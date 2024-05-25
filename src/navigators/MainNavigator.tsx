@@ -37,7 +37,7 @@ const MainTabNavigator = () => {
             return (
               <Text
                 style={{
-                  color: focused ? 'white' : 'gray',
+                  color: focused ? COLORS.callToAction : 'gray',
                   paddingBottom: 8,
                   fontSize: 12,
                 }}>
@@ -75,7 +75,7 @@ const MainTabNavigator = () => {
               <FontAwesome5
                 name={iconName}
                 size={size}
-                color={'white'}
+                color={focused ? COLORS.callToAction : 'gray'}
                 style={{...validIconStyle, opacity: iconOpacity}}
               />
             );

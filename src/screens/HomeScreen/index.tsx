@@ -14,16 +14,19 @@ const HomeScreen = () => {
     imageSource: require('../../assets/images/29.png'),
   };
   return (
-    <ScrollView>
+    <ScrollView
+      style={{
+        backgroundColor: COLORS.background.primary,
+      }}>
       <View style={styles.container}>
-        <Text style={styles.title}>
-          Discover marketplace & Find your Dragon ball character
-        </Text>
-        <Text style={styles.subTitle}>
-          Delve into our marketplace powered by Dragon Ball enthusiasts.
-          Purchase, sell, and uncover artwork from NFT artists, showcasing
-          beloved Dragon Ball characters.
-        </Text>
+        <View style={{paddingHorizontal: 16}}>
+          <Text style={styles.title}>Find favorite character</Text>
+          <Text style={styles.subTitle} ellipsizeMode="tail">
+            Delve into our marketplace powered by Dragon Ball enthusiasts.
+            Purchase, sell, and uncover artwork from NFT artists, showcasing
+            beloved Dragon Ball characters.
+          </Text>
+        </View>
         <NFTItem {...hottestItem} />
         <Button content="Get Started" />
       </View>
@@ -35,7 +38,7 @@ const styles = StyleSheet.create({
   container: {
     paddingVertical: 100,
     flex: 1,
-    paddingHorizontal: 32,
+    paddingHorizontal: 16,
     backgroundColor: COLORS.background.primary,
     paddingTop: 24,
     gap: 14,

@@ -1,8 +1,10 @@
 import React from 'react';
 import {View, Image, StyleSheet, Text, TouchableOpacity} from 'react-native';
 import {BlurView} from '@react-native-community/blur';
-import {COLORS, FONTS} from '../config';
+import {COLORS} from '../config';
 import {STYLES} from '../config/styles';
+import LinearGradient from 'react-native-linear-gradient';
+import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 
 const itemCardRadius = 30;
 
@@ -21,6 +23,10 @@ const NFTItem = ({
   highestBid,
   imageSource,
 }: NFTItemPropsType) => {
+  const handlePurchase = () => {
+    console.log('Purchase NFT');
+  };
+
   return (
     <TouchableOpacity style={styles.container}>
       <View style={styles.nftIDContainer}>
@@ -38,10 +44,29 @@ const NFTItem = ({
             <Text style={styles.descriptionTitle}>Price</Text>
             <Text style={styles.descriptionContent}>{price} FTM</Text>
           </View>
-          <View style={styles.descriptionWrapperRight}>
-            <Text style={styles.descriptionTitle}>Highest Bid</Text>
-            <Text style={styles.descriptionContent}>{highestBid} FTM</Text>
-          </View>
+          <TouchableOpacity style={{width: 140}} onPress={handlePurchase}>
+            <LinearGradient
+              start={{x: 0, y: 0}}
+              end={{x: 0.75, y: 0}}
+              colors={[COLORS.gradient[0], COLORS.gradient[1]]}
+              style={{
+                padding: 12,
+                alignItems: 'center',
+                borderRadius: 10,
+                flexDirection: 'row',
+                justifyContent: 'center',
+                gap: 8,
+              }}>
+              <FontAwesome5 name="shopping-cart" size={16} color="white" />
+              <Text
+                style={{
+                  fontSize: 15,
+                  color: '#fff',
+                }}>
+                Purchase
+              </Text>
+            </LinearGradient>
+          </TouchableOpacity>
         </View>
       </View>
     </TouchableOpacity>
@@ -62,6 +87,7 @@ const styles = StyleSheet.create({
   },
   nftID: {
     ...STYLES.text.SpaceMonoCaption,
+    color: COLORS.background.primary,
   },
   imageWrapper: {
     position: 'relative',
@@ -94,7 +120,7 @@ const styles = StyleSheet.create({
     borderRadius: itemCardRadius,
   },
   container: {
-    marginHorizontal: 32,
+    marginHorizontal: 40,
     marginTop: 24,
     marginBottom: 16,
     borderRadius: itemCardRadius,
@@ -137,6 +163,17 @@ const styles = StyleSheet.create({
   rowSpaceBetween: {
     flexDirection: 'row',
     justifyContent: 'space-between',
+  },
+  textBuy: {
+    ...STYLES.text.WorkSansBase,
+    paddingBottom: 4,
+  },
+  btnBuy: {
+    backgroundColor: COLORS.orange[0],
+    paddingHorizontal: 16,
+    borderRadius: 14,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
 });
 

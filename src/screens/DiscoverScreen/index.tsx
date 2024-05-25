@@ -118,7 +118,7 @@ const DiscoverScreen = () => {
       <FlatList
         ListHeaderComponent={
           <Text style={{...STYLES.text.WorkSansH4, paddingHorizontal: 16}}>
-            Discover 🔎
+            🔎 Discover
           </Text>
         }
         showsVerticalScrollIndicator={false}

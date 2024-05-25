@@ -10,4 +10,14 @@ export const COLORS = {
   },
   callToAction: "#FD6E8A",
   idTag: "#FD6E8A",
+  red: [
+    "#FF5B5B",
+  ],
+  orange: [
+    "#FE761B",
+  ],
+  gradient: [
+    "#27C99C",
+    "#FF6250",
+  ]
 }
