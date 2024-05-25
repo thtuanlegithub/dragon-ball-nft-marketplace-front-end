@@ -75,4 +75,5 @@ export const STYLES = {
       color: COLORS.text.primary,
     },
   },
+
 }
