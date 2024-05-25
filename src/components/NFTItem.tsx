@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Image, StyleSheet, Text } from 'react-native';
+import { View, Image, StyleSheet, Text, TouchableOpacity } from 'react-native';
 import { BlurView } from '@react-native-community/blur';
 import { COLORS, FONTS } from '../config';
 import { STYLES } from '../config/styles';
@@ -8,18 +8,18 @@ const itemCardRadius = 20;
 
 const NFTItem = () => {
   return (
-    <View style={styles.container}>
+    <TouchableOpacity style={styles.container}>
       <View style={styles.imageWrapper}>
-        <Image style={styles.image} source={require('../assets/images/3.png')} />
-        <Image style={styles.bgImage} source={require('../assets/images/3.png')} />
+        <Image style={styles.image} source={require('../assets/images/18.png')} />
+        <Image style={styles.bgImage} source={require('../assets/images/18.png')} />
         <BlurView
           style={styles.absolute}
           blurType="regular"
-          blurAmount={2}
+          blurAmount={8}
         />
       </View>
       <View style={styles.description}>
-        <Text style={styles.itemName}>Trunks kids</Text>
+        <Text style={styles.itemName}>Trunks kid</Text>
         <View style={styles.rowSpaceBetween}>
           <View style={styles.descriptionWrapper}>
             <Text style={styles.descriptionTitle}>Price</Text>
@@ -31,7 +31,7 @@ const NFTItem = () => {
           </View>
         </View>
       </View>
-    </View>
+    </TouchableOpacity>
   );
 }
 
@@ -45,8 +45,8 @@ const styles = StyleSheet.create({
   bgImage: {
     position: 'absolute',
     zIndex: -2,
-    marginTop: -26,
-    height: 300,
+    marginTop: -61,
+    height: 360,
     resizeMode: 'contain',
     width: '100%',
     borderRadius: itemCardRadius,
@@ -67,6 +67,7 @@ const styles = StyleSheet.create({
     borderRadius: itemCardRadius,
   },
   container: {
+    marginTop: 24,
     borderRadius: itemCardRadius,
     borderColor: 'white',
     borderWidth: 1,

@@ -74,5 +74,5 @@ export const STYLES = {
       fontSize: 12,
       color: COLORS.text.primary,
     },
-  }
+  },
 }
