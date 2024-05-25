@@ -3,10 +3,11 @@ import React from 'react'
 import { COLORS, FONTS } from './src/config'
 import { STYLES } from './src/config/styles'
 import HomeScreen from './src/screens/HomeScreen'
+import MainTabNavigator from './src/navigators/MainNavigator'
 
 const App = () => {
   return (
-    <HomeScreen/>
+    <MainTabNavigator/>
   )
 }
 
