@@ -8,5 +8,6 @@ export const COLORS = {
     label: "#BDBDBD",
     primary: "#FFFFFF",
   },
-  callToAction: "#A259FF",
+  callToAction: "#FD6E8A",
+  idTag: "#FD6E8A",
 }

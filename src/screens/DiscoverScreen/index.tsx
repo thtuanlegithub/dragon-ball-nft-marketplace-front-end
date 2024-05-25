@@ -52,7 +52,7 @@ const ListNFT = [
     title: 'Goku Super Saiyan 1',
     price: '1.63',
     highestBid: '4.63',
-    imageSource: '../../assets/images/7.png',
+    imageSource: require('../../assets/images/7.png'),
   },
   {
     id: 'NFT-008',
@@ -115,8 +115,14 @@ const ListNFT = [
 const DiscoverScreen = () => {
   return (
     <View style={styles.container}>
-      <Text style={STYLES.text.WorkSansH4}>Discover 🔎</Text>
       <FlatList
+        ListHeaderComponent={
+          <Text style={{...STYLES.text.WorkSansH4, paddingHorizontal: 16}}>
+            Discover 🔎
+          </Text>
+        }
+        showsVerticalScrollIndicator={false}
+        ListFooterComponent={<View style={{height: 70}} />}
         data={ListNFT}
         keyExtractor={item => item.id}
         renderItem={({item}) => <NFTItem {...item} />}
@@ -129,7 +135,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: COLORS.background.primary,
-    paddingHorizontal: 32,
     paddingVertical: 12,
   },
 });

@@ -23,6 +23,9 @@ const NFTItem = ({
 }: NFTItemPropsType) => {
   return (
     <TouchableOpacity style={styles.container}>
+      <View style={styles.nftIDContainer}>
+        <Text style={styles.nftID}>{id}</Text>
+      </View>
       <View style={styles.imageWrapper}>
         <Image style={styles.image} source={imageSource} />
         <Image style={styles.bgImage} source={imageSource} />
@@ -46,6 +49,20 @@ const NFTItem = ({
 };
 
 const styles = StyleSheet.create({
+  nftIDContainer: {
+    position: 'absolute',
+    zIndex: 2,
+    left: 24,
+    top: 16,
+    textAlignVertical: 'center',
+    borderRadius: 8,
+    backgroundColor: COLORS.idTag,
+    paddingHorizontal: 8,
+    paddingVertical: 4,
+  },
+  nftID: {
+    ...STYLES.text.SpaceMonoCaption,
+  },
   imageWrapper: {
     position: 'relative',
     height: 200, // explicitly set the height
@@ -77,11 +94,17 @@ const styles = StyleSheet.create({
     borderRadius: itemCardRadius,
   },
   container: {
+    marginHorizontal: 32,
     marginTop: 24,
+    marginBottom: 16,
     borderRadius: itemCardRadius,
-    borderColor: 'white',
-    borderWidth: 1,
-    overflow: 'hidden', // ensure child views are clipped to the border radius
+    // borderColor: 'white',
+    // borderWidth: 1,
+    overflow: 'hidden',
+    shadowColor: '#FFFFFF',
+    shadowRadius: 5,
+    shadowOpacity: 0.5,
+    elevation: 8,
   },
   description: {
     justifyContent: 'space-between',
