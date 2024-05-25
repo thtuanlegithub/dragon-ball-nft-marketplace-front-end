@@ -1,14 +1,15 @@
 import React from 'react';
-import {View} from 'react-native';
+import {View, Text} from 'react-native';
 import {NavigationContainer} from '@react-navigation/native';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {BlurView} from '@react-native-community/blur';
+import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
+
+import {COLORS} from '../config';
 import HomeScreen from '../screens/HomeScreen';
 import ProfileScreen from '../screens/ProfileScreen';
 import AuctionScreen from '../screens/AuctionScreen';
 import DiscoverScreen from '../screens/DiscoverScreen';
-import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
-import {COLORS} from '../config';
 
 const BottomTab = createBottomTabNavigator();
 
@@ -21,21 +22,42 @@ const MainTabNavigator = () => {
           headerShown: false,
           tabBarLabelStyle: {
             color: 'white',
-            paddingVertical: 4,
+          },
+          tabBarLabel: ({focused, color}) => {
+            let label: string = '';
+            if (route.name === 'Home') {
+              label = 'Home';
+            } else if (route.name === 'Profile') {
+              label = 'Profile';
+            } else if (route.name === 'Auction') {
+              label = 'Auction';
+            } else if (route.name === 'Discover') {
+              label = 'Discover';
+            }
+            return (
+              <Text
+                style={{
+                  color: focused ? 'white' : 'gray',
+                  paddingBottom: 8,
+                  fontSize: 12,
+                }}>
+                {label}
+              </Text>
+            );
           },
           tabBarStyle: {
             justifyContent: 'center',
             alignItems: 'center',
             borderColor: 'transparent',
-            height: 64,
+            height: 65,
             position: 'absolute',
-            bottom: 16,
+            bottom: 12,
             left: 16,
             right: 16,
             elevation: 0,
-            backgroundColor: 'transparent', // Make the background transparent
+            backgroundColor: 'transparent',
           },
-          tabBarIcon: ({focused, color = COLORS.text.primary, size = 20}) => {
+          tabBarIcon: ({focused, size = 20}) => {
             let iconName;
             let iconStyle = focused ? 'solid' : 'regular';
             let iconOpacity = focused ? 1 : 0.2;
@@ -45,7 +67,7 @@ const MainTabNavigator = () => {
               iconName = 'compass';
             } else if (route.name === 'Auction') {
               iconName = 'gavel';
-            } else if (route.name == 'Profile') {
+            } else if (route.name === 'Profile') {
               iconName = 'user-alt';
             }
             let validIconStyle = typeof iconStyle === 'string' ? {} : iconStyle;
