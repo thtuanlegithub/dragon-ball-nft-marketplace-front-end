@@ -64,25 +64,8 @@ const NFTItem = ({
               </LinearGradient>
             </TouchableOpacity>
           ) : (
-            <View
-              style={{
-                flexDirection: 'row',
-                alignItems: 'center',
-                gap: 8,
-                transform: [{rotateZ: '-4deg'}],
-                paddingVertical: 2,
-                paddingHorizontal: 8,
-                borderWidth: 4,
-                borderColor: COLORS.gray[0],
-              }}>
-              <Text
-                style={{
-                  fontWeight: 'bold',
-                  fontSize: 24,
-                  color: COLORS.gray[0],
-                }}>
-                NOT SOLD
-              </Text>
+            <View style={styles.notSoldContainer}>
+              <Text style={styles.notSoldText}>NOT SOLD</Text>
             </View>
           )}
         </View>
@@ -217,6 +200,21 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'center',
     gap: 8,
+  },
+  notSoldContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 8,
+    transform: [{rotateZ: '-4deg'}],
+    paddingVertical: 2,
+    paddingHorizontal: 8,
+    borderWidth: 4,
+    borderColor: COLORS.gray[0],
+  },
+  notSoldText: {
+    fontWeight: 'bold',
+    fontSize: 24,
+    color: COLORS.gray[0],
   },
 });
 

@@ -15,14 +15,20 @@ type AuctionItemPropsType = {
   price: string;
   highestBid: string;
   imageSource: any;
+  ownerName: string;
+  ownerProfileImg: any;
+  isSelling?: boolean;
 };
 
 const AuctionItem = ({
   id,
   title,
   price,
-  highestBid,
+  highestBid = '2.56',
   imageSource,
+  ownerName = 'Owner name',
+  ownerProfileImg = require('../assets/images/profile_test.png'),
+  isSelling = true,
 }: AuctionItemPropsType) => {
   return (
     <TouchableOpacity style={styles.container}>
@@ -39,9 +45,13 @@ const AuctionItem = ({
       </View>
       <View style={styles.description}>
         <Text style={styles.itemName}>{title}</Text>
+        <View style={styles.nftOwner}>
+          <Image style={styles.nftOwnerImg} source={ownerProfileImg} />
+          <Text style={STYLES.text.SpaceMonoH6}>{ownerName}</Text>
+        </View>
         <View style={styles.rowSpaceBetween}>
           <Text style={STYLES.text.SpaceMonoBase}>Highest bid</Text>
-          <Text style={STYLES.text.WorkSansH5}>100 FTM</Text>
+          <Text style={STYLES.text.SpaceMonoH5}>{highestBid} FTM</Text>
         </View>
         <TouchableOpacity>
           <LinearGradient
@@ -171,6 +181,17 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'center',
     gap: 8,
+  },
+  nftOwner: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    paddingBottom: 8,
+  },
+  nftOwnerImg: {
+    width: 24,
+    height: 24,
+    borderRadius: 12,
+    marginRight: 8,
   },
 });
 
