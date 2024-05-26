@@ -1,9 +1,11 @@
 import React from 'react';
 import {View, Image, StyleSheet, Text, TouchableOpacity} from 'react-native';
 import {BlurView} from '@react-native-community/blur';
-import {COLORS, FONTS} from '../config';
-import {STYLES} from '../config/styles';
 import LinearGradient from 'react-native-linear-gradient';
+import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
+
+import {COLORS} from '../config';
+import {STYLES} from '../config/styles';
 
 const itemCardRadius = 30;
 
@@ -47,6 +49,7 @@ const AuctionItem = ({
             start={{x: 0, y: 0}}
             end={{x: 1, y: 0}}
             colors={[COLORS.gradient[0], COLORS.gradient[1]]}>
+            <FontAwesome5 name="gavel" size={16} color="white" />
             <Text style={STYLES.text.WorkSansBase}>Place a bid</Text>
           </LinearGradient>
         </TouchableOpacity>
@@ -165,6 +168,9 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     paddingVertical: 10,
     alignItems: 'center',
+    flexDirection: 'row',
+    justifyContent: 'center',
+    gap: 8,
   },
 });
 

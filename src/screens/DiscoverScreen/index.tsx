@@ -11,6 +11,9 @@ const ListNFT = [
     price: '1.63',
     highestBid: '4.63',
     imageSource: require('../../assets/images/1.png'),
+    ownerName: 'John Does',
+    ownerProfileImg: require('../../assets/images/profile_1.png'),
+    isSelling: true,
   },
   {
     id: 'NFT-002',
@@ -18,6 +21,9 @@ const ListNFT = [
     price: '1.63',
     highestBid: '4.63',
     imageSource: require('../../assets/images/2.png'),
+    ownerName: 'David Doe',
+    ownerProfileImg: require('../../assets/images/profile_2.png'),
+    isSelling: false,
   },
   {
     id: 'NFT-003',
@@ -25,6 +31,9 @@ const ListNFT = [
     price: '1.63',
     highestBid: '4.63',
     imageSource: require('../../assets/images/3.png'),
+    ownerName: 'Sara Lee',
+    ownerProfileImg: require('../../assets/images/profile_3.png'),
+    isSelling: true,
   },
   {
     id: 'NFT-004',
@@ -32,6 +41,8 @@ const ListNFT = [
     price: '1.63',
     highestBid: '4.63',
     imageSource: require('../../assets/images/4.png'),
+    ownerName: 'Marry Jane',
+    isSelling: false,
   },
   {
     id: 'NFT-005',
@@ -39,6 +50,8 @@ const ListNFT = [
     price: '1.63',
     highestBid: '4.63',
     imageSource: require('../../assets/images/5.png'),
+    ownerName: 'John Doe',
+    isSelling: true,
   },
   {
     id: 'NFT-006',
@@ -46,6 +59,7 @@ const ListNFT = [
     price: '1.63',
     highestBid: '4.63',
     imageSource: require('../../assets/images/6.png'),
+    isSelling: false,
   },
   {
     id: 'NFT-007',
@@ -53,6 +67,7 @@ const ListNFT = [
     price: '1.63',
     highestBid: '4.63',
     imageSource: require('../../assets/images/7.png'),
+    isSelling: true,
   },
   {
     id: 'NFT-008',
@@ -60,6 +75,7 @@ const ListNFT = [
     price: '1.63',
     highestBid: '4.63',
     imageSource: require('../../assets/images/8.png'),
+    isSelling: true,
   },
   {
     id: 'NFT-009',
@@ -67,6 +83,7 @@ const ListNFT = [
     price: '1.63',
     highestBid: '4.63',
     imageSource: require('../../assets/images/9.png'),
+    isSelling: true,
   },
   {
     id: 'NFT-010',
@@ -74,6 +91,7 @@ const ListNFT = [
     price: '1.63',
     highestBid: '4.63',
     imageSource: require('../../assets/images/10.png'),
+    isSelling: true,
   },
   {
     id: 'NFT-011',
@@ -81,6 +99,7 @@ const ListNFT = [
     price: '1.63',
     highestBid: '4.63',
     imageSource: require('../../assets/images/11.png'),
+    isSelling: true,
   },
   {
     id: 'NFT-012',
@@ -88,6 +107,7 @@ const ListNFT = [
     price: '1.63',
     highestBid: '4.63',
     imageSource: require('../../assets/images/12.png'),
+    isSelling: true,
   },
   {
     id: 'NFT-013',
@@ -95,6 +115,7 @@ const ListNFT = [
     price: '1.63',
     highestBid: '4.63',
     imageSource: require('../../assets/images/13.png'),
+    isSelling: true,
   },
   {
     id: 'NFT-014',
@@ -109,6 +130,7 @@ const ListNFT = [
     price: '1.63',
     highestBid: '4.63',
     imageSource: require('../../assets/images/15.png'),
+    isSelling: true,
   },
 ];
 

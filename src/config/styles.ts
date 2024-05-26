@@ -1,4 +1,3 @@
-import { StyleSheet } from "react-native";
 import { FONTS } from "./fonts";
 import { COLORS } from "./colors";
 
@@ -39,6 +38,11 @@ export const STYLES = {
       fontSize: 12,
       color: COLORS.text.primary,
     },
+    SpaceMonoH6: {
+      ...FONTS.SpaceMonoRegular,
+      fontSize: 14,
+      color: COLORS.text.primary,
+    },
     WorkSansH1: {
       ...FONTS.WorkSansBold,
       fontSize: 67,
@@ -62,6 +66,16 @@ export const STYLES = {
     WorkSansH5: {
       ...FONTS.WorkSansSemiBold,
       fontSize: 22,
+      color: COLORS.text.primary,
+    },
+    WorkSansH6: {
+      ...FONTS.WorkSansSemiBold,
+      fontSize: 18,
+      color: COLORS.text.primary,
+    },
+    WorkSansH7: {
+      ...FONTS.WorkSansMedium,
+      fontSize: 14,
       color: COLORS.text.primary,
     },
     WorkSansBase: {

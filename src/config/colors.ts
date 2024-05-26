@@ -19,5 +19,9 @@ export const COLORS = {
   gradient: [
     "#27C99C",
     "#FF6250",
+  ],
+  gray: [
+    "#7F7F7F",
+    "#616161",
   ]
 }
