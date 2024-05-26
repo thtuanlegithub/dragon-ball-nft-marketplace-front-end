@@ -12,16 +12,20 @@ type NFTItemPropsType = {
   id: string;
   title: string;
   price: string;
-  highestBid: string;
   imageSource: any;
+  ownerName: string;
+  ownerProfileImg: any;
+  isSelling?: boolean;
 };
 
 const NFTItem = ({
   id,
   title,
   price,
-  highestBid,
   imageSource,
+  ownerName = 'Owner name',
+  ownerProfileImg = require('../assets/images/profile_test.png'),
+  isSelling = true,
 }: NFTItemPropsType) => {
   const handlePurchase = () => {
     console.log('Purchase NFT');
@@ -39,34 +43,48 @@ const NFTItem = ({
       </View>
       <View style={styles.description}>
         <Text style={styles.itemName}>{title}</Text>
+        <View style={styles.nftOwner}>
+          <Image style={styles.nftOwnerImg} source={ownerProfileImg} />
+          <Text style={STYLES.text.SpaceMonoH6}>{ownerName}</Text>
+        </View>
         <View style={styles.rowSpaceBetween}>
           <View style={styles.descriptionWrapperLeft}>
             <Text style={styles.descriptionTitle}>Price</Text>
             <Text style={styles.descriptionContent}>{price} FTM</Text>
           </View>
-          <TouchableOpacity style={{width: 140}} onPress={handlePurchase}>
-            <LinearGradient
-              start={{x: 0, y: 0}}
-              end={{x: 0.75, y: 0}}
-              colors={[COLORS.gradient[0], COLORS.gradient[1]]}
+          {isSelling ? (
+            <TouchableOpacity style={{width: 140}} onPress={handlePurchase}>
+              <LinearGradient
+                start={{x: 0, y: 0}}
+                end={{x: 0.75, y: 0}}
+                colors={[COLORS.gradient[0], COLORS.gradient[1]]}
+                style={styles.gradientBtn}>
+                <FontAwesome5 name="shopping-cart" size={16} color="white" />
+                <Text style={STYLES.text.WorkSansBase}>Purchase</Text>
+              </LinearGradient>
+            </TouchableOpacity>
+          ) : (
+            <View
               style={{
-                padding: 12,
-                alignItems: 'center',
-                borderRadius: 10,
                 flexDirection: 'row',
-                justifyContent: 'center',
+                alignItems: 'center',
                 gap: 8,
+                transform: [{rotateZ: '-4deg'}],
+                paddingVertical: 2,
+                paddingHorizontal: 8,
+                borderWidth: 4,
+                borderColor: COLORS.gray[0],
               }}>
-              <FontAwesome5 name="shopping-cart" size={16} color="white" />
               <Text
                 style={{
-                  fontSize: 15,
-                  color: '#fff',
+                  fontWeight: 'bold',
+                  fontSize: 24,
+                  color: COLORS.gray[0],
                 }}>
-                Purchase
+                NOT SOLD
               </Text>
-            </LinearGradient>
-          </TouchableOpacity>
+            </View>
+          )}
         </View>
       </View>
     </TouchableOpacity>
@@ -124,8 +142,6 @@ const styles = StyleSheet.create({
     marginTop: 24,
     marginBottom: 16,
     borderRadius: itemCardRadius,
-    // borderColor: 'white',
-    // borderWidth: 1,
     overflow: 'hidden',
     shadowColor: '#FFFFFF',
     shadowRadius: 5,
@@ -142,8 +158,19 @@ const styles = StyleSheet.create({
     borderBottomRightRadius: itemCardRadius,
   },
   itemName: {
-    ...STYLES.text.WorkSansH5,
+    ...STYLES.text.WorkSansH6,
     paddingBottom: 8,
+  },
+  nftOwner: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    paddingBottom: 8,
+  },
+  nftOwnerImg: {
+    width: 24,
+    height: 24,
+    borderRadius: 12,
+    marginRight: 8,
   },
   descriptionTitle: {
     ...STYLES.text.SpaceMonoCaption,
@@ -174,6 +201,22 @@ const styles = StyleSheet.create({
     borderRadius: 14,
     justifyContent: 'center',
     alignItems: 'center',
+  },
+  gradientBtn: {
+    padding: 10,
+    alignItems: 'center',
+    borderRadius: 10,
+    flexDirection: 'row',
+    justifyContent: 'center',
+    gap: 8,
+  },
+  notSoldBtn: {
+    padding: 10,
+    alignItems: 'center',
+    // borderRadius: 0,
+    flexDirection: 'row',
+    justifyContent: 'center',
+    gap: 8,
   },
 });
 
