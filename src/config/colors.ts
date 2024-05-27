@@ -2,6 +2,7 @@ export const COLORS = {
   background: {
     primary: "#2B2B2B",
     secondary: "#3B3B3B",
+    modal: "#3B3B3B",
   },
   text: {
     caption: "#BDBDBD",
@@ -23,5 +24,8 @@ export const COLORS = {
   gray: [
     "#7F7F7F",
     "#616161",
+  ],
+  yellow: [
+    "#EDE103",
   ]
 }

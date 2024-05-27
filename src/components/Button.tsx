@@ -19,8 +19,8 @@ const Button = ({content}: ButtonProps) => {
 const styles = StyleSheet.create({
   btnContainer: {
     backgroundColor: COLORS.callToAction,
-    width: '100%',
-    borderRadius: 300,
+    flex: 1,
+    borderRadius: 30,
     paddingVertical: 16,
     alignItems: 'center',
     justifyContent: 'center',

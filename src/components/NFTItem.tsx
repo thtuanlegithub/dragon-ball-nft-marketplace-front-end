@@ -4,11 +4,11 @@ import {BlurView} from '@react-native-community/blur';
 import {COLORS} from '../config';
 import {STYLES} from '../config/styles';
 import LinearGradient from 'react-native-linear-gradient';
-import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
+import BuyBottomSheet from '../screens/DiscoverScreen/components/BuyBottomSheet';
 
 const itemCardRadius = 30;
 
-type NFTItemPropsType = {
+export type NFTItemPropsType = {
   id: string;
   title: string;
   price: string;
@@ -27,10 +27,6 @@ const NFTItem = ({
   ownerProfileImg = require('../assets/images/profile_test.png'),
   isSelling = true,
 }: NFTItemPropsType) => {
-  const handlePurchase = () => {
-    console.log('Purchase NFT');
-  };
-
   return (
     <TouchableOpacity style={styles.container}>
       <View style={styles.nftIDContainer}>
@@ -53,16 +49,14 @@ const NFTItem = ({
             <Text style={styles.descriptionContent}>{price} FTM</Text>
           </View>
           {isSelling ? (
-            <TouchableOpacity style={{width: 140}} onPress={handlePurchase}>
-              <LinearGradient
-                start={{x: 0, y: 0}}
-                end={{x: 0.75, y: 0}}
-                colors={[COLORS.gradient[0], COLORS.gradient[1]]}
-                style={styles.gradientBtn}>
-                <FontAwesome5 name="shopping-cart" size={16} color="white" />
-                <Text style={STYLES.text.WorkSansBase}>Purchase</Text>
-              </LinearGradient>
-            </TouchableOpacity>
+            <BuyBottomSheet
+              id={id}
+              title={title}
+              price={price}
+              imageSource={imageSource}
+              ownerName={ownerName}
+              ownerProfileImg={ownerProfileImg}
+            />
           ) : (
             <View style={styles.notSoldContainer}>
               <Text style={styles.notSoldText}>NOT SOLD</Text>
