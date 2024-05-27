@@ -1,34 +1,29 @@
 import React from 'react';
 import {View, Image, StyleSheet, Text, TouchableOpacity} from 'react-native';
 import {BlurView} from '@react-native-community/blur';
-import LinearGradient from 'react-native-linear-gradient';
-import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 
 import {COLORS} from '../config';
 import {STYLES} from '../config/styles';
+import PlaceBidBottomSheet from '../screens/AuctionScreen/components/PlaceBidBottomSheet';
 
 const itemCardRadius = 30;
 
-type AuctionItemPropsType = {
+export type AuctionItemPropsType = {
   id: string;
   title: string;
-  price: string;
   highestBid: string;
   imageSource: any;
   ownerName: string;
   ownerProfileImg: any;
-  isSelling?: boolean;
 };
 
 const AuctionItem = ({
   id,
   title,
-  price,
   highestBid = '2.56',
   imageSource,
   ownerName = 'Owner name',
   ownerProfileImg = require('../assets/images/profile_test.png'),
-  isSelling = true,
 }: AuctionItemPropsType) => {
   return (
     <TouchableOpacity style={styles.container}>
@@ -45,24 +40,20 @@ const AuctionItem = ({
       </View>
       <View style={styles.description}>
         <Text style={styles.itemName}>{title}</Text>
-        <View style={styles.nftOwner}>
-          <Image style={styles.nftOwnerImg} source={ownerProfileImg} />
-          <Text style={STYLES.text.SpaceMonoH6}>{ownerName}</Text>
-        </View>
         <View style={styles.rowSpaceBetween}>
           <Text style={STYLES.text.SpaceMonoBase}>Highest bid</Text>
-          <Text style={STYLES.text.SpaceMonoH5}>{highestBid} FTM</Text>
+          <Text style={{...STYLES.text.SpaceMonoH5, color: COLORS.yellow[0]}}>
+            {highestBid} FTM
+          </Text>
         </View>
-        <TouchableOpacity>
-          <LinearGradient
-            style={styles.placeBidBtn}
-            start={{x: 0, y: 0}}
-            end={{x: 1, y: 0}}
-            colors={[COLORS.gradient[0], COLORS.gradient[1]]}>
-            <FontAwesome5 name="gavel" size={16} color="white" />
-            <Text style={STYLES.text.WorkSansBase}>Place a bid</Text>
-          </LinearGradient>
-        </TouchableOpacity>
+        <PlaceBidBottomSheet
+          id={id}
+          title={title}
+          highestBid={highestBid}
+          imageSource={imageSource}
+          ownerName={ownerName}
+          ownerProfileImg={ownerProfileImg}
+        />
       </View>
     </TouchableOpacity>
   );
