@@ -5,6 +5,8 @@ import {STYLES} from '../../config/styles';
 import NFTItem, {NFTItemPropsType} from '../../components/NFTItem';
 import axios from 'axios';
 import {SERVER_URL} from '../../utils/constants/server-url.constant';
+import { collection, onSnapshot } from 'firebase/firestore';
+import { db } from '../../config/firebaseConfig';
 
 type NFTFetchItem = {
   tokenId: string;
@@ -30,6 +32,11 @@ const DiscoverScreen = () => {
   };
   useEffect(() => {
     fetchListNFT();
+    const unsubscribe = onSnapshot(collection(db, "nfts"), () => {
+        fetchListNFT();
+    });  
+    // Clean up listener on unmount
+    return () => unsubscribe();
   }, []);
   return (
     <View style={styles.container}>
