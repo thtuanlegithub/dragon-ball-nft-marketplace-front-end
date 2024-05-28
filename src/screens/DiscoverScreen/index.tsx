@@ -1,8 +1,10 @@
 import {View, Text, StyleSheet, FlatList} from 'react-native';
-import React from 'react';
+import React, {useEffect} from 'react';
 import {COLORS} from '../../config';
 import {STYLES} from '../../config/styles';
 import NFTItem from '../../components/NFTItem';
+import axios from 'axios';
+import {SERVER_URL} from '../../utils/constants/server-url.constant';
 
 const ListNFT = [
   {
@@ -135,6 +137,19 @@ const ListNFT = [
 ];
 
 const DiscoverScreen = () => {
+  const fetchListNFT = async () => {
+    try {
+      const res = await axios.get(`${SERVER_URL}/nft`);
+      console.log(JSON.stringify(res.data, null, 2));
+      return res;
+    } catch (error) {
+      console.error(error);
+      return null;
+    }
+  };
+  useEffect(() => {
+    fetchListNFT();
+  }, []);
   return (
     <View style={styles.container}>
       <FlatList

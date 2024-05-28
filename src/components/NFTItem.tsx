@@ -1,9 +1,9 @@
 import React from 'react';
 import {View, Image, StyleSheet, Text, TouchableOpacity} from 'react-native';
 import {BlurView} from '@react-native-community/blur';
+
 import {COLORS} from '../config';
 import {STYLES} from '../config/styles';
-import LinearGradient from 'react-native-linear-gradient';
 import BuyBottomSheet from '../screens/DiscoverScreen/components/BuyBottomSheet';
 
 const itemCardRadius = 30;
@@ -13,8 +13,8 @@ export type NFTItemPropsType = {
   title: string;
   price: string;
   imageSource: any;
-  ownerName: string;
-  ownerProfileImg: any;
+  ownerName?: string;
+  ownerProfileImg?: any;
   isSelling?: boolean;
 };
 
