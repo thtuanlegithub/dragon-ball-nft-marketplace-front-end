@@ -9,53 +9,59 @@ import BuyBottomSheet from '../screens/DiscoverScreen/components/BuyBottomSheet'
 const itemCardRadius = 30;
 
 export type NFTItemPropsType = {
-  id: string;
-  title: string;
-  price: string;
-  imageSource: any;
-  ownerName?: string;
-  ownerProfileImg?: any;
-  isSelling?: boolean;
+  tokenId: number;
+  name: string;
+  price: number;
+  image: string;
+  rarity: string;
+  isSold: boolean;
+  isAuction: boolean;
 };
 
 const NFTItem = ({
-  id,
-  title,
+  tokenId,
+  name,
   price,
-  imageSource,
-  ownerName = 'Owner name',
-  ownerProfileImg = require('../assets/images/profile_test.png'),
-  isSelling = true,
+  image,
+  rarity,
+  isSold,
+  isAuction,
 }: NFTItemPropsType) => {
   return (
     <TouchableOpacity style={styles.container}>
       <View style={styles.nftIDContainer}>
-        <Text style={styles.nftID}>{id}</Text>
+        <Text style={styles.nftID}>NFT-{tokenId}</Text>
       </View>
       <View style={styles.imageWrapper}>
-        <Image style={styles.image} source={imageSource} />
-        <Image style={styles.bgImage} source={imageSource} />
+        <Image style={styles.image} source={{uri: image}} />
+        <Image style={styles.bgImage} source={{uri: image}} />
         <BlurView style={styles.absolute} blurType="regular" blurAmount={8} />
       </View>
       <View style={styles.description}>
-        <Text style={styles.itemName}>{title}</Text>
+        <Text style={styles.itemName}>{name}</Text>
         <View style={styles.nftOwner}>
-          <Image style={styles.nftOwnerImg} source={ownerProfileImg} />
-          <Text style={STYLES.text.SpaceMonoH6}>{ownerName}</Text>
+          <Image
+            style={styles.nftOwnerImg}
+            source={require('../assets/images/profile_test.png')}
+          />
+          <Text style={STYLES.text.SpaceMonoH6}>{rarity}</Text>
         </View>
         <View style={styles.rowSpaceBetween}>
           <View style={styles.descriptionWrapperLeft}>
             <Text style={styles.descriptionTitle}>Price</Text>
             <Text style={styles.descriptionContent}>{price} FTM</Text>
           </View>
-          {isSelling ? (
+          {isSold ? (
             <BuyBottomSheet
-              id={id}
-              title={title}
+              tokenId={tokenId}
+              name={name}
               price={price}
-              imageSource={imageSource}
-              ownerName={ownerName}
-              ownerProfileImg={ownerProfileImg}
+              image={image}
+              rarity={rarity}
+              isAuction={isAuction}
+              isSold={isSold}
+              // ownerName={ownerName}
+              // ownerProfileImg={ownerProfileImg}
             />
           ) : (
             <View style={styles.notSoldContainer}>

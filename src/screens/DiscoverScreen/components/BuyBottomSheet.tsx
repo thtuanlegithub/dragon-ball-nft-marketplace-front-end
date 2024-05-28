@@ -7,18 +7,20 @@ import {BlurView} from '@react-native-community/blur';
 import BottomSheet from '../../../components/BottomSheet';
 import {COLORS} from '../../../config';
 import {STYLES} from '../../../config/styles';
-import Button from '../../../components/Button';
 import {NFTItemPropsType} from '../../../components/NFTItem';
 
 const itemCardRadius = 30;
 
 const BuyBottomSheet = ({
-  id,
-  title,
+  tokenId,
+  name,
   price,
-  imageSource,
-  ownerProfileImg = require('../../../assets/images/profile_test.png'),
-}: NFTItemPropsType) => {
+  image,
+  rarity,
+  isSold,
+  isAuction,
+}: // ownerProfileImg? = require('../../../assets/images/profile_test.png'),
+NFTItemPropsType) => {
   const bottomSheetRef = useRef<any>(null);
   const handlePresentModalPress = () => {
     bottomSheetRef.current?.popUp();
@@ -46,11 +48,11 @@ const BuyBottomSheet = ({
           }}>
           <View style={styles.container}>
             <View style={styles.nftIDContainer}>
-              <Text style={styles.nftID}>{id}</Text>
+              <Text style={styles.nftID}>{tokenId}</Text>
             </View>
             <View style={styles.imageWrapper}>
-              <Image style={styles.image} source={imageSource} />
-              <Image style={styles.bgImage} source={imageSource} />
+              <Image style={styles.image} source={{uri: image}} />
+              <Image style={styles.bgImage} source={{uri: image}} />
               <BlurView
                 style={styles.absolute}
                 blurType="regular"
@@ -58,7 +60,7 @@ const BuyBottomSheet = ({
               />
             </View>
           </View>
-          <Text style={styles.itemName}>{title}</Text>
+          <Text style={styles.itemName}>{name}</Text>
           <Text
             style={{
               ...STYLES.text.SpaceMonoH5,
