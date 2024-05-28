@@ -2,6 +2,8 @@
 #
 .DS_Store
 
+./src/utils/constants/server-url.constant
+
 # Xcode
 #
 build/
