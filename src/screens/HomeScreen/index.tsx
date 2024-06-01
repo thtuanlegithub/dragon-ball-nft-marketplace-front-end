@@ -1,18 +1,46 @@
 import {View, Text, StyleSheet, ScrollView} from 'react-native';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import {STYLES} from '../../config/styles';
 import {COLORS} from '../../config';
 import NFTItem from '../../components/NFTItem';
 import Button from '../../components/Button';
+import axios from 'axios';
+import { SERVER_URL } from '../../utils/constants/server-url.constant';
+import { collection, onSnapshot } from 'firebase/firestore';
+import { db } from '../../config/firebaseConfig';
+
+type NFTFetchItem = {
+  tokenId: string;
+  name: string;
+  price: number;
+  image: string;
+  rarity: string;
+  isSold: boolean;
+  isAuction: boolean;
+}[];
 
 const HomeScreen = () => {
-  const hottestItem = {
-    id: 'NFT-29',
-    title: 'Goku',
-    price: '100',
-    highestBid: '200',
-    imageSource: require('../../assets/images/29.png'),
-  };
+    const [topPriceNFT, setTopPriceNFT] = useState<NFTFetchItem>([]); 
+    const fetchTopPriceNFT = async () => {
+      try {
+        const res = await axios.get(`${SERVER_URL}/nft/topPrice`);
+        setTopPriceNFT(res.data.data.nft);
+        return res;
+      } catch (error) {
+        console.error(error);
+        return null;
+      }
+    };
+  
+    useEffect(() => {
+      fetchTopPriceNFT();
+      const unsubscribe = onSnapshot(collection(db, "nfts"), () => {
+        fetchTopPriceNFT();
+      });  
+      // Clean up listener on unmount
+      return () => unsubscribe();
+    }, []);
+
   return (
     <ScrollView
       style={{
@@ -27,7 +55,15 @@ const HomeScreen = () => {
             beloved Dragon Ball characters.
           </Text>
         </View>
-        <NFTItem {...hottestItem} />
+        <NFTItem 
+          tokenId={topPriceNFT.tokenId}
+          name={topPriceNFT.name}
+          price={topPriceNFT.price}
+          image={topPriceNFT.image}
+          rarity={topPriceNFT.rarity}
+          isSold={topPriceNFT.isSold}
+          isAuction={topPriceNFT.isAuction}
+        />
         <Button content="Get Started" />
       </View>
     </ScrollView>

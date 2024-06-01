@@ -1,7 +1,6 @@
 import React from 'react';
 import {View, Image, StyleSheet, Text, TouchableOpacity} from 'react-native';
 import {BlurView} from '@react-native-community/blur';
-
 import {COLORS} from '../config';
 import {STYLES} from '../config/styles';
 import BuyBottomSheet from '../screens/DiscoverScreen/components/BuyBottomSheet';
@@ -33,8 +32,12 @@ const NFTItem = ({
         <Text style={styles.nftID}>NFT-{tokenId}</Text>
       </View>
       <View style={styles.imageWrapper}>
-        <Image style={styles.image} source={{uri: image}} />
-        <Image style={styles.bgImage} source={{uri: image}} />
+        {image && (
+          <>
+            <Image style={styles.image} source={{uri: image}} />
+            <Image style={styles.bgImage} source={{uri: image}} />
+          </>
+        )}
         <BlurView style={styles.absolute} blurType="regular" blurAmount={8} />
       </View>
       <View style={styles.description}>
