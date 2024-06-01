@@ -8,10 +8,10 @@ import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 
 import {COLORS} from '../config';
 import HomeScreen from '../screens/HomeScreen';
-import ProfileScreen from '../screens/ProfileScreen';
 import AuctionScreen from '../screens/AuctionScreen';
 import DiscoverScreen from '../screens/DiscoverScreen';
 import {GestureHandlerRootView} from 'react-native-gesture-handler';
+import ProfileNavigator from './ProfileNavigator';
 
 const BottomTab = createBottomTabNavigator();
 
@@ -111,7 +111,7 @@ const MainTabNavigator = () => {
             <BottomTab.Screen name="Home" component={HomeScreen} />
             <BottomTab.Screen name="Discover" component={DiscoverScreen} />
             <BottomTab.Screen name="Auction" component={AuctionScreen} />
-            <BottomTab.Screen name="Profile" component={ProfileScreen} />
+            <BottomTab.Screen name="Profile" component={ProfileNavigator} />
           </BottomTab.Navigator>
         </NavigationContainer>
       </BottomSheetModalProvider>

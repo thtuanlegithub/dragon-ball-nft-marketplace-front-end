@@ -1,11 +1,65 @@
 import React from 'react';
-import {View, StyleSheet, Image, TouchableOpacity, Text} from 'react-native';
+import {
+  View,
+  StyleSheet,
+  Image,
+  TouchableOpacity,
+  Text,
+  FlatList,
+} from 'react-native';
 
 import {COLORS} from '../../config';
 import {STYLES} from '../../config/styles';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
+import {useNavigation} from '@react-navigation/native';
+import {SCREEN} from '../../navigators/AppRoute';
+
+const MenuItem = ({title, route}: {title: string; route: string}) => {
+  const navigation = useNavigation();
+  return (
+    <TouchableOpacity
+      style={styles.btnContainer}
+      onPress={() => navigation.navigate(route)}>
+      <Text style={STYLES.text.WorkSansBase}>{title}</Text>
+      <FontAwesome5
+        opacity={0.7}
+        name="chevron-right"
+        size={16}
+        color={COLORS.text.primary}
+      />
+    </TouchableOpacity>
+  );
+};
+
+type MenuItemType = {
+  id: number;
+  label: string;
+  route: string;
+};
 
 const ProfileScreen = () => {
+  const listMenuItem: MenuItemType[] = [
+    {
+      id: 1,
+      label: 'NFT Property',
+      route: SCREEN.NFT_PROPERTY,
+    },
+    {
+      id: 2,
+      label: 'Selling NFT',
+      route: SCREEN.SELLING_NFT,
+    },
+    {
+      id: 3,
+      label: 'Up for auction NFT',
+      route: SCREEN.UP_FOR_AUCTION_NFT,
+    },
+    {
+      id: 4,
+      label: 'Wallets',
+      route: SCREEN.WALLET,
+    },
+  ];
   return (
     <View style={styles.container}>
       <View style={styles.flexStart}>
@@ -20,42 +74,13 @@ const ProfileScreen = () => {
           }}>
           John Doe
         </Text>
-        <TouchableOpacity style={styles.btnContainer}>
-          <Text style={STYLES.text.WorkSansBase}>NFT Property</Text>
-          <FontAwesome5
-            opacity={0.7}
-            name="chevron-right"
-            size={16}
-            color={COLORS.text.primary}
-          />
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.btnContainer}>
-          <Text style={STYLES.text.WorkSansBase}>Selling NFT</Text>
-          <FontAwesome5
-            opacity={0.7}
-            name="chevron-right"
-            size={16}
-            color={COLORS.text.primary}
-          />
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.btnContainer}>
-          <Text style={STYLES.text.WorkSansBase}>Up for auction NFT</Text>
-          <FontAwesome5
-            opacity={0.7}
-            name="chevron-right"
-            size={16}
-            color={COLORS.text.primary}
-          />
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.btnContainer}>
-          <Text style={STYLES.text.WorkSansBase}>Wallets</Text>
-          <FontAwesome5
-            opacity={0.7}
-            name="chevron-right"
-            size={16}
-            color={COLORS.text.primary}
-          />
-        </TouchableOpacity>
+        <FlatList
+          data={listMenuItem}
+          keyExtractor={item => item.id.toString()}
+          renderItem={({item}) => (
+            <MenuItem title={item.label} route={item.route} />
+          )}
+        />
       </View>
       <View style={styles.flexEnd}>
         <TouchableOpacity style={styles.btnLogOut}>
@@ -81,6 +106,7 @@ const ProfileScreen = () => {
 
 const styles = StyleSheet.create({
   flexStart: {
+    flex: 1,
     alignItems: 'center',
     paddingTop: 16,
   },
