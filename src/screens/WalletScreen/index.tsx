@@ -1,11 +1,12 @@
 import {StyleSheet, Text, View} from 'react-native';
 import React from 'react';
 import {COLORS} from '../../config';
+import {STYLES} from '../../config/styles';
 
 const WalletScreen = () => {
   return (
     <View style={styles.container}>
-      <Text>WalletScreen</Text>
+      <Text style={STYLES.text.SpaceMonoH4}>WalletScreen</Text>
     </View>
   );
 };
