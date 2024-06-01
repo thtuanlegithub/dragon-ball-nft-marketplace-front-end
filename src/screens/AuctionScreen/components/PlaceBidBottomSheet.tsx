@@ -67,7 +67,7 @@ const PlaceBidBottomSheet = ({
               <Text style={STYLES.text.SpaceMonoH6}>{ownerName}</Text>
             </View>
             <View style={styles.rowSpaceBetween}>
-              <Text style={STYLES.text.SpaceMonoBase}>Highest bid</Text>
+              <Text style={STYLES.text.SpaceMonoH6}>Highest bid</Text>
               <Text
                 style={{...STYLES.text.SpaceMonoH5, color: COLORS.yellow[0]}}>
                 {highestBid} FTM
@@ -171,7 +171,7 @@ const styles = StyleSheet.create({
   },
   imageWrapper: {
     position: 'relative',
-    height: 200, // explicitly set the height
+    height: 140, // explicitly set the height
     width: '100%',
     borderRadius: itemCardRadius,
   },
@@ -179,7 +179,7 @@ const styles = StyleSheet.create({
     position: 'absolute',
     zIndex: -2,
     marginTop: -61,
-    height: 320,
+    height: 280,
     resizeMode: 'contain',
     width: '100%',
     borderRadius: itemCardRadius,
@@ -194,13 +194,13 @@ const styles = StyleSheet.create({
   },
   image: {
     zIndex: 1,
-    height: 200,
+    height: 140,
     resizeMode: 'contain',
     width: '100%',
     borderRadius: itemCardRadius,
   },
   container: {
-    marginHorizontal: 32,
+    marginHorizontal: 56,
     marginBottom: 24,
     borderRadius: itemCardRadius,
     // borderColor: 'white',
@@ -221,7 +221,7 @@ const styles = StyleSheet.create({
     borderBottomRightRadius: itemCardRadius,
   },
   itemName: {
-    ...STYLES.text.WorkSansH5,
+    ...STYLES.text.WorkSansH6,
     paddingBottom: 8,
   },
   descriptionTitle: {
