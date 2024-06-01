@@ -1,45 +1,43 @@
 import {View, Text, StyleSheet, ScrollView} from 'react-native';
-import React, { useEffect, useState } from 'react';
+import React, {useEffect, useState} from 'react';
 import {STYLES} from '../../config/styles';
 import {COLORS} from '../../config';
-import NFTItem from '../../components/NFTItem';
+import NFTItem, {NFTItemPropsType} from '../../components/NFTItem';
 import Button from '../../components/Button';
 import axios from 'axios';
-import { SERVER_URL } from '../../utils/constants/server-url.constant';
-import { collection, onSnapshot } from 'firebase/firestore';
-import { db } from '../../config/firebaseConfig';
-
-type NFTFetchItem = {
-  tokenId: string;
-  name: string;
-  price: number;
-  image: string;
-  rarity: string;
-  isSold: boolean;
-  isAuction: boolean;
-}[];
+import {SERVER_URL} from '../../utils/constants/server-url.constant';
+import {collection, onSnapshot} from 'firebase/firestore';
+import {db} from '../../config/firebaseConfig';
 
 const HomeScreen = () => {
-    const [topPriceNFT, setTopPriceNFT] = useState<NFTFetchItem>([]); 
-    const fetchTopPriceNFT = async () => {
-      try {
-        const res = await axios.get(`${SERVER_URL}/nft/topPrice`);
-        setTopPriceNFT(res.data.data.nft);
-        return res;
-      } catch (error) {
-        console.error(error);
-        return null;
-      }
-    };
-  
-    useEffect(() => {
+  const [topPriceNFT, setTopPriceNFT] = useState<NFTItemPropsType>({
+    tokenId: 0,
+    name: '',
+    price: 0,
+    image: '',
+    rarity: '',
+    isSold: false,
+    isAuction: false,
+  });
+  const fetchTopPriceNFT = async () => {
+    try {
+      const res = await axios.get(`${SERVER_URL}/nft/topPrice`);
+      setTopPriceNFT(res.data.data.nft);
+      return res;
+    } catch (error) {
+      console.error(error);
+      return null;
+    }
+  };
+
+  useEffect(() => {
+    fetchTopPriceNFT();
+    const unsubscribe = onSnapshot(collection(db, 'nfts'), () => {
       fetchTopPriceNFT();
-      const unsubscribe = onSnapshot(collection(db, "nfts"), () => {
-        fetchTopPriceNFT();
-      });  
-      // Clean up listener on unmount
-      return () => unsubscribe();
-    }, []);
+    });
+    // Clean up listener on unmount
+    return () => unsubscribe();
+  }, []);
 
   return (
     <ScrollView
@@ -55,14 +53,15 @@ const HomeScreen = () => {
             beloved Dragon Ball characters.
           </Text>
         </View>
-        <NFTItem 
-          tokenId={topPriceNFT.tokenId}
-          name={topPriceNFT.name}
-          price={topPriceNFT.price}
-          image={topPriceNFT.image}
-          rarity={topPriceNFT.rarity}
-          isSold={topPriceNFT.isSold}
-          isAuction={topPriceNFT.isAuction}
+        <NFTItem
+          {...topPriceNFT}
+          // tokenId={topPriceNFT.tokenId}
+          // name={topPriceNFT.name}
+          // price={topPriceNFT.price}
+          // image={topPriceNFT.image}
+          // rarity={topPriceNFT.rarity}
+          // isSold={topPriceNFT.isSold}
+          // isAuction={topPriceNFT.isAuction}
         />
         <Button content="Get Started" />
       </View>
