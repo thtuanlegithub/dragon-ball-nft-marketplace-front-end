@@ -2,7 +2,7 @@
 #
 .DS_Store
 
-./src/utils/constants/server-url.constant.ts
+/src/utils/constants/server-url.constant.ts
 
 # Xcode
 #
