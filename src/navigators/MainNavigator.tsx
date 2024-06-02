@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {View, Text} from 'react-native';
 import {NavigationContainer} from '@react-navigation/native';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
@@ -12,13 +12,31 @@ import AuctionScreen from '../screens/AuctionScreen';
 import DiscoverScreen from '../screens/DiscoverScreen';
 import {GestureHandlerRootView} from 'react-native-gesture-handler';
 import ProfileNavigator from './ProfileNavigator';
-import {useSelector} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import WalletNavigator from './WalletNavigator';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import {setWalletInfo} from '../services/slices/walletSlice';
 
 const BottomTab = createBottomTabNavigator();
 
 const MainTabNavigator = () => {
   const wallet = useSelector((state: any) => state.wallet);
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    const fetchWalletInfo = async () => {
+      const storedWalletInfo = await AsyncStorage.getItem('wallet');
+      if (!storedWalletInfo) {
+      } else {
+        const walletInfo = JSON.parse(storedWalletInfo);
+        console.log(walletInfo);
+        dispatch(setWalletInfo(walletInfo));
+      }
+    };
+    fetchWalletInfo();
+  }, []);
+
   return (
     <GestureHandlerRootView>
       <BottomSheetModalProvider>

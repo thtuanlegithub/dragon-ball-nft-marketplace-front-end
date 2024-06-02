@@ -10,7 +10,7 @@ const itemCardRadius = 30;
 export type NFTItemPropsType = {
   tokenId: string;
   name: string;
-  price: number;
+  price: string;
   image: string;
   rarity: string;
   isSold: boolean;

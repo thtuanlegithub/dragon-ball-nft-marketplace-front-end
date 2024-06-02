@@ -6,6 +6,7 @@ import {
   TouchableOpacity,
   Text,
   FlatList,
+  Clipboard,
 } from 'react-native';
 
 import {COLORS} from '../../config';
@@ -17,6 +18,7 @@ import {useDispatch, useSelector} from 'react-redux';
 import {logout, setBalance} from '../../services/slices/walletSlice';
 import axios from 'axios';
 import {SERVER_URL} from '../../utils/constants/server-url.constant';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const MenuItem = ({title, route}: {title: string; route: string}) => {
   const navigation = useNavigation();
@@ -65,6 +67,7 @@ const ProfileScreen = () => {
   const dispatch = useDispatch();
 
   const handleLogout = () => {
+    AsyncStorage.removeItem('wallet');
     dispatch(logout());
   };
 
@@ -75,6 +78,10 @@ const ProfileScreen = () => {
     dispatch(setBalance(balance.data.data.balance));
   };
 
+  const handleCopyToClipboard = () => {
+    Clipboard.setString(wallet.address);
+  };
+
   useEffect(() => {
     getBalance();
   }, []);
@@ -82,15 +89,32 @@ const ProfileScreen = () => {
   return (
     <View style={styles.container}>
       <View style={styles.flexStart}>
-        <Text style={STYLES.text.WorkSansH5}>Total balance</Text>
-        <Text style={STYLES.text.SpaceMonoBase}>{wallet.balance}</Text>
-        <Text
-          style={{
-            ...STYLES.text.WorkSansCaption,
-            paddingBottom: 16,
-          }}>
-          {wallet.address}
-        </Text>
+        <View style={styles.balanceWrapper}>
+          <Text style={STYLES.text.WorkSansH5}>Total balance:</Text>
+          <Text style={{...STYLES.text.SpaceMonoH5, color: COLORS.yellow[0]}}>
+            {wallet.balance} FTM
+          </Text>
+        </View>
+        <View style={{justifyContent: 'flex-start', gap: 8}}>
+          <Text style={STYLES.text.WorkSansH6}>Wallet address</Text>
+          <TouchableOpacity
+            onPress={handleCopyToClipboard}
+            style={styles.addressWrapper}>
+            <Text
+              style={{
+                ...STYLES.text.WorkSanSmall,
+                textAlign: 'center',
+                textAlignVertical: 'center',
+              }}>
+              {wallet.address}
+            </Text>
+            <Image
+              style={{width: 16, height: 16}}
+              source={require('../../assets/images/copy.png')}
+            />
+          </TouchableOpacity>
+        </View>
+
         <FlatList
           data={listMenuItem}
           keyExtractor={item => item.id.toString()}
@@ -124,7 +148,7 @@ const ProfileScreen = () => {
 const styles = StyleSheet.create({
   flexStart: {
     flex: 1,
-    alignItems: 'center',
+    gap: 8,
   },
   flexEnd: {
     width: '100%',
@@ -160,6 +184,21 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'center',
     gap: 16,
+  },
+  addressWrapper: {
+    flexDirection: 'row',
+    backgroundColor: COLORS.background.secondary,
+    paddingVertical: 12,
+    borderRadius: 12,
+    justifyContent: 'space-between',
+    paddingHorizontal: 16,
+  },
+  balanceWrapper: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 8,
+    marginBottom: 16,
+    justifyContent: 'center',
   },
 });
 

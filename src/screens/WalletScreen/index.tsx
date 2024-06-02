@@ -3,15 +3,12 @@ import {Image, StyleSheet, Text, View} from 'react-native';
 
 import {COLORS} from '../../config';
 import {STYLES} from '../../config/styles';
-import {useSelector} from 'react-redux';
-import {RootState} from '../../services/store';
 import ControlButton, {ControlButtonMode} from '../../components/ControlButton';
 import {useNavigation} from '@react-navigation/native';
 import {SCREEN} from '../../navigators/AppRoute';
 
 const WalletScreen = () => {
   const navigation = useNavigation();
-  const wallet = useSelector((state: RootState) => state.wallet);
   return (
     <View style={styles.container}>
       <View style={{justifyContent: 'center', alignItems: 'center', gap: 16}}>
