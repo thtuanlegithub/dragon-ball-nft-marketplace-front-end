@@ -2,6 +2,11 @@ import { FONTS } from "./fonts";
 import { COLORS } from "./colors";
 
 export const STYLES = {
+  stackScreenContainer: {
+    flex: 1,
+    backgroundColor: COLORS.background.primary,
+    paddingHorizontal: 16,
+  },
   text: {
     SpaceMonoH1: {
       ...FONTS.SpaceMonoBold,
@@ -85,7 +90,7 @@ export const STYLES = {
     },
     WorkSansCaption: {
       ...FONTS.WorkSansRegular,
-      fontSize: 12,
+      fontSize: 13,
       color: COLORS.text.primary,
     },
   },

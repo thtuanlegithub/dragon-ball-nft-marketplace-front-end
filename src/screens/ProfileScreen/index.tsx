@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {
   View,
   StyleSheet,
@@ -13,6 +13,10 @@ import {STYLES} from '../../config/styles';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import {useNavigation} from '@react-navigation/native';
 import {SCREEN} from '../../navigators/AppRoute';
+import {useDispatch, useSelector} from 'react-redux';
+import {logout, setBalance} from '../../services/slices/walletSlice';
+import axios from 'axios';
+import {SERVER_URL} from '../../utils/constants/server-url.constant';
 
 const MenuItem = ({title, route}: {title: string; route: string}) => {
   const navigation = useNavigation();
@@ -37,42 +41,55 @@ type MenuItemType = {
   route: string;
 };
 
+const listMenuItem: MenuItemType[] = [
+  {
+    id: 1,
+    label: 'NFT Property',
+    route: SCREEN.NFT_PROPERTY,
+  },
+  {
+    id: 2,
+    label: 'Selling NFT',
+    route: SCREEN.SELLING_NFT,
+  },
+  {
+    id: 3,
+    label: 'Up for auction NFT',
+    route: SCREEN.UP_FOR_AUCTION_NFT,
+  },
+];
+
 const ProfileScreen = () => {
-  const listMenuItem: MenuItemType[] = [
-    {
-      id: 1,
-      label: 'NFT Property',
-      route: SCREEN.NFT_PROPERTY,
-    },
-    {
-      id: 2,
-      label: 'Selling NFT',
-      route: SCREEN.SELLING_NFT,
-    },
-    {
-      id: 3,
-      label: 'Up for auction NFT',
-      route: SCREEN.UP_FOR_AUCTION_NFT,
-    },
-    {
-      id: 4,
-      label: 'Wallets',
-      route: SCREEN.WALLET,
-    },
-  ];
+  const wallet = useSelector((state: any) => state.wallet);
+  console.log(wallet);
+  const dispatch = useDispatch();
+
+  const handleLogout = () => {
+    dispatch(logout());
+  };
+
+  const getBalance = async () => {
+    const balance = await axios.get(
+      `${SERVER_URL}/wallet/balance/${wallet.address}`,
+    );
+    dispatch(setBalance(balance.data.data.balance));
+  };
+
+  useEffect(() => {
+    getBalance();
+  }, []);
+
   return (
     <View style={styles.container}>
       <View style={styles.flexStart}>
-        <Image
-          style={styles.image}
-          source={require('../../assets/images/profile_test.png')}
-        />
+        <Text style={STYLES.text.WorkSansH5}>Total balance</Text>
+        <Text style={STYLES.text.SpaceMonoBase}>{wallet.balance}</Text>
         <Text
           style={{
-            ...STYLES.text.WorkSansBase,
+            ...STYLES.text.WorkSansCaption,
             paddingBottom: 16,
           }}>
-          John Doe
+          {wallet.address}
         </Text>
         <FlatList
           data={listMenuItem}
@@ -83,7 +100,7 @@ const ProfileScreen = () => {
         />
       </View>
       <View style={styles.flexEnd}>
-        <TouchableOpacity style={styles.btnLogOut}>
+        <TouchableOpacity onPress={handleLogout} style={styles.btnLogOut}>
           <Text
             style={{
               ...STYLES.text.WorkSansBase,
@@ -108,7 +125,6 @@ const styles = StyleSheet.create({
   flexStart: {
     flex: 1,
     alignItems: 'center',
-    paddingTop: 16,
   },
   flexEnd: {
     width: '100%',
@@ -119,7 +135,6 @@ const styles = StyleSheet.create({
     backgroundColor: COLORS.background.primary,
     alignItems: 'center',
     paddingHorizontal: 16,
-    paddingTop: 16,
     justifyContent: 'space-between',
   },
   image: {

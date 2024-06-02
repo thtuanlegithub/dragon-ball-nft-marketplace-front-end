@@ -12,10 +12,13 @@ import AuctionScreen from '../screens/AuctionScreen';
 import DiscoverScreen from '../screens/DiscoverScreen';
 import {GestureHandlerRootView} from 'react-native-gesture-handler';
 import ProfileNavigator from './ProfileNavigator';
+import {useSelector} from 'react-redux';
+import WalletNavigator from './WalletNavigator';
 
 const BottomTab = createBottomTabNavigator();
 
 const MainTabNavigator = () => {
+  const wallet = useSelector((state: any) => state.wallet);
   return (
     <GestureHandlerRootView>
       <BottomSheetModalProvider>
@@ -111,7 +114,12 @@ const MainTabNavigator = () => {
             <BottomTab.Screen name="Home" component={HomeScreen} />
             <BottomTab.Screen name="Discover" component={DiscoverScreen} />
             <BottomTab.Screen name="Auction" component={AuctionScreen} />
-            <BottomTab.Screen name="Profile" component={ProfileNavigator} />
+            <BottomTab.Screen
+              name="Profile"
+              component={
+                wallet.address.length > 0 ? ProfileNavigator : WalletNavigator
+              }
+            />
           </BottomTab.Navigator>
         </NavigationContainer>
       </BottomSheetModalProvider>

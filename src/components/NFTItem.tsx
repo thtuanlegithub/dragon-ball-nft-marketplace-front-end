@@ -8,7 +8,7 @@ import BuyBottomSheet from '../screens/DiscoverScreen/components/BuyBottomSheet'
 const itemCardRadius = 30;
 
 export type NFTItemPropsType = {
-  tokenId: number;
+  tokenId: string;
   name: string;
   price: number;
   image: string;

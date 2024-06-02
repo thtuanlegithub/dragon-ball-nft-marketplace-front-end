@@ -8,6 +8,7 @@ export const COLORS = {
     caption: "#BDBDBD",
     label: "#BDBDBD",
     primary: "#FFFFFF",
+    placeHolder: "#B4B4B4",
   },
   callToAction: "#FD6E8A",
   idTag: "#FD6E8A",
