@@ -8,12 +8,13 @@ import axios from 'axios';
 import {SERVER_URL} from '../../utils/constants/server-url.constant';
 import {collection, onSnapshot} from 'firebase/firestore';
 import {db} from '../../config/firebaseConfig';
+import {ethers} from 'ethers';
 
 const HomeScreen = () => {
   const [topPriceNFT, setTopPriceNFT] = useState<NFTItemPropsType>({
-    tokenId: 0,
+    tokenId: '',
     name: '',
-    price: 0,
+    price: '',
     image: '',
     rarity: '',
     isSold: false,
@@ -22,7 +23,12 @@ const HomeScreen = () => {
   const fetchTopPriceNFT = async () => {
     try {
       const res = await axios.get(`${SERVER_URL}/nft/topPrice`);
-      setTopPriceNFT(res.data.data.nft);
+      const nftData = res.data.data.nft;
+      const etherPrice = ethers.formatEther(BigInt(nftData.price)); // Convert from Wei to Ether
+      setTopPriceNFT({
+        ...nftData,
+        price: etherPrice,
+      });
       return res;
     } catch (error) {
       console.error(error);

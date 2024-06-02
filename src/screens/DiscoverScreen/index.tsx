@@ -2,16 +2,17 @@ import {View, Text, StyleSheet, FlatList} from 'react-native';
 import React, {useEffect, useState} from 'react';
 import {COLORS} from '../../config';
 import {STYLES} from '../../config/styles';
-import NFTItem, {NFTItemPropsType} from '../../components/NFTItem';
+import NFTItem from '../../components/NFTItem';
 import axios from 'axios';
 import {SERVER_URL} from '../../utils/constants/server-url.constant';
 import {collection, onSnapshot} from 'firebase/firestore';
 import {db} from '../../config/firebaseConfig';
+import {ethers} from 'ethers';
 
 type NFTFetchItem = {
   tokenId: string;
   name: string;
-  price: number;
+  price: string;
   image: string;
   rarity: string;
   isSold: boolean;
@@ -23,7 +24,13 @@ const DiscoverScreen = () => {
   const fetchListNFT = async () => {
     try {
       const res = await axios.get(`${SERVER_URL}/nft`);
-      setListNFT(res.data.data.nfts);
+      const nfts = res.data.data.nfts.map(nft => {
+        return {
+          ...nft,
+          price: ethers.formatEther(BigInt(nft.price)), // Convert from Wei to Ether
+        };
+      });
+      setListNFT(nfts);
       return res;
     } catch (error) {
       console.error(error);
