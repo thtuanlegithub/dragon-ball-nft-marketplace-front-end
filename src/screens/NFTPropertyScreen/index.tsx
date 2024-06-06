@@ -9,6 +9,8 @@ import {SERVER_URL} from '../../utils/constants/server-url.constant';
 
 import {NFTItemType} from '../DiscoverScreen';
 import NFTItem from '../../components/NFTItem';
+import {address_test} from '../../utils/constants/address-test.constant';
+import {ethers} from 'ethers';
 
 const NFTPropertyScreen = () => {
   const wallet_address = useSelector((state: any) => state.wallet.address);
@@ -18,11 +20,14 @@ const NFTPropertyScreen = () => {
   useEffect(() => {
     const fetchListProperty = async () => {
       try {
-        const res = await axios.get(
-          `${SERVER_URL}/nft/owned/${wallet_address}`,
-        );
-        console.log(JSON.stringify(res.data.data, null, 2));
-        setListPropertyNFT(res.data.data);
+        const res = await axios.get(`${SERVER_URL}/nft/owned/${address_test}`);
+        const nfts = res.data.data.nfts.map((nft: NFTItemType) => {
+          return {
+            ...nft,
+            price: ethers.formatEther(BigInt(nft.price)), // Convert from Wei to Ether
+          };
+        });
+        setListPropertyNFT(nfts);
       } catch (error) {
         console.error(error);
       }

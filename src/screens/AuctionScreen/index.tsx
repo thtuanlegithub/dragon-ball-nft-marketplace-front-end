@@ -1,129 +1,68 @@
+import React, {useEffect, useState} from 'react';
 import {View, Text, StyleSheet, FlatList} from 'react-native';
-import React from 'react';
+import axios from 'axios';
+
 import {COLORS} from '../../config';
 import {STYLES} from '../../config/styles';
-import AuctionItem from '../../components/AuctionItem';
+import {SERVER_URL} from '../../utils/constants/server-url.constant';
 
-const ListNFT = [
-  {
-    id: 'NFT-001',
-    title: 'Kakarot Super Saiyan 4',
-    price: '1.63',
-    highestBid: '4.63',
-    imageSource: require('../../assets/images/1.png'),
-  },
-  {
-    id: 'NFT-002',
-    title: 'Goku kid',
-    price: '1.63',
-    highestBid: '4.63',
-    imageSource: require('../../assets/images/2.png'),
-  },
-  {
-    id: 'NFT-003',
-    title: 'Trunks kid',
-    price: '1.63',
-    highestBid: '4.63',
-    imageSource: require('../../assets/images/3.png'),
-  },
-  {
-    id: 'NFT-004',
-    title: 'Goku Super Saiyan 3',
-    price: '1.63',
-    highestBid: '4.63',
-    imageSource: require('../../assets/images/4.png'),
-  },
-  {
-    id: 'NFT-005',
-    title: 'Vegito Super Saiyan',
-    price: '1.63',
-    highestBid: '4.63',
-    imageSource: require('../../assets/images/5.png'),
-  },
-  {
-    id: 'NFT-006',
-    title: 'Goku Super Saiyan 2',
-    price: '1.63',
-    highestBid: '4.63',
-    imageSource: require('../../assets/images/6.png'),
-  },
-  {
-    id: 'NFT-007',
-    title: 'Goku Super Saiyan 1',
-    price: '1.63',
-    highestBid: '4.63',
-    imageSource: require('../../assets/images/7.png'),
-  },
-  {
-    id: 'NFT-008',
-    title: 'Future Trunks',
-    price: '1.63',
-    highestBid: '4.63',
-    imageSource: require('../../assets/images/8.png'),
-  },
-  {
-    id: 'NFT-009',
-    title: 'Goku Super Saiyan 3',
-    price: '1.63',
-    highestBid: '4.63',
-    imageSource: require('../../assets/images/9.png'),
-  },
-  {
-    id: 'NFT-010',
-    title: 'Broly Super Saiyan White',
-    price: '1.63',
-    highestBid: '4.63',
-    imageSource: require('../../assets/images/10.png'),
-  },
-  {
-    id: 'NFT-011',
-    title: 'Cell Perfect Form',
-    price: '1.63',
-    highestBid: '4.63',
-    imageSource: require('../../assets/images/11.png'),
-  },
-  {
-    id: 'NFT-012',
-    title: 'Future Trunks Super Saiyan 1',
-    price: '1.63',
-    highestBid: '4.63',
-    imageSource: require('../../assets/images/12.png'),
-  },
-  {
-    id: 'NFT-013',
-    title: 'Gogeta',
-    price: '1.63',
-    highestBid: '4.63',
-    imageSource: require('../../assets/images/13.png'),
-  },
-  {
-    id: 'NFT-014',
-    title: 'Goku Ultra Instinct',
-    price: '1.63',
-    highestBid: '4.63',
-    imageSource: require('../../assets/images/14.png'),
-  },
-  {
-    id: 'NFT-015',
-    title: 'Freezer Final Form',
-    price: '1.63',
-    highestBid: '4.63',
-    imageSource: require('../../assets/images/15.png'),
-  },
-];
+import AuctionItem from '../../components/AuctionItem';
+import {NFTItemType} from '../DiscoverScreen';
+import {ethers} from 'ethers';
+
+export type AttributeType = {
+  trait_type: string;
+  value: string;
+};
+export type AuctionType = {
+  auctionId: string;
+  autioneer: string;
+  tokenId: string;
+  initialPrice: string;
+  previousBidder: string;
+  lastBidder: string;
+  startTime: number;
+  endTime: number;
+  completed: boolean;
+  active: boolean;
+  lastBid: string;
+  name: string;
+  description: string;
+  image: string;
+  attributes: AttributeType[];
+  rarity: string;
+};
 
 const AuctionScreen = () => {
+  const [listAuctionNFT, setListAuctionNFT] = useState<NFTItemType[]>([]);
+  const fetchListAuctionNFT = async () => {
+    try {
+      const res = await axios.get(`${SERVER_URL}/nft/auction`);
+      console.log(JSON.stringify(res.data.data.nfts, null, 2));
+      const nfts = res.data.data.nfts.map((nft: AuctionType) => {
+        return {
+          ...nft,
+          initialPrice: ethers.formatEther(BigInt(nft.initialPrice)), // Convert from Wei to Ether
+          lastBid: ethers.formatEther(BigInt(nft.lastBid)), // Convert from Wei to Ether
+        };
+      });
+      setListAuctionNFT(nfts);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+  useEffect(() => {
+    fetchListAuctionNFT();
+  }, []);
   return (
     <View style={styles.container}>
       <FlatList
         ListHeaderComponent={
-          <Text style={{...STYLES.text.WorkSansH4, paddingHorizontal: 16}}>
-            🔥 Being Auctioned
-          </Text>
+          <Text style={styles.headerText}>🔥 Being Auctioned</Text>
         }
         showsVerticalScrollIndicator={false}
         ListFooterComponent={<View style={{height: 70}} />}
-        data={ListNFT}
+        data={listAuctionNFT}
         keyExtractor={item => item.id}
         renderItem={({item}) => <AuctionItem {...item} />}
       />
@@ -137,6 +76,7 @@ const styles = StyleSheet.create({
     backgroundColor: COLORS.background.primary,
     paddingVertical: 12,
   },
+  headerText: {...STYLES.text.WorkSansH4, paddingHorizontal: 16},
 });
 
 export default AuctionScreen;

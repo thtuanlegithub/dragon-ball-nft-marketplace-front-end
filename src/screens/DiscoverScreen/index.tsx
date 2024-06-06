@@ -48,11 +48,7 @@ const DiscoverScreen = () => {
   return (
     <View style={styles.container}>
       <FlatList
-        ListHeaderComponent={
-          <Text style={{...STYLES.text.WorkSansH4, paddingHorizontal: 16}}>
-            🔎 Discover
-          </Text>
-        }
+        ListHeaderComponent={<Text style={styles.headerText}>🔎 Discover</Text>}
         showsVerticalScrollIndicator={false}
         ListFooterComponent={<View style={{height: 70}} />}
         data={ListNFT}
@@ -79,6 +75,7 @@ const styles = StyleSheet.create({
     backgroundColor: COLORS.background.primary,
     paddingVertical: 12,
   },
+  headerText: {...STYLES.text.WorkSansH4, paddingHorizontal: 16},
 });
 
 export default DiscoverScreen;
