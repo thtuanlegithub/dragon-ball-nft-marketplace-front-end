@@ -1,10 +1,8 @@
 import {FlatList, StyleSheet, Text, View} from 'react-native';
 import React, {useEffect, useState} from 'react';
 import {useSelector} from 'react-redux';
-import {NFTItemType} from '../DiscoverScreen';
 import axios from 'axios';
 import {SERVER_URL} from '../../utils/constants/server-url.constant';
-import NFTItem from '../../components/NFTItem';
 import {COLORS} from '../../config';
 import {STYLES} from '../../config/styles';
 import {address_test} from '../../utils/constants/address-test.constant';
