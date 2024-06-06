@@ -9,7 +9,7 @@ import {collection, onSnapshot} from 'firebase/firestore';
 import {db} from '../../config/firebaseConfig';
 import {ethers} from 'ethers';
 
-type NFTFetchItem = {
+export type NFTItemType = {
   tokenId: string;
   name: string;
   price: string;
@@ -17,14 +17,14 @@ type NFTFetchItem = {
   rarity: string;
   isSold: boolean;
   isAuction: boolean;
-}[];
+};
 
 const DiscoverScreen = () => {
-  const [ListNFT, setListNFT] = useState<NFTFetchItem>([]); // [1
+  const [ListNFT, setListNFT] = useState<NFTItemType[]>([]); // [1
   const fetchListNFT = async () => {
     try {
       const res = await axios.get(`${SERVER_URL}/nft`);
-      const nfts = res.data.data.nfts.map(nft => {
+      const nfts = res.data.data.nfts.map((nft: NFTItemType) => {
         return {
           ...nft,
           price: ethers.formatEther(BigInt(nft.price)), // Convert from Wei to Ether

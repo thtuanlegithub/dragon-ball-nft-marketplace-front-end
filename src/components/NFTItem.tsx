@@ -1,21 +1,14 @@
 import React from 'react';
 import {View, Image, StyleSheet, Text, TouchableOpacity} from 'react-native';
 import {BlurView} from '@react-native-community/blur';
+
 import {COLORS} from '../config';
 import {STYLES} from '../config/styles';
+
 import BuyBottomSheet from '../screens/DiscoverScreen/components/BuyBottomSheet';
+import {NFTItemType} from '../screens/DiscoverScreen';
 
 const itemCardRadius = 30;
-
-export type NFTItemPropsType = {
-  tokenId: string;
-  name: string;
-  price: string;
-  image: string;
-  rarity: string;
-  isSold: boolean;
-  isAuction: boolean;
-};
 
 const NFTItem = ({
   tokenId,
@@ -25,7 +18,7 @@ const NFTItem = ({
   rarity,
   isSold,
   isAuction,
-}: NFTItemPropsType) => {
+}: NFTItemType) => {
   return (
     <TouchableOpacity style={styles.container}>
       <View style={styles.nftIDContainer}>
