@@ -10,16 +10,20 @@ import GradientButton, {
 } from '../../../components/GradientButton';
 import {NFTItemType} from '..';
 import PriceInput from '../../../components/PriceInput';
+import { useSelector } from 'react-redux';
+import { SERVER_URL } from '../../../utils/constants/server-url.constant';
+import axios from 'axios';
 
 const itemCardRadius = 30;
 
 const UpdateSellingBottomSheet = (props: NFTItemType) => {
   const bottomSheetRef = useRef<any>(null);
+  const wallet_address = useSelector<any>(state => state.wallet.address);
   const [price, setPrice] = useState(); 
   const handlePresentModalPress = () => {
     bottomSheetRef.current?.popUp();
   };
-	const handleUpdate = () => {
+	const handleUpdate = async () => {
     // Check if price is empty
     if (!price) {
 			alert('Price cannot be empty');
@@ -28,11 +32,24 @@ const UpdateSellingBottomSheet = (props: NFTItemType) => {
 
     // Check if price is a valid number
     if (isNaN(Number(price))) {
-        alert('Invalid price');
-        return;
+      alert('Invalid price');
+      return;
     }
 		
-    // Update the NFT item
+    // Update NFT item
+		const data = {
+			address: wallet_address,
+			tokenId: props.tokenId, 
+			price: Number(price),
+		};
+
+		// Send a POST request
+		try {
+			const response = await axios.post(`${SERVER_URL}/marketplace/updateListingNftPrice`, data);
+			console.log(response.data);
+		} catch (error) {
+			console.error(error);
+		}
     bottomSheetRef.current?.close();
 	};
   return (
