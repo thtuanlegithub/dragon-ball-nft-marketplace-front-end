@@ -10,15 +10,35 @@ import GradientButton, {
   GradientButtonMode,
 } from '../../../components/GradientButton';
 import {NFTItemType} from '..';
+import { useSelector } from 'react-redux';
+import axios from 'axios';
+import { SERVER_URL } from '../../../utils/constants/server-url.constant';
 
 const itemCardRadius = 30;
 
 const BuyBottomSheet = (props: NFTItemType) => {
   const bottomSheetRef = useRef<any>(null);
+  const wallet_address = useSelector<any>(state => state.wallet.address);
   const handlePresentModalPress = () => {
     bottomSheetRef.current?.popUp();
   };
-  const handlePurchase = () => {
+  const handlePurchase = async () => {
+    // Buy NFT item
+    const data = {
+      address: wallet_address,
+      tokenId: props.tokenId,
+    };
+
+    // Send a POST request
+    try {
+      const response = await axios.post(
+        `${SERVER_URL}/marketplace/buyNft`,
+        data,
+      );
+      console.log(response.data);
+    } catch (error) {
+      console.error(error);
+    }
     bottomSheetRef.current?.close();
   };
   return (

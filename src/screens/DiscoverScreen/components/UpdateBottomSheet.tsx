@@ -10,6 +10,9 @@ import GradientButton, {
 } from '../../../components/GradientButton';
 import {NFTItemType} from '..';
 import PriceInput from '../../../components/PriceInput';
+import {useSelector} from 'react-redux';
+import {SERVER_URL} from '../../../utils/constants/server-url.constant';
+import axios from 'axios';
 import ConfirmDialog from '../../../components/ConfirmDialog';
 import {set} from 'firebase/database';
 
@@ -17,6 +20,7 @@ const itemCardRadius = 30;
 
 const UpdateSellingBottomSheet = (props: NFTItemType) => {
   const bottomSheetRef = useRef<any>(null);
+  const wallet_address = useSelector<any>(state => state.wallet.address);
   const [price, setPrice] = useState<number>();
   const [isConfirmUpdateDialogVisible, setConfirmUpdateDialogVisible] =
     useState<boolean>(false);
@@ -28,7 +32,7 @@ const UpdateSellingBottomSheet = (props: NFTItemType) => {
   const handlePresentModalPress = () => {
     bottomSheetRef.current?.popUp();
   };
-  const handleUpdate = () => {
+  const handleUpdate = async () => {
     // Check if price is empty
     if (!price) {
       alert('Price cannot be empty');
@@ -41,12 +45,42 @@ const UpdateSellingBottomSheet = (props: NFTItemType) => {
       return;
     }
 
-    // Update the NFT item
+    // Update NFT item
+    const data = {
+      address: wallet_address,
+      tokenId: props.tokenId,
+      price: Number(price),
+    };
+
+    // Send a POST request
+    try {
+      const response = await axios.post(
+        `${SERVER_URL}/marketplace/updateListingNftPrice`,
+        data,
+      );
+      console.log(response.data);
+    } catch (error) {
+      console.error(error);
+    }
     bottomSheetRef.current?.close();
   };
 
-  const handleStopSelling = () => {
+  const handleStopSelling = async () => {
     // Stop selling the NFT item
+    const data = {
+      address: wallet_address,
+      tokenId: props.tokenId,
+    };
+    // Send a POST request
+    try {
+      const response = await axios.post(
+        `${SERVER_URL}/marketplace/unListNft`,
+        data,
+      );
+      console.log(response.data);
+    } catch (error) {
+      console.error(error);
+    }
     bottomSheetRef.current?.close();
   };
 

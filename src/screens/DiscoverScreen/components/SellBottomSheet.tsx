@@ -11,17 +11,23 @@ import GradientButton, {
 import {NFTItemType} from '..';
 import PriceInput from '../../../components/PriceInput';
 import ConfirmDialog from '../../../components/ConfirmDialog';
+import { TouchableOpacity } from 'react-native-gesture-handler';
+import LinearGradient from 'react-native-linear-gradient';
+import { useSelector } from 'react-redux';
+import axios from 'axios';
+import { SERVER_URL } from '../../../utils/constants/server-url.constant';
 
 const itemCardRadius = 30;
 
 const SellBottomSheet = (props: NFTItemType) => {
   const [isConfirmDialogVisible, setConfirmDialogVisible] = useState(false);
-  const [price, setPrice] = useState<string>();
+	const wallet_address = useSelector<any>(state => state.wallet.address);
+	const [price, setPrice] = useState<string>();
   const bottomSheetRef = useRef<any>(null);
   const handlePresentModalPress = () => {
     bottomSheetRef.current?.popUp();
   };
-  const handleSell = () => {
+  const handleSell = async () => {
     // Check if price is empty
     if (!price) {
       alert('Price cannot be empty');
@@ -33,6 +39,23 @@ const SellBottomSheet = (props: NFTItemType) => {
       alert('Invalid price');
       return;
     }
+		
+    // Sell the NFT item
+		const data = {
+			address: wallet_address,
+			tokenId: props.tokenId, 
+			price: Number(price),
+		};
+
+		// Send a POST request
+		try {
+			const response = await axios.post(`${SERVER_URL}/marketplace/listNft`, data);
+			console.log(response.data);
+		} catch (error) {
+			console.error(error);
+		}
+
+		bottomSheetRef.current?.close();
 
     // Update the NFT item
     bottomSheetRef.current?.close();
