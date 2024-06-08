@@ -19,12 +19,14 @@ const UpdateSellingBottomSheet = (props: NFTItemType) => {
   const handlePresentModalPress = () => {
     bottomSheetRef.current?.popUp();
   };
-  const handlePurchase = () => {
+  const handleUpdate = () => {
+    // Update the NFT item
     bottomSheetRef.current?.close();
   };
   return (
     <>
       <GradientButton
+        mode={GradientButtonMode.SECONDARY}
         iconName="tags"
         content="Update"
         onPress={handlePresentModalPress}
@@ -71,6 +73,7 @@ const UpdateSellingBottomSheet = (props: NFTItemType) => {
           <View style={styles.btnWrapper}>
             <PriceInput placeholder="Enter your price" />
             <GradientButton
+              onPress={handleUpdate}
               customContainerStyles={{width: 120}}
               content="Confirm"
             />

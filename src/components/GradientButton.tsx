@@ -8,6 +8,7 @@ import {COLORS} from '../config';
 
 export enum GradientButtonMode {
   PRIMARY = 'PRIMARY',
+  SECONDARY = 'SECONDARY',
   GRAY = 'GRAY',
   RED = 'RED',
 }
@@ -61,6 +62,28 @@ const GradientButton = ({
           style={styles.gradientBtn}>
           {iconName && <FontAwesome5 name={iconName} size={16} color="white" />}
           <Text style={STYLES.text.WorkSansBase}>{content}</Text>
+        </LinearGradient>
+      )}
+      {mode === GradientButtonMode.SECONDARY && (
+        <LinearGradient
+          start={{x: 0, y: 0}}
+          end={{x: 0.75, y: 0}}
+          colors={[COLORS.red[0], COLORS.yellow[1]]}
+          style={styles.gradientBtn}>
+          {iconName && (
+            <FontAwesome5
+              name={iconName}
+              size={16}
+              color={COLORS.background.primary}
+            />
+          )}
+          <Text
+            style={{
+              ...STYLES.text.WorkSansH6,
+              color: COLORS.background.primary,
+            }}>
+            {content}
+          </Text>
         </LinearGradient>
       )}
     </TouchableOpacity>

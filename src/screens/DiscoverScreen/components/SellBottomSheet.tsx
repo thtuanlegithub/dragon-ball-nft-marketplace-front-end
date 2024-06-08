@@ -6,7 +6,9 @@ import {BlurView} from '@react-native-community/blur';
 import {COLORS} from '../../../config';
 import {STYLES} from '../../../config/styles';
 import BottomSheet from '../../../components/BottomSheet';
-import GradientButton from '../../../components/GradientButton';
+import GradientButton, {
+  GradientButtonMode,
+} from '../../../components/GradientButton';
 import {NFTItemType} from '..';
 import PriceInput from '../../../components/PriceInput';
 
@@ -17,12 +19,13 @@ const SellBottomSheet = (props: NFTItemType) => {
   const handlePresentModalPress = () => {
     bottomSheetRef.current?.popUp();
   };
-  const handlePurchase = () => {
+  const handleSell = () => {
     bottomSheetRef.current?.close();
   };
   return (
     <>
       <GradientButton
+        mode={GradientButtonMode.SECONDARY}
         iconName="tags"
         content="Sell"
         onPress={handlePresentModalPress}
@@ -52,7 +55,7 @@ const SellBottomSheet = (props: NFTItemType) => {
           <Text style={styles.confirmText}>Enter your NFT Item price</Text>
           <View style={styles.btnWrapper}>
             <PriceInput placeholder="Enter your price" />
-            <TouchableOpacity style={STYLES.flex_1} onPress={handlePurchase}>
+            <TouchableOpacity style={STYLES.flex_1} onPress={handleSell}>
               <LinearGradient
                 start={{x: 0, y: 0}}
                 end={{x: 0.75, y: 0}}
