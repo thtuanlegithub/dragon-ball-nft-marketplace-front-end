@@ -59,16 +59,7 @@ const HomeScreen = () => {
             beloved Dragon Ball characters.
           </Text>
         </View>
-        <NFTItem
-          {...topPriceNFT}
-          // tokenId={topPriceNFT.tokenId}
-          // name={topPriceNFT.name}
-          // price={topPriceNFT.price}
-          // image={topPriceNFT.image}
-          // rarity={topPriceNFT.rarity}
-          // isSold={topPriceNFT.isSold}
-          // isAuction={topPriceNFT.isAuction}
-        />
+        <NFTItem {...topPriceNFT} />
         <Button content="Get Started" />
       </View>
     </ScrollView>
@@ -79,7 +70,7 @@ const styles = StyleSheet.create({
   container: {
     paddingVertical: 100,
     flex: 1,
-    paddingHorizontal: 16,
+    paddingHorizontal: 8,
     backgroundColor: COLORS.background.primary,
     paddingTop: 24,
     gap: 14,

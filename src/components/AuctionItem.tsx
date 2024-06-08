@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {View, Image, StyleSheet, Text, TouchableOpacity} from 'react-native';
 import {BlurView} from '@react-native-community/blur';
 import {useSelector} from 'react-redux';
@@ -7,15 +7,31 @@ import dayjs from 'dayjs';
 import {COLORS} from '../config';
 import {STYLES} from '../config/styles';
 
-import PlaceBidBottomSheet from '../screens/AuctionScreen/components/PlaceBidBottomSheet';
 import AuctionTimer from './AuctionTimer';
 import GradientButton, {GradientButtonMode} from './GradientButton';
 import {AuctionType} from '../screens/AuctionScreen';
+import ConfirmDialog from './ConfirmDialog';
+import PlaceBidBottomSheet from '../screens/AuctionScreen/components/PlaceBidBottomSheet';
 
 const itemCardRadius = 30;
 
 const AuctionItem = (props: AuctionType) => {
+  const [isConfirmStopDialogVisible, setConfirmStopDialogVisible] =
+    useState(false);
+
+  const [isConfirmFinishDialogVisible, setConfirmFinishDialogVisible] =
+    useState<boolean>(false);
+
   const wallet_address = useSelector((state: any) => state.wallet.address);
+
+  const handleStopAuction = () => {
+    // handle stop auction logic here
+  };
+
+  const handleFinishAuction = () => {
+    // handle finish auction logic here
+  };
+
   return (
     <TouchableOpacity style={styles.container}>
       <View style={styles.AuctionIDContainer}>
@@ -68,20 +84,44 @@ const AuctionItem = (props: AuctionType) => {
           {props.autioneer === wallet_address &&
             props.endTime > dayjs().unix() && (
               <GradientButton
-                customContainerStyles={{width: '100%'}}
                 mode={GradientButtonMode.GREEN}
                 content="Finished"
-                onPress={() => console.log('Claim NFT')}
+                onPress={() => setConfirmFinishDialogVisible(true)}
+                customContainerStyles={{width: '100%'}}
               />
             )}
 
           {/* props.auctioner === wallet_address && props.endtime <= dayjs().unix() */}
           {props.autioneer === wallet_address &&
             props.endTime <= dayjs().unix() && (
-              <GradientButton mode={GradientButtonMode.GRAY} content="Stop" />
+              <GradientButton
+                onPress={() => setConfirmStopDialogVisible(true)}
+                mode={GradientButtonMode.GRAY}
+                content="Stop"
+                customContainerStyles={{width: '100%'}}
+              />
             )}
         </View>
       </View>
+      <ConfirmDialog
+        title="Confirm"
+        message="Are you sure to stop that auction?"
+        visible={isConfirmStopDialogVisible}
+        onCancel={() => setConfirmStopDialogVisible(false)}
+        onConfirm={() => {
+          handleStopAuction();
+          setConfirmStopDialogVisible(false);
+        }}
+      />
+      <ConfirmDialog
+        visible={isConfirmFinishDialogVisible}
+        message="Are you sure to finish that auction?"
+        onCancel={() => setConfirmFinishDialogVisible(false)}
+        onConfirm={() => {
+          handleFinishAuction();
+          setConfirmFinishDialogVisible(false);
+        }}
+      />
     </TouchableOpacity>
   );
 };

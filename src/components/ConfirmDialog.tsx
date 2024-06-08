@@ -5,15 +5,15 @@ import {STYLES} from '../config/styles';
 
 type Props = {
   visible: boolean;
-  title: string;
+  title?: string;
   message: string;
   onConfirm?: () => void;
   onCancel?: () => void;
 };
 
 const ConfirmDialog = ({
-  visible,
-  title,
+  visible = false,
+  title = 'Confirm',
   message,
   onConfirm,
   onCancel,

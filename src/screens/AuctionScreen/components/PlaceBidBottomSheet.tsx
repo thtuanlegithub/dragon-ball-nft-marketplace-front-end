@@ -20,14 +20,21 @@ import AuctionTimer from '../../../components/AuctionTimer';
 import GradientButton, {
   GradientButtonMode,
 } from '../../../components/GradientButton';
+import ConfirmDialog from '../../../components/ConfirmDialog';
+import PriceInput from '../../../components/PriceInput';
 
 const PlaceBidBottomSheet = (props: AuctionType) => {
   const [isFocused, setFocus] = useState(false);
+  const [isConfirmDialogVisible, setConfirmDialogVisible] = useState(false);
 
   const bottomSheetRef = useRef<any>(null);
 
   const handleBottomSheetPresent = () => {
     bottomSheetRef.current?.popUp();
+  };
+
+  const handleConfirm = () => {
+    // handle confirm logic here
   };
 
   return (
@@ -73,30 +80,25 @@ const PlaceBidBottomSheet = (props: AuctionType) => {
           </View>
         </View>
         <View style={styles.inputWrapper}>
-          <TextInput
-            style={{
-              ...styles.textInput,
-              borderColor: isFocused
-                ? COLORS.yellow[0]
-                : COLORS.background.secondary,
-            }}
-            placeholder="Enter your bid"
-            placeholderTextColor={COLORS.text.caption}
-            onFocus={() => setFocus(true)}
-            onBlur={() => setFocus(false)}
-            inputMode="numeric"
+          <PriceInput placeholder="Enter your bid" />
+          <GradientButton
+            mode={GradientButtonMode.GREEN}
+            iconName="gavel"
+            content="Place Bid"
+            onPress={() => setConfirmDialogVisible(true)}
+            customContainerStyles={{width: 130}}
           />
-          <TouchableOpacity style={styles.btnWrapper}>
-            <LinearGradient
-              style={styles.linearGradientBtn}
-              start={{x: 0, y: 0}}
-              end={{x: 1, y: 0}}
-              colors={[COLORS.gradient[0], COLORS.gradient[1]]}>
-              <FontAwesome5 name="gavel" size={16} color="white" />
-              <Text style={STYLES.text.SpaceMonoH6}>Confirm</Text>
-            </LinearGradient>
-          </TouchableOpacity>
         </View>
+        <ConfirmDialog
+          title="Confirm"
+          message="Are you sure to place this bid?"
+          visible={isConfirmDialogVisible}
+          onCancel={() => setConfirmDialogVisible(false)}
+          onConfirm={() => {
+            handleConfirm();
+            setConfirmDialogVisible(false);
+          }}
+        />
       </BottomSheet>
     </>
   );
