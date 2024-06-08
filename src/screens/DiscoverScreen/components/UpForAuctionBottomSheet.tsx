@@ -20,9 +20,7 @@ const UpForAuctionBottomSheet = (props: NFTItemType) => {
   const [isConfirmDialogVisible, setConfirmDialogVisible] = useState(false);
   const bottomSheetRef = useRef<any>(null);
   const [datePickerOpen, setDatePickerOpen] = useState<boolean>(false);
-  const [timePickerOpen, setTimePickerOpen] = useState<boolean>(false);
-  const [endDate, setEndDate] = useState<number>(0);
-  const [endTime, setEndTime] = useState<number>(0);
+  const [endDateTime, setEndDateTime] = useState<number>(0);
 
   const handlePresentModalPress = () => {
     bottomSheetRef.current?.popUp();
@@ -71,25 +69,12 @@ const UpForAuctionBottomSheet = (props: NFTItemType) => {
               onPress={() => {
                 setDatePickerOpen(true);
               }}>
-              {endDate ? (
+              {endDateTime ? (
                 <Text style={styles.pickDateTimeText}>
-                  {dayjs.unix(endDate).format('MMM D, YYYY')}
+                  {dayjs.unix(endDateTime).format('MMM D, YYYY HH:mm A')}
                 </Text>
               ) : (
-                <Text style={styles.pickDateTimeText}>End Date</Text>
-              )}
-            </TouchableOpacity>
-            <TouchableOpacity
-              style={styles.pickDateTimeBtn}
-              onPress={() => {
-                setTimePickerOpen(true);
-              }}>
-              {endTime ? (
-                <Text style={styles.pickDateTimeText}>
-                  {dayjs.unix(endTime).format('hh:mm A')}
-                </Text>
-              ) : (
-                <Text style={styles.pickDateTimeText}>End Time</Text>
+                <Text style={styles.pickDateTimeText}>Pick End DateTime</Text>
               )}
             </TouchableOpacity>
           </View>
@@ -107,26 +92,15 @@ const UpForAuctionBottomSheet = (props: NFTItemType) => {
           />
           <DatePicker
             modal
-            mode="date"
+            mode="datetime"
             open={datePickerOpen}
             date={new Date()}
             onConfirm={date => {
-              setEndDate(dayjs(date).unix());
-              console.log(dayjs(date).format('DD/MM/YYYY'));
+              setEndDateTime(dayjs(date).unix());
+              console.log(dayjs(date).format('MMM DD, YYYY HH:mm A'));
               setDatePickerOpen(false);
             }}
             onCancel={() => setDatePickerOpen(false)}
-          />
-          <DatePicker
-            modal
-            mode="time"
-            open={timePickerOpen}
-            date={new Date()}
-            onConfirm={date => {
-              setEndTime(dayjs(date).unix());
-              setTimePickerOpen(false);
-            }}
-            onCancel={() => setTimePickerOpen(false)}
           />
           <GradientButton
             customContainerStyles={styles.confirmBtn}
