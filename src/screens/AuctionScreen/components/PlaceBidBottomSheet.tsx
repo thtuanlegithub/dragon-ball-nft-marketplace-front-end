@@ -17,6 +17,9 @@ import BottomSheet from '../../../components/BottomSheet';
 import {itemCardRadius} from '../../../utils/constants/styles.constant';
 import {AuctionType} from '..';
 import AuctionTimer from '../../../components/AuctionTimer';
+import GradientButton, {
+  GradientButtonMode,
+} from '../../../components/GradientButton';
 
 const PlaceBidBottomSheet = (props: AuctionType) => {
   const [isFocused, setFocus] = useState(false);
@@ -29,16 +32,12 @@ const PlaceBidBottomSheet = (props: AuctionType) => {
 
   return (
     <>
-      <TouchableOpacity onPress={handleBottomSheetPresent}>
-        <LinearGradient
-          style={styles.placeBidBtn}
-          start={{x: 0, y: 0}}
-          end={{x: 1, y: 0}}
-          colors={[COLORS.gradient[0], COLORS.gradient[1]]}>
-          <FontAwesome5 name="gavel" size={16} color="white" />
-          <Text style={STYLES.text.WorkSansBase}>Place a bid</Text>
-        </LinearGradient>
-      </TouchableOpacity>
+      <GradientButton
+        customContainerStyles={{width: '100%'}}
+        mode={GradientButtonMode.PRIMARY}
+        content="Place a bid"
+        onPress={handleBottomSheetPresent}
+      />
       <BottomSheet ref={bottomSheetRef} showCloseBtn={true}>
         <View style={styles.container}>
           <View style={styles.AuctionIDContainer}>

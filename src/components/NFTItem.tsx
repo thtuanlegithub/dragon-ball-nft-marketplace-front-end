@@ -157,7 +157,10 @@ const styles = StyleSheet.create({
     color: COLORS.text.caption,
   },
   descriptionContent: {
-    ...STYLES.text.SpaceMonoCaption,
+    ...STYLES.text.SpaceMonoH5,
+    color: COLORS.yellow[0],
+    padding: 0,
+    marginTop: -10,
   },
   descriptionWrapperLeft: {
     gap: 8,

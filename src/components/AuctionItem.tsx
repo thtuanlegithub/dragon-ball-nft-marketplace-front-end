@@ -1,26 +1,41 @@
 import React from 'react';
 import {View, Image, StyleSheet, Text, TouchableOpacity} from 'react-native';
 import {BlurView} from '@react-native-community/blur';
+import {useSelector} from 'react-redux';
+import dayjs from 'dayjs';
 
 import {COLORS} from '../config';
 import {STYLES} from '../config/styles';
-import {AuctionType} from '../screens/AuctionScreen';
+
 import PlaceBidBottomSheet from '../screens/AuctionScreen/components/PlaceBidBottomSheet';
 import AuctionTimer from './AuctionTimer';
+import GradientButton, {GradientButtonMode} from './GradientButton';
+import {AuctionType} from '../screens/AuctionScreen';
 
 const itemCardRadius = 30;
 
 const AuctionItem = (props: AuctionType) => {
+  const wallet_address = useSelector((state: any) => state.wallet.address);
   return (
     <TouchableOpacity style={styles.container}>
       <View style={styles.AuctionIDContainer}>
         <Text style={styles.AuctionID}>NFT-{props.tokenId}</Text>
       </View>
+      {wallet_address === props.autioneer && (
+        <View style={styles.yourNFTWrapper}>
+          <Text style={styles.yourNFTText}>OWNED</Text>
+        </View>
+      )}
       <AuctionTimer endDateTime={props.endTime} />
       <View style={styles.imageWrapper}>
         {props?.image && (
           <>
-            <Image style={styles.image} source={{uri: props.image}} />
+            <View style={{position: 'relative'}}>
+              <Image style={styles.image} source={{uri: props.image}} />
+              <View style={styles.youAreHighestWrapper}>
+                <Text style={styles.youAreHighestText}>HIGHEST BIDDER</Text>
+              </View>
+            </View>
             <Image style={styles.bgImage} source={{uri: props.image}} />
           </>
         )}
@@ -34,10 +49,36 @@ const AuctionItem = (props: AuctionType) => {
             {props.lastBid} FTM
           </Text>
         </View>
-        <PlaceBidBottomSheet
-          {...props}
-          // ownerProfileImg={}
-        />
+        <View style={{marginTop: 8}}>
+          {/* props.auctioner != wallet_address && props.endtime > dayjs().unix() */}
+          {props.autioneer !== wallet_address &&
+            props.endTime > dayjs().unix() && (
+              <PlaceBidBottomSheet {...props} />
+            )}
+
+          {/* props.auctioner != wallet_address && props.endtime <= dayjs().unix() */}
+          {props.autioneer !== wallet_address &&
+            props.endTime <= dayjs().unix() && (
+              <Text style={styles.finishedText}>Auction Finished!</Text>
+            )}
+
+          {/* props.auctioner === wallet_address && props.endtime > dayjs().unix() */}
+          {props.autioneer === wallet_address &&
+            props.endTime > dayjs().unix() && (
+              <GradientButton
+                customContainerStyles={{width: '100%'}}
+                mode={GradientButtonMode.GREEN}
+                content="Finished"
+                onPress={() => console.log('Claim NFT')}
+              />
+            )}
+
+          {/* props.auctioner === wallet_address && props.endtime <= dayjs().unix() */}
+          {props.autioneer === wallet_address &&
+            props.endTime <= dayjs().unix() && (
+              <GradientButton mode={GradientButtonMode.GRAY} content="Stop" />
+            )}
+        </View>
       </View>
     </TouchableOpacity>
   );
@@ -167,6 +208,43 @@ const styles = StyleSheet.create({
     height: 24,
     borderRadius: 12,
     marginRight: 8,
+  },
+  finishedText: {
+    ...STYLES.text.WorkSansH5,
+    color: COLORS.orange[0],
+    textAlign: 'center',
+    marginTop: 8,
+  },
+  yourNFTWrapper: {
+    borderWidth: 2,
+    borderColor: COLORS.yellow[1],
+    // backgroundColor: COLORS.yellow[1],
+    paddingVertical: 8,
+    paddingHorizontal: 8,
+    borderRadius: 12,
+    position: 'absolute',
+    zIndex: 2,
+    top: 60,
+    right: 18,
+  },
+  yourNFTText: {
+    ...STYLES.text.WorkSansH7,
+    color: COLORS.yellow[1],
+  },
+  youAreHighestWrapper: {
+    backgroundColor: COLORS.yellow[0],
+    borderRadius: 8,
+    paddingVertical: 4,
+    paddingHorizontal: 8,
+    position: 'absolute',
+    zIndex: 2,
+    bottom: 12,
+    right: 12,
+    opacity: 0.9,
+  },
+  youAreHighestText: {
+    ...STYLES.text.WorkSans_SM_14,
+    color: COLORS.text.black,
   },
 });
 
