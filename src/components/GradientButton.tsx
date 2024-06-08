@@ -11,6 +11,7 @@ export enum GradientButtonMode {
   SECONDARY = 'SECONDARY',
   GRAY = 'GRAY',
   RED = 'RED',
+  GREEN = 'GREEN',
 }
 
 type Props = {
@@ -39,6 +40,16 @@ const GradientButton = ({
           start={{x: 0, y: 0}}
           end={{x: 0.75, y: 0}}
           colors={[COLORS.red[1], COLORS.red[0]]}
+          style={{...styles.gradientBtn, ...customStyles}}>
+          {iconName && <FontAwesome5 name={iconName} size={16} color="white" />}
+          <Text style={STYLES.text.WorkSansBase}>{content}</Text>
+        </LinearGradient>
+      )}
+      {mode === GradientButtonMode.GREEN && (
+        <LinearGradient
+          start={{x: 0, y: 0}}
+          end={{x: 0.75, y: 0}}
+          colors={[COLORS.green[0], COLORS.green[1]]}
           style={{...styles.gradientBtn, ...customStyles}}>
           {iconName && <FontAwesome5 name={iconName} size={16} color="white" />}
           <Text style={STYLES.text.WorkSansBase}>{content}</Text>

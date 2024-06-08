@@ -39,7 +39,7 @@ const PlaceBidBottomSheet = (props: AuctionType) => {
           <Text style={STYLES.text.WorkSansBase}>Place a bid</Text>
         </LinearGradient>
       </TouchableOpacity>
-      <BottomSheet ref={bottomSheetRef}>
+      <BottomSheet ref={bottomSheetRef} showCloseBtn={true}>
         <View style={styles.container}>
           <View style={styles.AuctionIDContainer}>
             <Text style={styles.AuctionID}>NFT-{props.tokenId}</Text>

@@ -9,6 +9,7 @@ export const COLORS = {
     label: '#BDBDBD',
     primary: '#FFFFFF',
     placeHolder: '#B4B4B4',
+    black: '#000000',
   },
   callToAction: '#FD6E8A',
   idTag: '#FD6E8A',
@@ -17,4 +18,5 @@ export const COLORS = {
   gradient: ['#27C99C', '#FF6250'],
   gray: ['#7F7F7F', '#616161'],
   yellow: ['#EDE103', '#FFC924'],
+  green: ['#27C99C', '#00A86B'],
 };

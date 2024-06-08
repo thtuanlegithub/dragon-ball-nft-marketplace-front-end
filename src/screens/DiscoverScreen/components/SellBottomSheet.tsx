@@ -1,6 +1,5 @@
-import React, {useRef} from 'react';
-import {View, Text, TouchableOpacity, StyleSheet, Image} from 'react-native';
-import LinearGradient from 'react-native-linear-gradient';
+import React, {useRef, useState} from 'react';
+import {View, Text, StyleSheet, Image} from 'react-native';
 import {BlurView} from '@react-native-community/blur';
 
 import {COLORS} from '../../../config';
@@ -11,17 +10,24 @@ import GradientButton, {
 } from '../../../components/GradientButton';
 import {NFTItemType} from '..';
 import PriceInput from '../../../components/PriceInput';
+import ConfirmDialog from '../../../components/ConfirmDialog';
 
 const itemCardRadius = 30;
 
 const SellBottomSheet = (props: NFTItemType) => {
+  const [isConfirmDialogVisible, setConfirmDialogVisible] = useState(false);
+
   const bottomSheetRef = useRef<any>(null);
+
   const handlePresentModalPress = () => {
     bottomSheetRef.current?.popUp();
   };
+
   const handleSell = () => {
-    bottomSheetRef.current?.close();
+    setConfirmDialogVisible(true);
+    // bottomSheetRef.current?.close();
   };
+
   return (
     <>
       <GradientButton
@@ -55,18 +61,25 @@ const SellBottomSheet = (props: NFTItemType) => {
           <Text style={styles.confirmText}>Enter your NFT Item price</Text>
           <View style={styles.btnWrapper}>
             <PriceInput placeholder="Enter your price" />
-            <TouchableOpacity style={STYLES.flex_1} onPress={handleSell}>
-              <LinearGradient
-                start={{x: 0, y: 0}}
-                end={{x: 0.75, y: 0}}
-                colors={[COLORS.gradient[0], COLORS.gradient[1]]}
-                style={styles.gradientBtn}>
-                {/* <FontAwesome5 name="shopping-cart" size={16} color="white" /> */}
-                <Text style={STYLES.text.WorkSansBase}>Confirm</Text>
-              </LinearGradient>
-            </TouchableOpacity>
+            <GradientButton
+              mode={GradientButtonMode.GREEN}
+              content="Confirm"
+              onPress={handleSell}
+              customContainerStyles={STYLES.width_100px}
+            />
           </View>
         </View>
+        <ConfirmDialog
+          visible={isConfirmDialogVisible}
+          onCancel={() => {
+            setConfirmDialogVisible(false);
+          }}
+          onConfirm={() => {
+            setConfirmDialogVisible(false);
+          }}
+          title="Confirm"
+          message="Are you sure you want to sell this NFT?"
+        />
       </BottomSheet>
     </>
   );

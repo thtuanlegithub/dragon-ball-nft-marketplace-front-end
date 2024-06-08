@@ -6,7 +6,9 @@ import {BlurView} from '@react-native-community/blur';
 import {COLORS} from '../../../config';
 import {STYLES} from '../../../config/styles';
 import BottomSheet from '../../../components/BottomSheet';
-import GradientButton from '../../../components/GradientButton';
+import GradientButton, {
+  GradientButtonMode,
+} from '../../../components/GradientButton';
 import {NFTItemType} from '..';
 
 const itemCardRadius = 30;
@@ -59,16 +61,12 @@ const BuyBottomSheet = (props: NFTItemType) => {
                 <Text style={STYLES.text.WorkSansBase}>Cancel</Text>
               </LinearGradient>
             </TouchableOpacity>
-            <TouchableOpacity style={STYLES.flex_1} onPress={handlePurchase}>
-              <LinearGradient
-                start={{x: 0, y: 0}}
-                end={{x: 0.75, y: 0}}
-                colors={[COLORS.gradient[0], COLORS.gradient[1]]}
-                style={styles.gradientBtn}>
-                {/* <FontAwesome5 name="shopping-cart" size={16} color="white" /> */}
-                <Text style={STYLES.text.WorkSansBase}>Confirm</Text>
-              </LinearGradient>
-            </TouchableOpacity>
+            <GradientButton
+              mode={GradientButtonMode.GREEN}
+              content="Confirm"
+              onPress={handlePurchase}
+              customContainerStyles={{...STYLES.flex_1}}
+            />
           </View>
         </View>
       </BottomSheet>

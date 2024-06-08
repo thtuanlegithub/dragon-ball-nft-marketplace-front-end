@@ -10,6 +10,9 @@ export const STYLES = {
   flex_1: {
     flex: 1,
   },
+  width_100px: {
+    width: 100,
+  },
   text: {
     SpaceMonoH1: {
       ...FONTS.SpaceMonoBold,
