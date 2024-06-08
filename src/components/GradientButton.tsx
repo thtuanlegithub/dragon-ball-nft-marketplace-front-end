@@ -90,7 +90,7 @@ const GradientButton = ({
           )}
           <Text
             style={{
-              ...STYLES.text.WorkSansH6,
+              ...STYLES.text.WorkSansBase,
               color: COLORS.background.primary,
             }}>
             {content}
