@@ -11,8 +11,8 @@ import {NFTItemType} from '../DiscoverScreen';
 import NFTItem from '../../components/NFTItem';
 import {address_test} from '../../utils/constants/address-test.constant';
 import {ethers} from 'ethers';
-import { collection, onSnapshot } from 'firebase/firestore';
-import { db } from '../../config/firebaseConfig';
+import {collection, onSnapshot} from 'firebase/firestore';
+import {db} from '../../config/firebaseConfig';
 
 const SellingNFT = () => {
   const wallet_address = useSelector((state: any) => state.wallet.address);
@@ -38,7 +38,7 @@ const SellingNFT = () => {
   useEffect(() => {
     fetchListProperty();
     const unsubscribe = onSnapshot(collection(db, 'nfts'), () => {
-        fetchListProperty();
+      fetchListProperty();
     });
     // Clean up listener on unmount
     return () => unsubscribe();
@@ -52,17 +52,7 @@ const SellingNFT = () => {
         ListFooterComponent={<View style={styles.footer} />}
         data={listSellingNFT}
         keyExtractor={item => item.tokenId}
-        renderItem={({item}) => (
-          <NFTItem
-            tokenId={item.tokenId}
-            name={item.name}
-            price={item.price}
-            image={item.image}
-            rarity={item.rarity}
-            isSold={item.isSold}
-            isAuction={item.isAuction}
-          />
-        )}
+        renderItem={({item}) => <NFTItem {...item} />}
       />
     </View>
   );
