@@ -4,7 +4,7 @@ import {COLORS} from '../config';
 import {STYLES} from '../config/styles';
 
 type Props = {
-  value: string;
+  value?: string;
   onFocus?: () => void;
   onBlur?: () => void;
   onChangeText?: (text: string) => void;

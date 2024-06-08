@@ -16,5 +16,5 @@ export const COLORS = {
   orange: ['#FE761B'],
   gradient: ['#27C99C', '#FF6250'],
   gray: ['#7F7F7F', '#616161'],
-  yellow: ['#EDE103',"#FFC924"],
+  yellow: ['#EDE103', '#FFC924'],
 };

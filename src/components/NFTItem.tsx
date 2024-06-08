@@ -8,14 +8,13 @@ import {STYLES} from '../config/styles';
 import BuyBottomSheet from '../screens/DiscoverScreen/components/BuyBottomSheet';
 import {NFTItemType} from '../screens/DiscoverScreen';
 import {useSelector} from 'react-redux';
-import GradientButton from './GradientButton';
 import SellBottomSheet from '../screens/DiscoverScreen/components/SellBottomSheet';
 import UpdateSellingBottomSheet from '../screens/DiscoverScreen/components/UpdateBottomSheet';
 
 const itemCardRadius = 30;
 
 const NFTItem = (props: NFTItemType) => {
-  const wallet_address = useSelector(state => state.wallet.address);
+  const wallet_address = useSelector<any>(state => state.wallet.address);
   return (
     <TouchableOpacity style={styles.container}>
       <View style={styles.nftIDContainer}>
