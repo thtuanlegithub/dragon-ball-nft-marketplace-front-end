@@ -73,7 +73,7 @@ const UpForAuctionBottomSheet = (props: NFTItemType) => {
               }}>
               {endDate ? (
                 <Text style={styles.pickDateTimeText}>
-                  {dayjs.unix(endDate).format('DD/MM/YYYY')}
+                  {dayjs.unix(endDate).format('MMM D, YYYY')}
                 </Text>
               ) : (
                 <Text style={styles.pickDateTimeText}>End Date</Text>
