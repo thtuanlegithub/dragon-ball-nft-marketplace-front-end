@@ -17,8 +17,10 @@ import axios from 'axios';
 import {COLORS} from '../../config';
 import {STYLES} from '../../config/styles';
 import {SCREEN} from '../../navigators/AppRoute';
-import {logout, setBalance} from '../../services/slices/walletSlice';
+import {logout, setWalletInfo} from '../../services/slices/walletSlice';
 import {SERVER_URL} from '../../utils/constants/server-url.constant';
+import {collection, onSnapshot} from 'firebase/firestore';
+import {db} from '../../config/firebaseConfig';
 
 const MenuItem = ({title, route}: {title: string; route: string}) => {
   const navigation = useNavigation();
@@ -63,7 +65,7 @@ const listMenuItem: MenuItemType[] = [
 
 const ProfileScreen = () => {
   const wallet = useSelector((state: any) => state.wallet);
-  console.log(wallet);
+
   const dispatch = useDispatch();
 
   const handleLogout = () => {
@@ -72,18 +74,39 @@ const ProfileScreen = () => {
   };
 
   const getBalance = async () => {
-    const balance = await axios.get(
-      `${SERVER_URL}/wallet/balance/${wallet.address}`,
+    const res = await axios.get(`${SERVER_URL}/wallet/${wallet.address}`);
+    const wallet_res = res.data.data.wallet;
+    dispatch(
+      setWalletInfo({
+        address: wallet_res.address,
+        balance: wallet_res.balance,
+        private_key: wallet_res.privateKey,
+      }),
     );
-    dispatch(setBalance(balance.data.data.balance));
+    // dispatch(setWalletInfo(res.data.data.wallet));
   };
 
   const handleCopyToClipboard = () => {
     Clipboard.setString(wallet.address);
   };
 
+  const storeData = async value => {
+    try {
+      const jsonValue = JSON.stringify(value);
+      await AsyncStorage.setItem('wallet', jsonValue);
+    } catch (e) {
+      console.log('error', e);
+    }
+  };
+
   useEffect(() => {
     getBalance();
+    const unsubscribe = onSnapshot(collection(db, 'wallets'), () => {
+      getBalance();
+      storeData(wallet);
+    });
+    // Clean up listener on unmount
+    return () => unsubscribe();
   }, []);
 
   return (

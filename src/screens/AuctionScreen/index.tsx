@@ -37,7 +37,6 @@ const AuctionScreen = () => {
   const fetchListAuctionNFT = async () => {
     try {
       const res = await axios.get(`${SERVER_URL}/nft/auction`);
-      console.log(JSON.stringify(res.data.data.nfts, null, 2));
       const nfts = res.data.data.nfts.map((nft: AuctionType) => {
         return {
           ...nft,

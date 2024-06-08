@@ -27,11 +27,9 @@ const ImportWalletScreen = () => {
 
   const handleImportWallet = async () => {
     const wallet = ethers.Wallet.fromPhrase(mnemonic);
-    console.log('wallet', wallet);
     const balance = await axios.get(
       `${SERVER_URL}/wallet/balance/${wallet.address}`,
     );
-    console.log('balance', JSON.stringify(balance.data, null, 2));
 
     await storeData({
       address: wallet.address,

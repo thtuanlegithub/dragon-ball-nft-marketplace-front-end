@@ -11,18 +11,66 @@ import {
 import {STYLES} from '../../config/styles';
 import ControlButton, {ControlButtonMode} from '../../components/ControlButton';
 import {COLORS} from '../../config';
-import axios from 'axios';
 import {SERVER_URL} from '../../utils/constants/server-url.constant';
+import axios from 'axios';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import {ethers} from 'ethers';
+import {useDispatch} from 'react-redux';
+import {setWalletInfo} from '../../services/slices/walletSlice';
 
 const CreateWalletScreen = () => {
   const [mnemonic, setMnemonic] = useState<string>('');
+
+  const dispatch = useDispatch();
 
   const handleCreateWallet = async () => {
     try {
       // const wallet = ethers.Wallet.createRandom();
       await axios.post(`${SERVER_URL}/wallet`).then(res => {
-        console.log(JSON.stringify(res.data, null, 2));
         setMnemonic(res.data.data.wallet.mnemonic.phrase);
+      });
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const storeData = async value => {
+    try {
+      const jsonValue = JSON.stringify(value);
+      await AsyncStorage.setItem('wallet', jsonValue);
+    } catch (e) {
+      console.log('error', e);
+    }
+  };
+
+  const handleImportWallet = async (wallet: {
+    address: string;
+    balance: number;
+    privateKey: string;
+  }) => {
+    await storeData({
+      address: wallet.address,
+      balance: Number(wallet.balance),
+      private_key: wallet.privateKey,
+    });
+
+    dispatch(
+      setWalletInfo({
+        address: wallet.address,
+        balance: wallet.balance,
+        private_key: wallet.privateKey,
+      }),
+    );
+  };
+
+  const handleStoreWallet = async () => {
+    try {
+      await axios({
+        method: 'post',
+        url: `${SERVER_URL}/wallet/storeWallet`,
+        data: {mnemonic: mnemonic},
+      }).then(res => {
+        handleImportWallet(res.data.data.wallet!);
       });
     } catch (error) {
       console.error(error);
@@ -52,7 +100,7 @@ const CreateWalletScreen = () => {
       </TouchableOpacity>
       <ControlButton
         mode={ControlButtonMode.PRIMARY}
-        onPress={handleCreateWallet}
+        onPress={handleStoreWallet}
         content="Done"
       />
     </View>

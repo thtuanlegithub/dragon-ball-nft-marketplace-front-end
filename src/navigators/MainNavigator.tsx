@@ -30,7 +30,6 @@ const MainTabNavigator = () => {
       if (!storedWalletInfo) {
       } else {
         const walletInfo = JSON.parse(storedWalletInfo);
-        console.log(walletInfo);
         dispatch(setWalletInfo(walletInfo));
       }
     };

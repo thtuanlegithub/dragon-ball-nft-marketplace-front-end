@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {Image, StyleSheet, Text, View} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 
@@ -7,9 +7,17 @@ import {STYLES} from '../../config/styles';
 import {SCREEN} from '../../navigators/AppRoute';
 
 import ControlButton, {ControlButtonMode} from '../../components/ControlButton';
+import {collection, onSnapshot} from 'firebase/firestore';
+import {db} from '../../config/firebaseConfig';
+import {SERVER_URL} from '../../utils/constants/server-url.constant';
+import axios from 'axios';
+import {useDispatch, useSelector} from 'react-redux';
+import {setBalance} from '../../services/slices/walletSlice';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const WalletScreen = () => {
   const navigation = useNavigation();
+
   return (
     <View style={styles.container}>
       <View style={styles.walletSetupWrapper}>

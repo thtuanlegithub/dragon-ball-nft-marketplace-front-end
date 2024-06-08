@@ -5,7 +5,7 @@ export type WalletState = {
   address: string;
   balance: number;
   private_key: string;
-}
+};
 
 const initialState: WalletState = {
   address: '',

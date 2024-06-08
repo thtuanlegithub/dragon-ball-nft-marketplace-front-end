@@ -25,9 +25,7 @@ NFTItemPropsType) => {
   const handlePresentModalPress = () => {
     bottomSheetRef.current?.popUp();
   };
-  const handlePurchase = () => {
-    console.log('Purchase NFT');
-  };
+  const handlePurchase = () => {};
   return (
     <>
       <TouchableOpacity style={{width: 140}} onPress={handlePresentModalPress}>
