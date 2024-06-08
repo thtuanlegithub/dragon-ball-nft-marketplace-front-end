@@ -1,4 +1,4 @@
-import React, {useRef} from 'react';
+import React, {useRef, useState} from 'react';
 import {View, Text, TouchableOpacity, StyleSheet, Image} from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import {BlurView} from '@react-native-community/blur';
@@ -16,12 +16,27 @@ const itemCardRadius = 30;
 
 const SellBottomSheet = (props: NFTItemType) => {
   const bottomSheetRef = useRef<any>(null);
+  const [price, setPrice] = useState<string>(); 
   const handlePresentModalPress = () => {
     bottomSheetRef.current?.popUp();
   };
-  const handleSell = () => {
+	const handleSell = () => {
+    // Check if price is empty
+    if (!price) {
+        alert('Price cannot be empty');
+        return;
+    }
+
+    // Check if price is a valid number
+    if (isNaN(Number(price))) {
+        alert('Invalid price');
+        return;
+    }
+
+    // Update the NFT item
+
     bottomSheetRef.current?.close();
-  };
+};
   return (
     <>
       <GradientButton
@@ -54,7 +69,10 @@ const SellBottomSheet = (props: NFTItemType) => {
           <Text style={styles.priceText}>{props.price} FTM</Text>
           <Text style={styles.confirmText}>Enter your NFT Item price</Text>
           <View style={styles.btnWrapper}>
-            <PriceInput placeholder="Enter your price" />
+            <PriceInput
+							value={price}
+							onChangeText={setPrice}
+              placeholder="Enter your price" />
             <TouchableOpacity style={STYLES.flex_1} onPress={handleSell}>
               <LinearGradient
                 start={{x: 0, y: 0}}

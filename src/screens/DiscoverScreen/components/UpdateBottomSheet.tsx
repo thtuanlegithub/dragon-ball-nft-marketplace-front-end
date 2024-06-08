@@ -1,5 +1,5 @@
-import React, {useRef} from 'react';
-import {View, Text, StyleSheet, Image} from 'react-native';
+import React, {useRef, useState} from 'react';
+import {View, Text, StyleSheet, Image, Alert} from 'react-native';
 import {BlurView} from '@react-native-community/blur';
 
 import {COLORS} from '../../../config';
@@ -15,13 +15,26 @@ const itemCardRadius = 30;
 
 const UpdateSellingBottomSheet = (props: NFTItemType) => {
   const bottomSheetRef = useRef<any>(null);
+	const [price, setPrice] = useState(); 
   const handlePresentModalPress = () => {
     bottomSheetRef.current?.popUp();
   };
-  const handleUpdate = () => {
+	const handleUpdate = () => {
+    // Check if price is empty
+    if (!price) {
+			alert('Price cannot be empty');
+			return;
+    }
+
+    // Check if price is a valid number
+    if (isNaN(Number(price))) {
+        alert('Invalid price');
+        return;
+    }
+		
     // Update the NFT item
     bottomSheetRef.current?.close();
-  };
+	};
   return (
     <>
       <GradientButton
@@ -68,13 +81,15 @@ const UpdateSellingBottomSheet = (props: NFTItemType) => {
           </View>
           <Text style={styles.itemName}>{props.name}</Text>
           <Text style={styles.priceText}>{props.price} FTM</Text>
-          <Text style={styles.confirmText}>Enter your NFT Item price</Text>
+          <Text style={styles.confirmText}>Enter your NFT item price</Text>
           <View style={styles.btnWrapper}>
-            <PriceInput placeholder="Enter your price" />
+            <PriceInput 
+							onChangeText={setPrice}
+							placeholder="Enter your price" />
             <GradientButton
               onPress={handleUpdate}
               customContainerStyles={{width: 120}}
-              content="Confirm"
+              content="Update"
             />
           </View>
         </View>
