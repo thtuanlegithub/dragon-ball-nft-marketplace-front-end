@@ -48,18 +48,19 @@ const NFTItem = (props: NFTItemType) => {
             <Text style={styles.descriptionTitle}>Price</Text>
             <Text style={styles.descriptionContent}>{props.price} FTM</Text>
           </View>
-          {/* ADD BUTTON */}
+
           {wallet_address === props.author && props.isSold && (
             <UpdateSellingBottomSheet {...props} />
           )}
+
           {wallet_address === props.author && !props.isSold && (
             <SellBottomSheet {...props} />
           )}
 
-          {/* COMPLETED */}
           {wallet_address !== props.author && props.isSold && (
             <BuyBottomSheet {...props} />
           )}
+
           {wallet_address !== props.author && !props.isSold && (
             <View style={styles.notSoldContainer}>
               <Text style={styles.notSoldText}>NOT SOLD</Text>
