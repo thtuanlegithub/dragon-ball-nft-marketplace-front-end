@@ -32,12 +32,16 @@ const AuctionItem = (props: AuctionType) => {
     // handle finish auction logic here
   };
 
+  console.log('wallet_address', wallet_address);
+
+  console.log('autioneer', props.auctioneer);
+
   return (
     <TouchableOpacity style={styles.container}>
       <View style={styles.AuctionIDContainer}>
         <Text style={styles.AuctionID}>NFT-{props.tokenId}</Text>
       </View>
-      {wallet_address === props.autioneer && (
+      {wallet_address === props.auctioneer && (
         <View style={styles.yourNFTWrapper}>
           <Text style={styles.yourNFTText}>OWNED</Text>
         </View>
@@ -48,7 +52,7 @@ const AuctionItem = (props: AuctionType) => {
           <>
             <View style={{position: 'relative'}}>
               <Image style={styles.image} source={{uri: props.image}} />
-              {props.lastBid == wallet_address && (
+              {props.lastBid === wallet_address && (
                 <View style={styles.youAreHighestWrapper}>
                   <Text style={styles.youAreHighestText}>HIGHEST BIDDER</Text>
                 </View>
@@ -69,19 +73,19 @@ const AuctionItem = (props: AuctionType) => {
         </View>
         <View style={{marginTop: 8}}>
           {/* props.auctioner != wallet_address && props.endtime > dayjs().unix() */}
-          {props.autioneer !== wallet_address &&
+          {props.auctioneer !== wallet_address &&
             props.endTime > dayjs().unix() && (
               <PlaceBidBottomSheet {...props} />
             )}
 
           {/* props.auctioner != wallet_address && props.endtime <= dayjs().unix() */}
-          {props.autioneer !== wallet_address &&
+          {props.auctioneer !== wallet_address &&
             props.endTime <= dayjs().unix() && (
               <Text style={styles.finishedText}>Auction Finished!</Text>
             )}
 
           {/* props.auctioner === wallet_address && props.endtime > dayjs().unix() */}
-          {props.autioneer === wallet_address &&
+          {props.auctioneer === wallet_address &&
             props.endTime > dayjs().unix() && (
               <GradientButton
                 mode={GradientButtonMode.GREEN}
@@ -92,7 +96,7 @@ const AuctionItem = (props: AuctionType) => {
             )}
 
           {/* props.auctioner === wallet_address && props.endtime <= dayjs().unix() */}
-          {props.autioneer === wallet_address &&
+          {props.auctioneer === wallet_address &&
             props.endTime <= dayjs().unix() && (
               <GradientButton
                 onPress={() => setConfirmStopDialogVisible(true)}

@@ -77,7 +77,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'center',
     borderTopWidth: 0.4,
-    borderColor: COLORS.gray[3],
+    borderColor: COLORS.gray[0],
   },
   controlCancelText: {
     color: 'red',

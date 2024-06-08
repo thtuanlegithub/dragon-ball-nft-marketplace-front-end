@@ -44,10 +44,12 @@ const NFTItem = (props: NFTItemType) => {
           <Text style={STYLES.text.SpaceMonoH6}>{props.rarity}</Text>
         </View>
         <View style={styles.rowSpaceBetween}>
-          <View style={styles.descriptionWrapperLeft}>
-            <Text style={styles.descriptionTitle}>Price</Text>
-            <Text style={styles.descriptionContent}>{props.price} FTM</Text>
-          </View>
+          {!props.isSold && (
+            <View style={styles.descriptionWrapperLeft}>
+              <Text style={styles.descriptionTitle}>Price</Text>
+              <Text style={styles.descriptionContent}>{props.price} FTM</Text>
+            </View>
+          )}
 
           {wallet_address === props.author && props.isSold && (
             <UpdateSellingBottomSheet {...props} />
