@@ -13,17 +13,72 @@ import GradientButton, {
 import {NFTItemType} from '..';
 import PriceInput from '../../../components/PriceInput';
 import ConfirmDialog from '../../../components/ConfirmDialog';
+import { useSelector } from 'react-redux';
+import axios from 'axios';
+import { SERVER_URL } from '../../../utils/constants/server-url.constant';
 
 const itemCardRadius = 30;
 
 const UpForAuctionBottomSheet = (props: NFTItemType) => {
+  const wallet_address = useSelector<any>(state => state.wallet.address);
   const [isConfirmDialogVisible, setConfirmDialogVisible] = useState(false);
   const bottomSheetRef = useRef<any>(null);
   const [datePickerOpen, setDatePickerOpen] = useState<boolean>(false);
   const [endDateTime, setEndDateTime] = useState<number>(0);
-
+  const [price, setPrice] = useState<string>();
   const handlePresentModalPress = () => {
     bottomSheetRef.current?.popUp();
+  };
+  const handleAuction = async () => {
+    // Check if price is empty
+    if (!price) {
+      alert('Price cannot be empty');
+      return;
+    }
+
+    // Check if price is a valid number
+    if (isNaN(Number(price))) {
+      alert('Invalid price');
+      return;
+    }
+
+    // Check if endDateTime is empty
+    if (!endDateTime) {
+      alert('End DateTime cannot be empty');
+      return;
+    }
+
+    // Check if endDateTime is in the past
+    if (dayjs().unix() > endDateTime) {
+      alert('End DateTime cannot be in the past');
+      return;
+    }
+
+    // Check if endDateTime is greater than current time + 2 minutes
+    if (endDateTime <= dayjs().add(2, 'minute').unix()) {
+      alert('End DateTime must be greater than current time +2 minutes');
+      return;
+    }
+
+    // Update NFT item
+    const data = {
+      address: wallet_address,
+      tokenId: props.tokenId,
+      initialPrice: price,
+      startTime: dayjs().add(1, 'minute').unix(),
+      endTime: endDateTime,
+    };
+
+    // Send a POST request
+    try {
+      const response = await axios.post(
+      `${SERVER_URL}/auction/createAuction`,
+        data
+      );
+    } catch (error) {
+      console.error('Error:', error);
+    }
+    bottomSheetRef.current?.close();
   };
   return (
     <>
@@ -31,7 +86,7 @@ const UpForAuctionBottomSheet = (props: NFTItemType) => {
         customContainerStyles={{flex: 1}}
         mode={GradientButtonMode.PRIMARY}
         iconName="gavel"
-        content="Up auction"
+        content="Auction"
         onPress={handlePresentModalPress}
       />
       <BottomSheet title="Bottom Sheet" ref={bottomSheetRef}>
@@ -59,7 +114,7 @@ const UpForAuctionBottomSheet = (props: NFTItemType) => {
           <Text style={styles.confirmText}>Enter your auction information</Text>
           <View style={styles.btnWrapper}>
             <PriceInput
-              // onChangeText={setPrice}
+              onChangeText={setPrice}
               placeholder="Enter starting price"
             />
           </View>
@@ -84,7 +139,7 @@ const UpForAuctionBottomSheet = (props: NFTItemType) => {
               setConfirmDialogVisible(false);
             }}
             onConfirm={() => {
-              // handleSell();
+              handleAuction();
               setConfirmDialogVisible(false);
             }}
             title="Confirm"

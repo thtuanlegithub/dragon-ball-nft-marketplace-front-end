@@ -3,20 +3,21 @@ import {StyleSheet, Text, View} from 'react-native';
 
 import {STYLES} from '../config/styles';
 import {COLORS} from '../config';
+import dayjs from 'dayjs';
 
 const AuctionTimer = ({endDateTime}: {endDateTime: number}) => {
   const [timeLeft, setTimeLeft] = useState('');
   useEffect(() => {
     const timer = setInterval(() => {
-      const now = Date.now();
-      const distance = endDateTime - now;
-
+      const now = dayjs().unix();
+      let distance = endDateTime - now;
       if (distance <= 0) {
         clearInterval(timer);
         setTimeLeft('00:00:00');
         return;
       }
-
+      // Convert distance from seconds to milliseconds
+      distance *= 1000;
       const days = Math.floor(distance / (1000 * 60 * 60 * 24));
       const hours = Math.floor(
         (distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60),
