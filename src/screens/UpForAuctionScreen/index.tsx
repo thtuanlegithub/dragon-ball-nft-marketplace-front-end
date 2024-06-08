@@ -9,39 +9,45 @@ import {address_test} from '../../utils/constants/address-test.constant';
 import {AuctionType} from '../AuctionScreen';
 import AuctionItem from '../../components/AuctionItem';
 import {ethers} from 'ethers';
+import { collection, onSnapshot } from 'firebase/firestore';
+import { db } from '../../config/firebaseConfig';
 
 const UpForAuctionScreen = () => {
   const wallet_address = useSelector((state: any) => state.wallet.address);
 
   const [listUpForAuction, setListUpForAuctionNFT] = useState<AuctionType[]>();
 
+  const fetchListProperty = async () => {
+    try {
+      const res = await axios.get(
+        `${SERVER_URL}/nft/owned/auction/${wallet_address}`,
+      );
+      const auctionNfts = res.data.data.nfts.map((nft: AuctionType) => {
+        return {
+          ...nft,
+          lastBid: ethers.formatEther(BigInt(nft.lastBid)), // Convert from Wei to Ether
+          initialPrice: ethers.formatEther(BigInt(nft.initialPrice)), // Convert from Wei to Ether
+        };
+      });
+      setListUpForAuctionNFT(auctionNfts);
+    } catch (error) {
+      console.error(error);
+    }
+  };
   useEffect(() => {
-    const fetchListProperty = async () => {
-      try {
-        const res = await axios.get(
-          `${SERVER_URL}/nft/owned/auction/${address_test}`,
-        );
-        const auctionNfts = res.data.data.nfts.map((nft: AuctionType) => {
-          return {
-            ...nft,
-            lastBid: ethers.formatEther(BigInt(nft.lastBid)), // Convert from Wei to Ether
-            initialPrice: ethers.formatEther(BigInt(nft.initialPrice)), // Convert from Wei to Ether
-          };
-        });
-        setListUpForAuctionNFT(auctionNfts);
-      } catch (error) {
-        console.error(error);
-      }
-    };
-
     fetchListProperty();
+    const unsubscribe = onSnapshot(collection(db, 'auctions'), () => {
+        fetchListProperty();
+    });
+    // Clean up listener on unmount
+    return () => unsubscribe();
   }, [setListUpForAuctionNFT, wallet_address]);
 
   return (
     <View style={styles.container}>
       <FlatList
         ListHeaderComponent={
-          <Text style={styles.headerText}>Up for Auction NFT</Text>
+          <Text style={styles.headerText}>On Auction NFT</Text>
         }
         showsVerticalScrollIndicator={false}
         ListFooterComponent={<View style={styles.footer} />}

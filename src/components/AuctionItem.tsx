@@ -11,14 +11,12 @@ import AuctionTimer from './AuctionTimer';
 const itemCardRadius = 30;
 
 const AuctionItem = (props: AuctionType) => {
-  const oneDayFromNow = Date.now() + 1 * 60 * 1000; // current time + 1 day in milliseconds
-
   return (
     <TouchableOpacity style={styles.container}>
       <View style={styles.AuctionIDContainer}>
         <Text style={styles.AuctionID}>NFT-{props.tokenId}</Text>
       </View>
-      <AuctionTimer endDateTime={oneDayFromNow} />
+      <AuctionTimer endDateTime={props.endTime} />
       <View style={styles.imageWrapper}>
         {props?.image && (
           <>

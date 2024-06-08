@@ -21,7 +21,7 @@ import {logout, setWalletInfo} from '../../services/slices/walletSlice';
 import {SERVER_URL} from '../../utils/constants/server-url.constant';
 import {collection, onSnapshot} from 'firebase/firestore';
 import {db} from '../../config/firebaseConfig';
-
+import { formatBalance } from '../../utils/formats/balance.format';
 const MenuItem = ({title, route}: {title: string; route: string}) => {
   const navigation = useNavigation();
   return (
@@ -58,7 +58,7 @@ const listMenuItem: MenuItemType[] = [
   },
   {
     id: 3,
-    label: 'Up for auction NFT',
+    label: 'On Auction NFT',
     route: SCREEN.UP_FOR_AUCTION_NFT,
   },
 ];
@@ -115,7 +115,7 @@ const ProfileScreen = () => {
         <View style={styles.balanceWrapper}>
           <Text style={STYLES.text.WorkSansH5}>Total balance:</Text>
           <Text style={{...STYLES.text.SpaceMonoH5, color: COLORS.yellow[0]}}>
-            {wallet.balance} FTM
+            {formatBalance(wallet.balance)} FTM
           </Text>
         </View>
         <View style={{justifyContent: 'flex-start', gap: 8}}>
