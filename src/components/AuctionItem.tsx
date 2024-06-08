@@ -32,9 +32,11 @@ const AuctionItem = (props: AuctionType) => {
           <>
             <View style={{position: 'relative'}}>
               <Image style={styles.image} source={{uri: props.image}} />
-              <View style={styles.youAreHighestWrapper}>
-                <Text style={styles.youAreHighestText}>HIGHEST BIDDER</Text>
-              </View>
+              {props.lastBid == wallet_address && (
+                <View style={styles.youAreHighestWrapper}>
+                  <Text style={styles.youAreHighestText}>HIGHEST BIDDER</Text>
+                </View>
+              )}
             </View>
             <Image style={styles.bgImage} source={{uri: props.image}} />
           </>

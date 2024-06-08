@@ -1,5 +1,5 @@
 import React, {useRef, useState} from 'react';
-import {View, Text, StyleSheet, Image, Alert} from 'react-native';
+import {View, Text, StyleSheet, Image} from 'react-native';
 import {BlurView} from '@react-native-community/blur';
 
 import {COLORS} from '../../../config';
@@ -10,24 +10,33 @@ import GradientButton, {
 } from '../../../components/GradientButton';
 import {NFTItemType} from '..';
 import PriceInput from '../../../components/PriceInput';
-import { useSelector } from 'react-redux';
-import { SERVER_URL } from '../../../utils/constants/server-url.constant';
+import {useSelector} from 'react-redux';
+import {SERVER_URL} from '../../../utils/constants/server-url.constant';
 import axios from 'axios';
+import ConfirmDialog from '../../../components/ConfirmDialog';
+import {set} from 'firebase/database';
 
 const itemCardRadius = 30;
 
 const UpdateSellingBottomSheet = (props: NFTItemType) => {
   const bottomSheetRef = useRef<any>(null);
   const wallet_address = useSelector<any>(state => state.wallet.address);
-  const [price, setPrice] = useState(); 
+  const [price, setPrice] = useState<number>();
+  const [isConfirmUpdateDialogVisible, setConfirmUpdateDialogVisible] =
+    useState<boolean>(false);
+
+  const [
+    isConfirmStopSellingDialogVisible,
+    setConfirmStopSellingDialogVisible,
+  ] = useState<boolean>(false);
   const handlePresentModalPress = () => {
     bottomSheetRef.current?.popUp();
   };
-	const handleUpdate = async () => {
+  const handleUpdate = async () => {
     // Check if price is empty
     if (!price) {
-			alert('Price cannot be empty');
-			return;
+      alert('Price cannot be empty');
+      return;
     }
 
     // Check if price is a valid number
@@ -35,23 +44,54 @@ const UpdateSellingBottomSheet = (props: NFTItemType) => {
       alert('Invalid price');
       return;
     }
-		
-    // Update NFT item
-		const data = {
-			address: wallet_address,
-			tokenId: props.tokenId, 
-			price: Number(price),
-		};
 
-		// Send a POST request
-		try {
-			const response = await axios.post(`${SERVER_URL}/marketplace/updateListingNftPrice`, data);
-			console.log(response.data);
-		} catch (error) {
-			console.error(error);
-		}
+    // Update NFT item
+    const data = {
+      address: wallet_address,
+      tokenId: props.tokenId,
+      price: Number(price),
+    };
+
+    // Send a POST request
+    try {
+      const response = await axios.post(
+        `${SERVER_URL}/marketplace/updateListingNftPrice`,
+        data,
+      );
+      console.log(response.data);
+    } catch (error) {
+      console.error(error);
+    }
     bottomSheetRef.current?.close();
-	};
+  };
+
+  const handleStopSelling = async () => {
+    // Stop selling the NFT item
+    const data = {
+      address: wallet_address,
+      tokenId: props.tokenId,
+    };
+    // Send a POST request
+    try {
+      const response = await axios.post(
+        `${SERVER_URL}/marketplace/unListNft`,
+        data,
+      );
+      console.log(response.data);
+    } catch (error) {
+      console.error(error);
+    }
+    bottomSheetRef.current?.close();
+  };
+
+  const handleChangePrice = (text: string) => {
+    if (isNaN(Number(text))) {
+      setPrice(undefined);
+    } else {
+      setPrice(Number(text));
+    }
+  };
+
   return (
     <>
       <GradientButton
@@ -69,13 +109,10 @@ const UpdateSellingBottomSheet = (props: NFTItemType) => {
               height: 50,
             }}>
             <GradientButton
+              onPress={() => setConfirmStopSellingDialogVisible(true)}
               mode={GradientButtonMode.RED}
               content="STOP SELLING"
-              customStyles={{
-                borderRadius: 0,
-                borderTopLeftRadius: 10,
-                borderBottomLeftRadius: 10,
-              }}
+              customStyles={styles.stopSellingBtn}
             />
           </View>
           <View style={styles.container}>
@@ -100,16 +137,42 @@ const UpdateSellingBottomSheet = (props: NFTItemType) => {
           <Text style={styles.priceText}>{props.price} FTM</Text>
           <Text style={styles.confirmText}>Enter your NFT item price</Text>
           <View style={styles.btnWrapper}>
-            <PriceInput 
-							onChangeText={setPrice}
-							placeholder="Enter your price" />
+            <PriceInput
+              onChangeText={text => handleChangePrice(text)}
+              placeholder="Enter your price"
+            />
             <GradientButton
-              onPress={handleUpdate}
+              onPress={() => setConfirmUpdateDialogVisible(true)}
               customContainerStyles={{width: 120}}
               content="Update"
             />
           </View>
         </View>
+        <ConfirmDialog
+          visible={isConfirmUpdateDialogVisible}
+          onCancel={() => {
+            setConfirmUpdateDialogVisible(false);
+          }}
+          onConfirm={() => {
+            handleUpdate();
+            setConfirmUpdateDialogVisible(false);
+          }}
+          title="Confirm"
+          message="Are you sure to update the price?"
+        />
+        <ConfirmDialog
+          visible={isConfirmStopSellingDialogVisible}
+          onCancel={() => {
+            setConfirmStopSellingDialogVisible(false);
+          }}
+          onConfirm={() => {
+            // Stop selling the NFT item
+            handleStopSelling();
+            setConfirmStopSellingDialogVisible(false);
+          }}
+          title="Confirm"
+          message="Are you sure to stop selling this NFT?"
+        />
       </BottomSheet>
     </>
   );
@@ -220,5 +283,10 @@ const styles = StyleSheet.create({
   yourNFTText: {
     ...STYLES.text.WorkSansH7,
     color: COLORS.yellow[1],
+  },
+  stopSellingBtn: {
+    borderRadius: 0,
+    borderTopLeftRadius: 10,
+    borderBottomLeftRadius: 10,
   },
 });

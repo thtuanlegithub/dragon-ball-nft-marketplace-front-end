@@ -24,27 +24,27 @@ const DiscoverScreen = () => {
   const [ListNFT, setListNFT] = useState<NFTItemType[]>([]); // [1
   const fetchListNFT = async () => {
     try {
-    //   const res = await axios.get(`${SERVER_URL}/nft`);
-    //   const nfts = res.data.data.nfts.map((nft: NFTItemType) => {
-    //     return {
-    //       ...nft,
-    //       price: ethers.formatEther(BigInt(nft.price)), // Convert from Wei to Ether
-    //     };
-    //   });
-    //   setListNFT(nfts);
-    //   return res;
+      const res = await axios.get(`${SERVER_URL}/nft`);
+      const nfts = res.data.data.nfts.map((nft: NFTItemType) => {
+        return {
+          ...nft,
+          price: ethers.formatEther(BigInt(nft.price)), // Convert from Wei to Ether
+        };
+      });
+      setListNFT(nfts);
+      return res;
     } catch (error) {
       console.error(error);
       return null;
     }
   };
   useEffect(() => {
-    // fetchListNFT();
-    // const unsubscribe = onSnapshot(collection(db, 'nfts'), () => {
-    //   fetchListNFT();
-    // });
-    // // Clean up listener on unmount
-    // return () => unsubscribe();
+    fetchListNFT();
+    const unsubscribe = onSnapshot(collection(db, 'nfts'), () => {
+      fetchListNFT();
+    });
+    // Clean up listener on unmount
+    return () => unsubscribe();
   }, []);
   return (
     <View style={styles.container}>
