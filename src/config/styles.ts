@@ -1,5 +1,5 @@
-import { FONTS } from "./fonts";
-import { COLORS } from "./colors";
+import {FONTS} from './fonts';
+import {COLORS} from './colors';
 
 export const STYLES = {
   stackScreenContainer: {
@@ -36,7 +36,7 @@ export const STYLES = {
     },
     SpaceMonoH5: {
       ...FONTS.SpaceMonoBold,
-      fontSize: 22,
+      fontSize: 20,
       color: COLORS.text.primary,
     },
     SpaceMonoBase: {
@@ -94,6 +94,11 @@ export const STYLES = {
       fontSize: 12,
       color: COLORS.text.primary,
     },
+    WorkSans_SM_14: {
+      ...FONTS.WorkSansSemiBold,
+      fontSize: 14,
+      color: COLORS.text.primary,
+    },
     WorkSans_R_18: {
       ...FONTS.WorkSansRegular,
       fontSize: 18,
@@ -110,5 +115,4 @@ export const STYLES = {
       color: COLORS.text.primary,
     },
   },
-
-}
+};

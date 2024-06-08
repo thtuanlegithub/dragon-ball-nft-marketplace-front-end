@@ -39,12 +39,12 @@ const DiscoverScreen = () => {
     }
   };
   useEffect(() => {
-    fetchListNFT();
-    const unsubscribe = onSnapshot(collection(db, 'nfts'), () => {
-      fetchListNFT();
-    });
-    // Clean up listener on unmount
-    return () => unsubscribe();
+    // fetchListNFT();
+    // const unsubscribe = onSnapshot(collection(db, 'nfts'), () => {
+    //   fetchListNFT();
+    // });
+    // // Clean up listener on unmount
+    // return () => unsubscribe();
   }, []);
   return (
     <View style={styles.container}>

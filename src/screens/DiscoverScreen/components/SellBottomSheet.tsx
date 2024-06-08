@@ -30,14 +30,14 @@ const SellBottomSheet = (props: NFTItemType) => {
   const handleSell = async () => {
     // Check if price is empty
     if (!price) {
-        alert('Price cannot be empty');
-        return;
+      alert('Price cannot be empty');
+      return;
     }
 
     // Check if price is a valid number
     if (isNaN(Number(price))) {
-        alert('Invalid price');
-        return;
+      alert('Invalid price');
+      return;
     }
 		
     // Sell the NFT item
@@ -56,6 +56,9 @@ const SellBottomSheet = (props: NFTItemType) => {
 		}
 
 		bottomSheetRef.current?.close();
+
+    // Update the NFT item
+    bottomSheetRef.current?.close();
   };
   return (
     <>
@@ -89,19 +92,16 @@ const SellBottomSheet = (props: NFTItemType) => {
           <Text style={styles.priceText}>{props.price} FTM</Text>
           <Text style={styles.confirmText}>Enter your NFT Item price</Text>
           <View style={styles.btnWrapper}>
-            <PriceInput 
-							onChangeText={setPrice}
-							placeholder="Enter your price" />
-            <TouchableOpacity style={STYLES.flex_1} onPress={handleSell}>
-              <LinearGradient
-                start={{x: 0, y: 0}}
-                end={{x: 0.75, y: 0}}
-                colors={[COLORS.gradient[0], COLORS.gradient[1]]}
-                style={styles.gradientBtn}>
-                {/* <FontAwesome5 name="shopping-cart" size={16} color="white" /> */}
-                <Text style={STYLES.text.WorkSansBase}>Confirm</Text>
-              </LinearGradient>
-            </TouchableOpacity>
+            <PriceInput
+              onChangeText={setPrice}
+              placeholder="Enter your price"
+            />
+            <GradientButton
+              customContainerStyles={STYLES.width_100px}
+              mode={GradientButtonMode.GREEN}
+              content="Confirm"
+              onPress={() => setConfirmDialogVisible(true)}
+            />
           </View>
         </View>
         <ConfirmDialog
@@ -110,6 +110,7 @@ const SellBottomSheet = (props: NFTItemType) => {
             setConfirmDialogVisible(false);
           }}
           onConfirm={() => {
+            handleSell();
             setConfirmDialogVisible(false);
           }}
           title="Confirm"

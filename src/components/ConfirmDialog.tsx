@@ -1,6 +1,7 @@
 import React from 'react';
 import {Modal, View, Text, TouchableHighlight, StyleSheet} from 'react-native';
-import {COLORS} from '../config';
+import {COLORS, FONTS} from '../config';
+import {STYLES} from '../config/styles';
 
 type Props = {
   visible: boolean;
@@ -54,18 +55,20 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
     paddingTop: 16,
     borderRadius: 16,
-    width: 300,
+    width: 310,
   },
   title: {
-    paddingHorizontal: 24,
+    paddingHorizontal: 32,
     flexWrap: 'wrap',
     textAlign: 'center',
+    ...STYLES.text.WorkSansH6,
     color: COLORS.text.black,
   },
   message: {
     textAlign: 'center',
+    ...STYLES.text.WorkSansBase,
     color: COLORS.text.black,
-    paddingBottom: 36,
+    paddingBottom: 16,
     paddingTop: 10,
     paddingHorizontal: 16,
   },
@@ -79,11 +82,14 @@ const styles = StyleSheet.create({
   controlCancelText: {
     color: 'red',
     padding: 10,
+    fontSize: 16,
   },
   controlConfirmText: {
     color: 'green',
     padding: 10,
     flexWrap: 'wrap',
+    fontSize: 16,
+    fontWeight: 'bold',
   },
   controlCancel: {
     width: '50%',
@@ -92,6 +98,7 @@ const styles = StyleSheet.create({
     borderBottomStartRadius: 16,
     borderRightWidth: 0.4,
     borderColor: COLORS.gray[3],
+    paddingVertical: 4,
   },
   controlConfirm: {
     width: '50%',
