@@ -12,6 +12,8 @@ import GradientButton, {GradientButtonMode} from './GradientButton';
 import {AuctionType} from '../screens/AuctionScreen';
 import ConfirmDialog from './ConfirmDialog';
 import PlaceBidBottomSheet from '../screens/AuctionScreen/components/PlaceBidBottomSheet';
+import { SERVER_URL } from '../utils/constants/server-url.constant';
+import axios from 'axios';
 
 const itemCardRadius = 30;
 
@@ -24,12 +26,38 @@ const AuctionItem = (props: AuctionType) => {
 
   const wallet_address = useSelector((state: any) => state.wallet.address);
 
-  const handleStopAuction = () => {
+  const handleStopAuction = async () => {
     // handle stop auction logic here
+    const data = {
+      address: wallet_address,
+      auctionId: props.auctionId,
+    };
+    // Send a POST request
+    try {
+      const response = await axios.post(
+        `${SERVER_URL}/auction/cancelAuction`,
+        data,
+      );
+    } catch (error) {
+      console.error(error);
+    }
   };
 
-  const handleFinishAuction = () => {
+  const handleFinishAuction = async () => {
     // handle finish auction logic here
+    const data = {
+      address: wallet_address,
+      auctionId: props.auctionId,
+    };
+    // Send a POST request
+    try {
+      const response = await axios.post(
+        `${SERVER_URL}/auction/finishAuction`,
+        data,
+      );
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   return (

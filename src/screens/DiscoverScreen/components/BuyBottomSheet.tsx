@@ -35,7 +35,6 @@ const BuyBottomSheet = (props: NFTItemType) => {
         `${SERVER_URL}/marketplace/buyNft`,
         data,
       );
-      console.log(response.data);
     } catch (error) {
       console.error(error);
     }

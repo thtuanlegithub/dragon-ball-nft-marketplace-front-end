@@ -22,19 +22,62 @@ import GradientButton, {
 } from '../../../components/GradientButton';
 import ConfirmDialog from '../../../components/ConfirmDialog';
 import PriceInput from '../../../components/PriceInput';
+import {useSelector} from 'react-redux';
+import axios from 'axios';
+import {SERVER_URL} from '../../../utils/constants/server-url.constant';
 
 const PlaceBidBottomSheet = (props: AuctionType) => {
   const [isFocused, setFocus] = useState(false);
+  const wallet_address = useSelector((state: any) => state.wallet.address);
   const [isConfirmDialogVisible, setConfirmDialogVisible] = useState(false);
 
   const bottomSheetRef = useRef<any>(null);
-
+  const [price, setPrice] = useState<string>();
   const handleBottomSheetPresent = () => {
     bottomSheetRef.current?.popUp();
   };
 
-  const handleConfirm = () => {
+  const handleConfirm = async () => {
+    // Check if price is empty
+    if (!price) {
+      alert('Price cannot be empty');
+      return;
+    }
+
+    // Check if price is a valid number
+    if (isNaN(Number(price))) {
+      alert('Invalid price');
+      return;
+    }
+    // Calculate the minimum bid
+    const MINIMUM_BID_RATE = 110;
+    const lastBid = Number(props.lastBid);
+    const _minBid =
+      lastBid === 0 ? lastBid : (lastBid * MINIMUM_BID_RATE) / 100;
+
+    // Check if price is greater than last bid and meets the minimum bid requirement
+    if (Number(price) <= lastBid || Number(price) < _minBid) {
+      alert(
+        'Price must be greater than the last bid and meet the minimum bid requirement',
+      );
+      return;
+    }
+
     // handle confirm logic here
+    const data = {
+      address: wallet_address,
+      auctionId: props.auctionId,
+      bidPrice: Number(price),
+    };
+    // Send a POST request
+    try {
+      const response = await axios.post(
+        `${SERVER_URL}/auction/joinAuction`,
+        data,
+      );
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   return (
@@ -80,7 +123,7 @@ const PlaceBidBottomSheet = (props: AuctionType) => {
           </View>
         </View>
         <View style={styles.inputWrapper}>
-          <PriceInput placeholder="Enter your bid" />
+          <PriceInput onChangeText={setPrice} placeholder="Enter your bid" />
           <GradientButton
             mode={GradientButtonMode.GREEN}
             iconName="gavel"
