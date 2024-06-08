@@ -1,8 +1,8 @@
 import React, {useRef, useState} from 'react';
-import {View, Text, StyleSheet, Image} from 'react-native';
-import {useSelector} from 'react-redux';
+import {View, Text, StyleSheet, Image, TouchableOpacity} from 'react-native';
 import {BlurView} from '@react-native-community/blur';
-import axios from 'axios';
+import DatePicker from 'react-native-date-picker';
+import dayjs from 'dayjs';
 
 import {COLORS} from '../../../config';
 import {STYLES} from '../../../config/styles';
@@ -13,61 +13,27 @@ import GradientButton, {
 import {NFTItemType} from '..';
 import PriceInput from '../../../components/PriceInput';
 import ConfirmDialog from '../../../components/ConfirmDialog';
-import {SERVER_URL} from '../../../utils/constants/server-url.constant';
 
 const itemCardRadius = 30;
 
-const SellBottomSheet = (props: NFTItemType) => {
+const UpForAuctionBottomSheet = (props: NFTItemType) => {
   const [isConfirmDialogVisible, setConfirmDialogVisible] = useState(false);
-  const wallet_address = useSelector<any>(state => state.wallet.address);
-  const [price, setPrice] = useState<string>();
   const bottomSheetRef = useRef<any>(null);
+  const [datePickerOpen, setDatePickerOpen] = useState<boolean>(false);
+  const [timePickerOpen, setTimePickerOpen] = useState<boolean>(false);
+  const [endDate, setEndDate] = useState<number>(0);
+  const [endTime, setEndTime] = useState<number>(0);
+
   const handlePresentModalPress = () => {
     bottomSheetRef.current?.popUp();
-  };
-  const handleSell = async () => {
-    // Check if price is empty
-    if (!price) {
-      alert('Price cannot be empty');
-      return;
-    }
-
-    // Check if price is a valid number
-    if (isNaN(Number(price))) {
-      alert('Invalid price');
-      return;
-    }
-
-    // Sell the NFT item
-    const data = {
-      address: wallet_address,
-      tokenId: props.tokenId,
-      price: Number(price),
-    };
-
-    // Send a POST request
-    try {
-      const response = await axios.post(
-        `${SERVER_URL}/marketplace/listNft`,
-        data,
-      );
-      console.log(response.data);
-    } catch (error) {
-      console.error(error);
-    }
-
-    bottomSheetRef.current?.close();
-
-    // Update the NFT item
-    bottomSheetRef.current?.close();
   };
   return (
     <>
       <GradientButton
         customContainerStyles={{flex: 1}}
-        mode={GradientButtonMode.SECONDARY}
-        iconName="tags"
-        content="Sell"
+        mode={GradientButtonMode.PRIMARY}
+        iconName="gavel"
+        content="Up auction"
         onPress={handlePresentModalPress}
       />
       <BottomSheet title="Bottom Sheet" ref={bottomSheetRef}>
@@ -95,35 +61,84 @@ const SellBottomSheet = (props: NFTItemType) => {
           <Text style={styles.confirmText}>Enter your NFT Item price</Text>
           <View style={styles.btnWrapper}>
             <PriceInput
-              onChangeText={setPrice}
-              placeholder="Enter your price"
-            />
-            <GradientButton
-              customContainerStyles={STYLES.width_100px}
-              mode={GradientButtonMode.GREEN}
-              content="Confirm"
-              onPress={() => setConfirmDialogVisible(true)}
+              // onChangeText={setPrice}
+              placeholder="Enter starting price"
             />
           </View>
+          <View style={styles.pickDateTimeWrapper}>
+            <TouchableOpacity
+              style={styles.pickDateTimeBtn}
+              onPress={() => {
+                setDatePickerOpen(true);
+              }}>
+              {endDate ? (
+                <Text style={styles.pickDateTimeText}>
+                  {dayjs(endDate).format('DD/MM/YYYY')}
+                </Text>
+              ) : (
+                <Text style={styles.pickDateTimeText}>End Date</Text>
+              )}
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={styles.pickDateTimeBtn}
+              onPress={() => {
+                setTimePickerOpen(true);
+              }}>
+              {endTime ? (
+                <Text style={styles.pickDateTimeText}>
+                  {dayjs(endTime).format('hh:mm A')}
+                </Text>
+              ) : (
+                <Text style={styles.pickDateTimeText}>End Time</Text>
+              )}
+            </TouchableOpacity>
+          </View>
+          <ConfirmDialog
+            visible={isConfirmDialogVisible}
+            onCancel={() => {
+              setConfirmDialogVisible(false);
+            }}
+            onConfirm={() => {
+              // handleSell();
+              setConfirmDialogVisible(false);
+            }}
+            title="Confirm"
+            message="Are you sure you want to sell this NFT?"
+          />
+          <DatePicker
+            modal
+            mode="date"
+            open={datePickerOpen}
+            date={new Date()}
+            onConfirm={date => {
+              setEndDate(dayjs(date).unix());
+              setDatePickerOpen(false);
+            }}
+            onCancel={() => setDatePickerOpen(false)}
+          />
+          <DatePicker
+            modal
+            mode="time"
+            open={timePickerOpen}
+            date={new Date()}
+            onConfirm={date => {
+              setEndTime(dayjs(date).unix());
+              setTimePickerOpen(false);
+            }}
+            onCancel={() => setTimePickerOpen(false)}
+          />
+          <GradientButton
+            mode={GradientButtonMode.GREEN}
+            content="Confirm"
+            onPress={() => setConfirmDialogVisible(true)}
+          />
         </View>
-        <ConfirmDialog
-          visible={isConfirmDialogVisible}
-          onCancel={() => {
-            setConfirmDialogVisible(false);
-          }}
-          onConfirm={() => {
-            handleSell();
-            setConfirmDialogVisible(false);
-          }}
-          title="Confirm"
-          message="Are you sure you want to sell this NFT?"
-        />
       </BottomSheet>
     </>
   );
 };
 
-export default SellBottomSheet;
+export default UpForAuctionBottomSheet;
 
 const styles = StyleSheet.create({
   imgWidth: {
@@ -229,5 +244,18 @@ const styles = StyleSheet.create({
   yourNFTText: {
     ...STYLES.text.WorkSansH7,
     color: COLORS.yellow[1],
+  },
+  pickDateTimeWrapper: {flexDirection: 'row', gap: 12, paddingHorizontal: 16},
+  pickDateTimeBtn: {
+    backgroundColor: COLORS.gray[0],
+    padding: 8,
+    borderRadius: 10,
+    flex: 1,
+    justifyContent: 'center',
+  },
+  pickDateTimeText: {
+    ...STYLES.text.SpaceMonoBase,
+    textAlign: 'center',
+    paddingVertical: 4,
   },
 });
