@@ -7,13 +7,13 @@ import {
   Image,
   TextInput,
 } from 'react-native';
+import {BlurView} from '@react-native-community/blur';
 import LinearGradient from 'react-native-linear-gradient';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 
 import {COLORS} from '../../../config';
 import {STYLES} from '../../../config/styles';
 import BottomSheet from '../../../components/BottomSheet';
-import {BlurView} from '@react-native-community/blur';
 import {itemCardRadius} from '../../../utils/constants/styles.constant';
 import {AuctionType} from '..';
 import AuctionTimer from '../../../components/AuctionTimer';
@@ -85,6 +85,7 @@ const PlaceBidBottomSheet = (props: AuctionType) => {
             placeholderTextColor={COLORS.text.caption}
             onFocus={() => setFocus(true)}
             onBlur={() => setFocus(false)}
+            inputMode="numeric"
           />
           <TouchableOpacity style={styles.btnWrapper}>
             <LinearGradient

@@ -6,12 +6,15 @@ import {BlurView} from '@react-native-community/blur';
 import {COLORS} from '../../../config';
 import {STYLES} from '../../../config/styles';
 import BottomSheet from '../../../components/BottomSheet';
-import GradientButton from '../../../components/GradientButton';
+import GradientButton, {
+  GradientButtonMode,
+} from '../../../components/GradientButton';
 import {NFTItemType} from '..';
+import PriceInput from '../../../components/PriceInput';
 
 const itemCardRadius = 30;
 
-const BuyBottomSheet = (props: NFTItemType) => {
+const UpdateSellingBottomSheet = (props: NFTItemType) => {
   const bottomSheetRef = useRef<any>(null);
   const handlePresentModalPress = () => {
     bottomSheetRef.current?.popUp();
@@ -22,16 +25,36 @@ const BuyBottomSheet = (props: NFTItemType) => {
   return (
     <>
       <GradientButton
-        iconName="shopping-cart"
-        content="Purchase"
+        iconName="tags"
+        content="Update"
         onPress={handlePresentModalPress}
       />
       <BottomSheet title="Bottom Sheet" ref={bottomSheetRef}>
         <View style={styles.bottomSheetWrapper}>
+          <View
+            style={{
+              flexDirection: 'row',
+              justifyContent: 'flex-end',
+              height: 50,
+            }}>
+            <GradientButton
+              mode={GradientButtonMode.RED}
+              content="STOP SELLING"
+              customStyles={{
+                borderRadius: 0,
+                borderTopLeftRadius: 10,
+                borderBottomLeftRadius: 10,
+              }}
+            />
+          </View>
           <View style={styles.container}>
             <View style={styles.nftIDContainer}>
               <Text style={styles.nftID}>NFT-{props.tokenId}</Text>
             </View>
+            <View style={styles.yourNFTWrapper}>
+              <Text style={styles.yourNFTText}>OWNED</Text>
+            </View>
+
             <View style={styles.imageWrapper}>
               <Image style={styles.image} source={{uri: props.image}} />
               <Image style={styles.bgImage} source={{uri: props.image}} />
@@ -44,31 +67,13 @@ const BuyBottomSheet = (props: NFTItemType) => {
           </View>
           <Text style={styles.itemName}>{props.name}</Text>
           <Text style={styles.priceText}>{props.price} FTM</Text>
-          <Text style={styles.confirmText}>
-            Are you sure to purchase this NFT?
-          </Text>
+          <Text style={styles.confirmText}>Enter your NFT Item price</Text>
           <View style={styles.btnWrapper}>
-            <TouchableOpacity
-              style={styles.btnHeight}
-              onPress={() => bottomSheetRef.current.close()}>
-              <LinearGradient
-                start={{x: 0, y: 0}}
-                end={{x: 0.75, y: 0}}
-                colors={[COLORS.gray[0], COLORS.gray[1]]}
-                style={styles.gradientBtn}>
-                <Text style={STYLES.text.WorkSansBase}>Cancel</Text>
-              </LinearGradient>
-            </TouchableOpacity>
-            <TouchableOpacity style={STYLES.flex_1} onPress={handlePurchase}>
-              <LinearGradient
-                start={{x: 0, y: 0}}
-                end={{x: 0.75, y: 0}}
-                colors={[COLORS.gradient[0], COLORS.gradient[1]]}
-                style={styles.gradientBtn}>
-                {/* <FontAwesome5 name="shopping-cart" size={16} color="white" /> */}
-                <Text style={STYLES.text.WorkSansBase}>Confirm</Text>
-              </LinearGradient>
-            </TouchableOpacity>
+            <PriceInput placeholder="Enter your price" />
+            <GradientButton
+              customContainerStyles={{width: 120}}
+              content="Confirm"
+            />
           </View>
         </View>
       </BottomSheet>
@@ -76,7 +81,7 @@ const BuyBottomSheet = (props: NFTItemType) => {
   );
 };
 
-export default BuyBottomSheet;
+export default UpdateSellingBottomSheet;
 
 const styles = StyleSheet.create({
   imgWidth: {
@@ -89,7 +94,6 @@ const styles = StyleSheet.create({
   },
   bottomSheetWrapper: {
     backgroundColor: COLORS.background.modal,
-    paddingHorizontal: 16,
   },
   priceText: {
     ...STYLES.text.SpaceMonoH5,
@@ -165,6 +169,22 @@ const styles = StyleSheet.create({
     width: '100%',
     borderRadius: itemCardRadius,
   },
-  btnWrapper: {flexDirection: 'row', gap: 16, padding: 16},
+  btnWrapper: {flexDirection: 'row', gap: 16, padding: 32},
   btnHeight: {flex: 1, height: 45},
+  yourNFTWrapper: {
+    borderWidth: 2,
+    borderColor: COLORS.yellow[1],
+    // backgroundColor: COLORS.yellow[1],
+    paddingVertical: 8,
+    paddingHorizontal: 8,
+    borderRadius: 12,
+    position: 'absolute',
+    zIndex: 2,
+    right: 18,
+    top: 14,
+  },
+  yourNFTText: {
+    ...STYLES.text.WorkSansH7,
+    color: COLORS.yellow[1],
+  },
 });

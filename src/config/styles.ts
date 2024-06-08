@@ -7,6 +7,9 @@ export const STYLES = {
     backgroundColor: COLORS.background.primary,
     paddingHorizontal: 16,
   },
+  flex_1: {
+    flex: 1,
+  },
   text: {
     SpaceMonoH1: {
       ...FONTS.SpaceMonoBold,

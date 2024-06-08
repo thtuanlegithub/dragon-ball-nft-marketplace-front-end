@@ -17,6 +17,7 @@ export type NFTItemType = {
   rarity: string;
   isSold: boolean;
   isAuction: boolean;
+  author: string;
 };
 
 const DiscoverScreen = () => {
@@ -53,17 +54,7 @@ const DiscoverScreen = () => {
         ListFooterComponent={<View style={{height: 70}} />}
         data={ListNFT}
         keyExtractor={item => item.tokenId}
-        renderItem={({item}) => (
-          <NFTItem
-            tokenId={item.tokenId}
-            name={item.name}
-            price={item.price}
-            image={item.image}
-            rarity={item.rarity}
-            isSold={item.isSold}
-            isAuction={item.isAuction}
-          />
-        )}
+        renderItem={({item}) => <NFTItem {...item} />}
       />
     </View>
   );

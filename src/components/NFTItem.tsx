@@ -7,59 +7,61 @@ import {STYLES} from '../config/styles';
 
 import BuyBottomSheet from '../screens/DiscoverScreen/components/BuyBottomSheet';
 import {NFTItemType} from '../screens/DiscoverScreen';
+import {useSelector} from 'react-redux';
+import GradientButton from './GradientButton';
+import SellBottomSheet from '../screens/DiscoverScreen/components/SellBottomSheet';
+import UpdateSellingBottomSheet from '../screens/DiscoverScreen/components/UpdateBottomSheet';
 
 const itemCardRadius = 30;
 
-const NFTItem = ({
-  tokenId,
-  name,
-  price,
-  image,
-  rarity,
-  isSold,
-  isAuction,
-}: NFTItemType) => {
+const NFTItem = (props: NFTItemType) => {
+  const wallet_address = useSelector(state => state.wallet.address);
   return (
     <TouchableOpacity style={styles.container}>
       <View style={styles.nftIDContainer}>
-        <Text style={styles.nftID}>NFT-{tokenId}</Text>
+        <Text style={styles.nftID}>NFT-{props.tokenId}</Text>
       </View>
+      {wallet_address === props.author && (
+        <View style={styles.yourNFTWrapper}>
+          <Text style={styles.yourNFTText}>OWNED</Text>
+        </View>
+      )}
       <View style={styles.imageWrapper}>
-        {image && (
+        {props.image && (
           <>
-            <Image style={styles.image} source={{uri: image}} />
-            <Image style={styles.bgImage} source={{uri: image}} />
+            <Image style={styles.image} source={{uri: props.image}} />
+            <Image style={styles.bgImage} source={{uri: props.image}} />
           </>
         )}
         <BlurView style={styles.absolute} blurType="regular" blurAmount={8} />
       </View>
       <View style={styles.description}>
-        <Text style={styles.itemName}>{name}</Text>
+        <Text style={styles.itemName}>{props.name}</Text>
         <View style={styles.nftOwner}>
           <Image
             style={styles.nftOwnerImg}
             source={require('../assets/images/profile_test.png')}
           />
-          <Text style={STYLES.text.SpaceMonoH6}>{rarity}</Text>
+          <Text style={STYLES.text.SpaceMonoH6}>{props.rarity}</Text>
         </View>
         <View style={styles.rowSpaceBetween}>
           <View style={styles.descriptionWrapperLeft}>
             <Text style={styles.descriptionTitle}>Price</Text>
-            <Text style={styles.descriptionContent}>{price} FTM</Text>
+            <Text style={styles.descriptionContent}>{props.price} FTM</Text>
           </View>
-          {isSold ? (
-            <BuyBottomSheet
-              tokenId={tokenId}
-              name={name}
-              price={price}
-              image={image}
-              rarity={rarity}
-              isAuction={isAuction}
-              isSold={isSold}
-              // ownerName={ownerName}
-              // ownerProfileImg={ownerProfileImg}
-            />
-          ) : (
+          {/* ADD BUTTON */}
+          {wallet_address === props.author && props.isSold && (
+            <UpdateSellingBottomSheet {...props} />
+          )}
+          {wallet_address === props.author && !props.isSold && (
+            <SellBottomSheet {...props} />
+          )}
+
+          {/* COMPLETED */}
+          {wallet_address !== props.author && props.isSold && (
+            <BuyBottomSheet {...props} />
+          )}
+          {wallet_address !== props.author && !props.isSold && (
             <View style={styles.notSoldContainer}>
               <Text style={styles.notSoldText}>NOT SOLD</Text>
             </View>
@@ -205,13 +207,29 @@ const styles = StyleSheet.create({
     paddingVertical: 2,
     paddingHorizontal: 8,
     borderWidth: 4,
-    borderColor: COLORS.gray[0],
+    borderColor: COLORS.red[1],
     borderRadius: 8,
   },
   notSoldText: {
     fontWeight: 'bold',
     fontSize: 24,
-    color: COLORS.gray[0],
+    color: COLORS.red[1],
+  },
+  yourNFTWrapper: {
+    borderWidth: 2,
+    borderColor: COLORS.yellow[1],
+    // backgroundColor: COLORS.yellow[1],
+    paddingVertical: 8,
+    paddingHorizontal: 8,
+    borderRadius: 12,
+    position: 'absolute',
+    zIndex: 2,
+    right: 18,
+    top: 14,
+  },
+  yourNFTText: {
+    ...STYLES.text.WorkSansH7,
+    color: COLORS.yellow[1],
   },
 });
 

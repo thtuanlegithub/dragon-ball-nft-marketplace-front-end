@@ -41,7 +41,7 @@ const BottomSheet = forwardRef<BottomSheetHandle, Props>(function (
   {
     icon,
     title,
-    showCloseBtn = true,
+    showCloseBtn = false,
     detached = false,
     headerContainerStyle,
     children,

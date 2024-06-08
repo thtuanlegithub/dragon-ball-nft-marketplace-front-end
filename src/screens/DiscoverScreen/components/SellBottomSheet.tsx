@@ -8,10 +8,11 @@ import {STYLES} from '../../../config/styles';
 import BottomSheet from '../../../components/BottomSheet';
 import GradientButton from '../../../components/GradientButton';
 import {NFTItemType} from '..';
+import PriceInput from '../../../components/PriceInput';
 
 const itemCardRadius = 30;
 
-const BuyBottomSheet = (props: NFTItemType) => {
+const SellBottomSheet = (props: NFTItemType) => {
   const bottomSheetRef = useRef<any>(null);
   const handlePresentModalPress = () => {
     bottomSheetRef.current?.popUp();
@@ -22,8 +23,8 @@ const BuyBottomSheet = (props: NFTItemType) => {
   return (
     <>
       <GradientButton
-        iconName="shopping-cart"
-        content="Purchase"
+        iconName="tags"
+        content="Sell"
         onPress={handlePresentModalPress}
       />
       <BottomSheet title="Bottom Sheet" ref={bottomSheetRef}>
@@ -32,6 +33,10 @@ const BuyBottomSheet = (props: NFTItemType) => {
             <View style={styles.nftIDContainer}>
               <Text style={styles.nftID}>NFT-{props.tokenId}</Text>
             </View>
+            <View style={styles.yourNFTWrapper}>
+              <Text style={styles.yourNFTText}>OWNED</Text>
+            </View>
+
             <View style={styles.imageWrapper}>
               <Image style={styles.image} source={{uri: props.image}} />
               <Image style={styles.bgImage} source={{uri: props.image}} />
@@ -44,21 +49,9 @@ const BuyBottomSheet = (props: NFTItemType) => {
           </View>
           <Text style={styles.itemName}>{props.name}</Text>
           <Text style={styles.priceText}>{props.price} FTM</Text>
-          <Text style={styles.confirmText}>
-            Are you sure to purchase this NFT?
-          </Text>
+          <Text style={styles.confirmText}>Enter your NFT Item price</Text>
           <View style={styles.btnWrapper}>
-            <TouchableOpacity
-              style={styles.btnHeight}
-              onPress={() => bottomSheetRef.current.close()}>
-              <LinearGradient
-                start={{x: 0, y: 0}}
-                end={{x: 0.75, y: 0}}
-                colors={[COLORS.gray[0], COLORS.gray[1]]}
-                style={styles.gradientBtn}>
-                <Text style={STYLES.text.WorkSansBase}>Cancel</Text>
-              </LinearGradient>
-            </TouchableOpacity>
+            <PriceInput placeholder="Enter your price" />
             <TouchableOpacity style={STYLES.flex_1} onPress={handlePurchase}>
               <LinearGradient
                 start={{x: 0, y: 0}}
@@ -76,7 +69,7 @@ const BuyBottomSheet = (props: NFTItemType) => {
   );
 };
 
-export default BuyBottomSheet;
+export default SellBottomSheet;
 
 const styles = StyleSheet.create({
   imgWidth: {
@@ -167,4 +160,20 @@ const styles = StyleSheet.create({
   },
   btnWrapper: {flexDirection: 'row', gap: 16, padding: 16},
   btnHeight: {flex: 1, height: 45},
+  yourNFTWrapper: {
+    borderWidth: 2,
+    borderColor: COLORS.yellow[1],
+    // backgroundColor: COLORS.yellow[1],
+    paddingVertical: 8,
+    paddingHorizontal: 8,
+    borderRadius: 12,
+    position: 'absolute',
+    zIndex: 2,
+    right: 18,
+    top: 14,
+  },
+  yourNFTText: {
+    ...STYLES.text.WorkSansH7,
+    color: COLORS.yellow[1],
+  },
 });
