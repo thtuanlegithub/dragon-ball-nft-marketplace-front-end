@@ -18,7 +18,7 @@ const itemCardRadius = 30;
 
 const SellBottomSheet = (props: NFTItemType) => {
   const [isConfirmDialogVisible, setConfirmDialogVisible] = useState(false);
-
+	const [price, setPrice] = useState<string>();
   const bottomSheetRef = useRef<any>(null);
   const handlePresentModalPress = () => {
     bottomSheetRef.current?.popUp();
@@ -71,7 +71,9 @@ const SellBottomSheet = (props: NFTItemType) => {
           <Text style={styles.priceText}>{props.price} FTM</Text>
           <Text style={styles.confirmText}>Enter your NFT Item price</Text>
           <View style={styles.btnWrapper}>
-            <PriceInput placeholder="Enter your price" />
+            <PriceInput 
+							onChangeText={setPrice}
+							placeholder="Enter your price" />
             <TouchableOpacity style={STYLES.flex_1} onPress={handleSell}>
               <LinearGradient
                 start={{x: 0, y: 0}}
