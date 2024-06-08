@@ -128,6 +128,7 @@ const UpForAuctionBottomSheet = (props: NFTItemType) => {
             onCancel={() => setTimePickerOpen(false)}
           />
           <GradientButton
+            customContainerStyles={styles.confirmBtn}
             mode={GradientButtonMode.GREEN}
             content="Confirm"
             onPress={() => setConfirmDialogVisible(true)}
@@ -257,5 +258,11 @@ const styles = StyleSheet.create({
     ...STYLES.text.SpaceMonoBase,
     textAlign: 'center',
     paddingVertical: 4,
+  },
+  confirmBtn: {
+    width: '100%',
+    height: 50,
+    marginTop: 16,
+    paddingHorizontal: 16,
   },
 });
