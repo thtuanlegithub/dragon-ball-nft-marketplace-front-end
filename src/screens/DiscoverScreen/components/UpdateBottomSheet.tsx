@@ -15,7 +15,7 @@ const itemCardRadius = 30;
 
 const UpdateSellingBottomSheet = (props: NFTItemType) => {
   const bottomSheetRef = useRef<any>(null);
-	const [price, setPrice] = useState(); 
+  const [price, setPrice] = useState(); 
   const handlePresentModalPress = () => {
     bottomSheetRef.current?.popUp();
   };
