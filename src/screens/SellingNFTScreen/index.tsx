@@ -9,7 +9,6 @@ import {SERVER_URL} from '../../utils/constants/server-url.constant';
 
 import {NFTItemType} from '../DiscoverScreen';
 import NFTItem from '../../components/NFTItem';
-import {address_test} from '../../utils/constants/address-test.constant';
 import {ethers} from 'ethers';
 import {collection, onSnapshot} from 'firebase/firestore';
 import {db} from '../../config/firebaseConfig';
@@ -42,7 +41,7 @@ const SellingNFT = () => {
     });
     // Clean up listener on unmount
     return () => unsubscribe();
-  }, [wallet_address]);
+  }, []);
 
   return (
     <View style={styles.container}>
