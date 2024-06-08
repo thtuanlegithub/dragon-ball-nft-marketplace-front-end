@@ -58,7 +58,6 @@ const UpdateSellingBottomSheet = (props: NFTItemType) => {
         `${SERVER_URL}/marketplace/updateListingNftPrice`,
         data,
       );
-      console.log(response.data);
     } catch (error) {
       console.error(error);
     }
@@ -77,7 +76,6 @@ const UpdateSellingBottomSheet = (props: NFTItemType) => {
         `${SERVER_URL}/marketplace/unListNft`,
         data,
       );
-      console.log(response.data);
     } catch (error) {
       console.error(error);
     }

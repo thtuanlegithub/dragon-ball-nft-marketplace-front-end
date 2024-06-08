@@ -17,7 +17,7 @@ export type AttributeType = {
 };
 export type AuctionType = {
   auctionId: string;
-  autioneer: string;
+  auctioneer: string;
   tokenId: string;
   initialPrice: string;
   previousBidder: string;

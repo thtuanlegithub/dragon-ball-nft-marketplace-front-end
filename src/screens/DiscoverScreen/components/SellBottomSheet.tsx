@@ -50,7 +50,6 @@ const SellBottomSheet = (props: NFTItemType) => {
 		// Send a POST request
 		try {
 			const response = await axios.post(`${SERVER_URL}/marketplace/listNft`, data);
-			console.log(response.data);
 		} catch (error) {
 			console.error(error);
 		}
