@@ -262,7 +262,7 @@ const styles = StyleSheet.create({
   confirmBtn: {
     width: '100%',
     height: 50,
-    marginTop: 16,
+    marginTop: 32,
     paddingHorizontal: 16,
   },
 });
