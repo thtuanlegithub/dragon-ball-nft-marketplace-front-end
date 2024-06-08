@@ -15,21 +15,17 @@ import {STYLES} from '../../../config/styles';
 import BottomSheet from '../../../components/BottomSheet';
 import {BlurView} from '@react-native-community/blur';
 import {itemCardRadius} from '../../../utils/constants/styles.constant';
-import {AuctionItemPropsType} from '../../../components/AuctionItem';
+import {AuctionType} from '..';
+import AuctionTimer from '../../../components/AuctionTimer';
 
-const PlaceBidBottomSheet = ({
-  id,
-  title,
-  highestBid = '2.56',
-  imageSource,
-  ownerName = 'Owner name',
-  ownerProfileImg = require('../../../assets/images/profile_test.png'),
-}: AuctionItemPropsType) => {
+const PlaceBidBottomSheet = (props: AuctionType) => {
+  const [isFocused, setFocus] = useState(false);
+
   const bottomSheetRef = useRef<any>(null);
+
   const handleBottomSheetPresent = () => {
     bottomSheetRef.current?.popUp();
   };
-  const [isFocused, setFocus] = useState(false);
 
   return (
     <>
@@ -46,14 +42,16 @@ const PlaceBidBottomSheet = ({
       <BottomSheet ref={bottomSheetRef}>
         <View style={styles.container}>
           <View style={styles.AuctionIDContainer}>
-            <Text style={styles.AuctionID}>{id}</Text>
+            <Text style={styles.AuctionID}>NFT-{props.tokenId}</Text>
           </View>
-          <View style={styles.countDownContainer}>
-            <Text style={STYLES.text.WorkSansBase}>17:28:00 left</Text>
-          </View>
+          <AuctionTimer endDateTime={props.endTime} />
           <View style={styles.imageWrapper}>
-            <Image style={styles.image} source={imageSource} />
-            <Image style={styles.bgImage} source={imageSource} />
+            {props?.image && (
+              <>
+                <Image style={styles.image} source={{uri: props.image}} />
+                <Image style={styles.bgImage} source={{uri: props.image}} />
+              </>
+            )}
             <BlurView
               style={styles.absolute}
               blurType="regular"
@@ -61,61 +59,36 @@ const PlaceBidBottomSheet = ({
             />
           </View>
           <View style={styles.description}>
-            <Text style={styles.itemName}>{title}</Text>
+            <Text style={styles.itemName}>{props.name}</Text>
             <View style={styles.nftOwner}>
-              <Image style={styles.nftOwnerImg} source={ownerProfileImg} />
-              <Text style={STYLES.text.SpaceMonoH6}>{ownerName}</Text>
+              {/* <Image style={styles.nftOwnerImg} /> */}
+              <Text style={STYLES.text.SpaceMonoH6}>{props.autioneer}</Text>
             </View>
             <View style={styles.rowSpaceBetween}>
               <Text style={STYLES.text.SpaceMonoH6}>Highest bid</Text>
               <Text
                 style={{...STYLES.text.SpaceMonoH5, color: COLORS.yellow[0]}}>
-                {highestBid} FTM
+                {props.lastBid} FTM
               </Text>
             </View>
           </View>
         </View>
-        <View
-          style={{
-            flexDirection: 'row',
-            paddingHorizontal: 32,
-            gap: 8,
-            marginBottom: 16,
-          }}>
+        <View style={styles.inputWrapper}>
           <TextInput
             style={{
-              ...STYLES.text.WorkSansBase,
-              flex: 1,
-              paddingVertical: 12,
-              paddingHorizontal: 16,
-              backgroundColor: COLORS.gray[0],
-              borderRadius: 14,
-              borderWidth: 2,
+              ...styles.textInput,
               borderColor: isFocused
                 ? COLORS.yellow[0]
                 : COLORS.background.secondary,
-              color: COLORS.text.primary,
             }}
             placeholder="Enter your bid"
             placeholderTextColor={COLORS.text.caption}
             onFocus={() => setFocus(true)}
             onBlur={() => setFocus(false)}
           />
-          <TouchableOpacity
-            style={{
-              justifyContent: 'center',
-              alignItems: 'center',
-            }}>
+          <TouchableOpacity style={styles.btnWrapper}>
             <LinearGradient
-              style={{
-                flex: 1,
-                gap: 8,
-                paddingHorizontal: 16,
-                flexDirection: 'row',
-                justifyContent: 'center',
-                alignItems: 'center',
-                borderRadius: 12,
-              }}
+              style={styles.linearGradientBtn}
               start={{x: 0, y: 0}}
               end={{x: 1, y: 0}}
               colors={[COLORS.gradient[0], COLORS.gradient[1]]}>
@@ -254,5 +227,34 @@ const styles = StyleSheet.create({
     height: 24,
     borderRadius: 12,
     marginRight: 8,
+  },
+  inputWrapper: {
+    flexDirection: 'row',
+    paddingHorizontal: 32,
+    gap: 8,
+    marginBottom: 16,
+  },
+  textInput: {
+    ...STYLES.text.WorkSansBase,
+    flex: 1,
+    paddingVertical: 12,
+    paddingHorizontal: 16,
+    backgroundColor: COLORS.gray[0],
+    borderRadius: 14,
+    borderWidth: 2,
+    color: COLORS.text.primary,
+  },
+  btnWrapper: {
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  linearGradientBtn: {
+    flex: 1,
+    gap: 8,
+    paddingHorizontal: 16,
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderRadius: 12,
   },
 });

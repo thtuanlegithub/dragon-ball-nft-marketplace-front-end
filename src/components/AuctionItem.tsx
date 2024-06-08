@@ -4,56 +4,40 @@ import {BlurView} from '@react-native-community/blur';
 
 import {COLORS} from '../config';
 import {STYLES} from '../config/styles';
-import PlaceBidBottomSheet from '../screens/AuctionScreen/components/PlaceBidBottomSheet';
 import {AuctionType} from '../screens/AuctionScreen';
+import PlaceBidBottomSheet from '../screens/AuctionScreen/components/PlaceBidBottomSheet';
+import AuctionTimer from './AuctionTimer';
 
 const itemCardRadius = 30;
 
-const AuctionItem = ({
-  auctionId,
-  autioneer,
-  tokenId,
-  initialPrice,
-  previousBidder,
-  lastBidder,
-  startTime,
-  endTime,
-  completed,
-  active,
-  lastBid,
-  name,
-  description,
-  image,
-  attributes,
-  rarity,
-}: AuctionType) => {
+const AuctionItem = (props: AuctionType) => {
+  const oneDayFromNow = Date.now() + 1 * 60 * 1000; // current time + 1 day in milliseconds
+
   return (
     <TouchableOpacity style={styles.container}>
       <View style={styles.AuctionIDContainer}>
-        <Text style={styles.AuctionID}>NFT-{tokenId}</Text>
+        <Text style={styles.AuctionID}>NFT-{props.tokenId}</Text>
       </View>
-      <View style={styles.countDownContainer}>
-        <Text style={STYLES.text.WorkSansBase}>{'handle timer tick'}</Text>
-      </View>
+      <AuctionTimer endDateTime={oneDayFromNow} />
       <View style={styles.imageWrapper}>
-        <Image style={styles.image} source={{uri: image}} />
-        <Image style={styles.bgImage} source={{uri: image}} />
+        {props?.image && (
+          <>
+            <Image style={styles.image} source={{uri: props.image}} />
+            <Image style={styles.bgImage} source={{uri: props.image}} />
+          </>
+        )}
         <BlurView style={styles.absolute} blurType="regular" blurAmount={8} />
       </View>
       <View style={styles.description}>
-        <Text style={styles.itemName}>{name}</Text>
+        <Text style={styles.itemName}>{props.name}</Text>
         <View style={styles.rowSpaceBetween}>
           <Text style={STYLES.text.SpaceMonoBase}>Highest bid</Text>
           <Text style={{...STYLES.text.SpaceMonoH5, color: COLORS.yellow[0]}}>
-            {lastBid} FTM
+            {props.lastBid} FTM
           </Text>
         </View>
         <PlaceBidBottomSheet
-          id={tokenId}
-          title={name}
-          highestBid={lastBid}
-          imageSource={image}
-          ownerName={lastBidder}
+          {...props}
           // ownerProfileImg={}
         />
       </View>

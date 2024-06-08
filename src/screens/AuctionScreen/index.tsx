@@ -1,14 +1,13 @@
 import React, {useEffect, useState} from 'react';
 import {View, Text, StyleSheet, FlatList} from 'react-native';
 import axios from 'axios';
+import {ethers} from 'ethers';
 
 import {COLORS} from '../../config';
 import {STYLES} from '../../config/styles';
 import {SERVER_URL} from '../../utils/constants/server-url.constant';
 
 import AuctionItem from '../../components/AuctionItem';
-import {NFTItemType} from '../DiscoverScreen';
-import {ethers} from 'ethers';
 
 export type AttributeType = {
   trait_type: string;
@@ -34,7 +33,7 @@ export type AuctionType = {
 };
 
 const AuctionScreen = () => {
-  const [listAuctionNFT, setListAuctionNFT] = useState<NFTItemType[]>([]);
+  const [listAuctionNFT, setListAuctionNFT] = useState<AuctionType[]>([]);
   const fetchListAuctionNFT = async () => {
     try {
       const res = await axios.get(`${SERVER_URL}/nft/auction`);
@@ -63,7 +62,7 @@ const AuctionScreen = () => {
         showsVerticalScrollIndicator={false}
         ListFooterComponent={<View style={{height: 70}} />}
         data={listAuctionNFT}
-        keyExtractor={item => item.id}
+        keyExtractor={item => item.tokenId}
         renderItem={({item}) => <AuctionItem {...item} />}
       />
     </View>

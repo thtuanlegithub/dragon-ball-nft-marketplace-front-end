@@ -3,13 +3,13 @@ import {StyleSheet, Text, View} from 'react-native';
 import {useDispatch} from 'react-redux';
 import axios from 'axios';
 import {ethers} from 'ethers';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import {STYLES} from '../../config/styles';
 import CustomTextInput from '../../components/CustomTextInput';
 import ControlButton, {ControlButtonMode} from '../../components/ControlButton';
 import {SERVER_URL} from '../../utils/constants/server-url.constant';
 import {setWalletInfo} from '../../services/slices/walletSlice';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const ImportWalletScreen = () => {
   const [mnemonic, setMnemonic] = useState<string>(''); // [1
