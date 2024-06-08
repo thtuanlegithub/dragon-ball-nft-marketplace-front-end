@@ -11,6 +11,8 @@ import GradientButton, {
 import {NFTItemType} from '..';
 import PriceInput from '../../../components/PriceInput';
 import ConfirmDialog from '../../../components/ConfirmDialog';
+import { TouchableOpacity } from 'react-native-gesture-handler';
+import LinearGradient from 'react-native-linear-gradient';
 
 const itemCardRadius = 30;
 
