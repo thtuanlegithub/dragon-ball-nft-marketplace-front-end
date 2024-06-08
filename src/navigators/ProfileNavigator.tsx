@@ -1,5 +1,4 @@
 import React from 'react';
-import {StyleSheet, View} from 'react-native';
 import {
   createStackNavigator,
   CardStyleInterpolators,
@@ -14,6 +13,8 @@ import SellingNFT from '../screens/SellingNFTScreen';
 import UpForAuctionScreen from '../screens/UpForAuctionScreen';
 import StackNavigatorHeaderBackground from '../components/StackNavigatorHeaderBackground';
 
+const HeaderBackground = () => <StackNavigatorHeaderBackground />;
+
 const ProfileStack = createStackNavigator<ProfileParamList>();
 
 const ProfileNavigator = () => {
@@ -25,9 +26,7 @@ const ProfileNavigator = () => {
         headerShadowVisible: false,
         fullScreenGestureEnabled: true,
         headerTitle: '',
-        headerBackground() {
-          return <StackNavigatorHeaderBackground />;
-        },
+        headerBackground: HeaderBackground,
         headerTintColor: COLORS.text.primary,
         gestureEnabled: true,
         gestureDirection: 'horizontal',
@@ -50,5 +49,3 @@ const ProfileNavigator = () => {
 };
 
 export default ProfileNavigator;
-
-const styles = StyleSheet.create({});

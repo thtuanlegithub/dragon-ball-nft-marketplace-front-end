@@ -206,6 +206,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 8,
     borderWidth: 4,
     borderColor: COLORS.gray[0],
+    borderRadius: 8,
   },
   notSoldText: {
     fontWeight: 'bold',

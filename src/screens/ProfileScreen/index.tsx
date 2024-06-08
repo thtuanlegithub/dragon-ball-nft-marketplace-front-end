@@ -8,17 +8,17 @@ import {
   FlatList,
   Clipboard,
 } from 'react-native';
+import {useNavigation} from '@react-navigation/native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import {useDispatch, useSelector} from 'react-redux';
+import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
+import axios from 'axios';
 
 import {COLORS} from '../../config';
 import {STYLES} from '../../config/styles';
-import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
-import {useNavigation} from '@react-navigation/native';
 import {SCREEN} from '../../navigators/AppRoute';
-import {useDispatch, useSelector} from 'react-redux';
 import {logout, setBalance} from '../../services/slices/walletSlice';
-import axios from 'axios';
 import {SERVER_URL} from '../../utils/constants/server-url.constant';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const MenuItem = ({title, route}: {title: string; route: string}) => {
   const navigation = useNavigation();
@@ -100,14 +100,7 @@ const ProfileScreen = () => {
           <TouchableOpacity
             onPress={handleCopyToClipboard}
             style={styles.addressWrapper}>
-            <Text
-              style={{
-                ...STYLES.text.WorkSanSmall,
-                textAlign: 'center',
-                textAlignVertical: 'center',
-              }}>
-              {wallet.address}
-            </Text>
+            <Text style={styles.walletText}>{wallet.address}</Text>
             <Image
               style={{width: 16, height: 16}}
               source={require('../../assets/images/copy.png')}
@@ -188,10 +181,11 @@ const styles = StyleSheet.create({
   addressWrapper: {
     flexDirection: 'row',
     backgroundColor: COLORS.background.secondary,
-    paddingVertical: 12,
-    borderRadius: 12,
+    paddingVertical: 16,
+    borderRadius: 14,
     justifyContent: 'space-between',
     paddingHorizontal: 16,
+    marginBottom: 16,
   },
   balanceWrapper: {
     flexDirection: 'row',
@@ -199,6 +193,11 @@ const styles = StyleSheet.create({
     gap: 8,
     marginBottom: 16,
     justifyContent: 'center',
+  },
+  walletText: {
+    ...STYLES.text.WorkSanSmall,
+    textAlign: 'center',
+    textAlignVertical: 'center',
   },
 });
 

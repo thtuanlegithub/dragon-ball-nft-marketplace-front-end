@@ -88,6 +88,11 @@ export const STYLES = {
       fontSize: 12,
       color: COLORS.text.primary,
     },
+    WorkSans_R_18: {
+      ...FONTS.WorkSansRegular,
+      fontSize: 18,
+      color: COLORS.text.primary,
+    },
     WorkSansBase: {
       ...FONTS.WorkSansRegular,
       fontSize: 16,

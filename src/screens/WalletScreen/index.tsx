@@ -1,27 +1,28 @@
 import React from 'react';
 import {Image, StyleSheet, Text, View} from 'react-native';
+import {useNavigation} from '@react-navigation/native';
 
 import {COLORS} from '../../config';
 import {STYLES} from '../../config/styles';
-import ControlButton, {ControlButtonMode} from '../../components/ControlButton';
-import {useNavigation} from '@react-navigation/native';
 import {SCREEN} from '../../navigators/AppRoute';
+
+import ControlButton, {ControlButtonMode} from '../../components/ControlButton';
 
 const WalletScreen = () => {
   const navigation = useNavigation();
   return (
     <View style={styles.container}>
-      <View style={{justifyContent: 'center', alignItems: 'center', gap: 16}}>
+      <View style={styles.walletSetupWrapper}>
         <Text style={STYLES.text.WorkSansH5}>Wallet Setup</Text>
-        <Text style={{...STYLES.text.WorkSansCaption, textAlign: 'center'}}>
+        <Text style={styles.importText}>
           Import an existing wallet or create a new one
         </Text>
       </View>
       <Image
-        style={{height: 300, width: 300, resizeMode: 'contain'}}
+        style={styles.walletImg}
         source={require('../../assets/images/wallet-icon.png')}
       />
-      <View style={{width: '100%', gap: 16}}>
+      <View style={styles.btnWrapper}>
         <ControlButton
           onPress={() => navigation.navigate(SCREEN.IMPORT_WALLET)}
           mode={ControlButtonMode.SECONDARY}
@@ -48,4 +49,8 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     paddingBottom: 90,
   },
+  walletSetupWrapper: {justifyContent: 'center', alignItems: 'center', gap: 16},
+  importText: {...STYLES.text.WorkSansCaption, textAlign: 'center'},
+  walletImg: {height: 300, width: 300, resizeMode: 'contain'},
+  btnWrapper: {width: '100%', gap: 16},
 });
