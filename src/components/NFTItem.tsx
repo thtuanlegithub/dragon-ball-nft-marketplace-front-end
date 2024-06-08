@@ -10,6 +10,7 @@ import {NFTItemType} from '../screens/DiscoverScreen';
 import {useSelector} from 'react-redux';
 import SellBottomSheet from '../screens/DiscoverScreen/components/SellBottomSheet';
 import UpdateSellingBottomSheet from '../screens/DiscoverScreen/components/UpdateBottomSheet';
+import GradientButton, {GradientButtonMode} from './GradientButton';
 
 const itemCardRadius = 30;
 
@@ -43,13 +44,18 @@ const NFTItem = (props: NFTItemType) => {
           />
           <Text style={STYLES.text.SpaceMonoH6}>{props.rarity}</Text>
         </View>
-        <View style={styles.rowSpaceBetween}>
-          {!props.isSold && (
-            <View style={styles.descriptionWrapperLeft}>
-              <Text style={styles.descriptionTitle}>Price</Text>
-              <Text style={styles.descriptionContent}>{props.price} FTM</Text>
-            </View>
-          )}
+        <View
+          style={{gap: 8, flexDirection: 'row', justifyContent: 'flex-end'}}>
+          {!props.isSold &&
+            !props.isAuction &&
+            wallet_address === props.author && (
+              <GradientButton
+                iconName="gavel"
+                content="Up auction"
+                customContainerStyles={{flex: 1}}
+                mode={GradientButtonMode.PRIMARY}
+              />
+            )}
 
           {wallet_address === props.author && props.isSold && (
             <UpdateSellingBottomSheet {...props} />

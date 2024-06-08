@@ -32,10 +32,6 @@ const AuctionItem = (props: AuctionType) => {
     // handle finish auction logic here
   };
 
-  console.log('wallet_address', wallet_address);
-
-  console.log('autioneer', props.auctioneer);
-
   return (
     <TouchableOpacity style={styles.container}>
       <View style={styles.AuctionIDContainer}>
@@ -86,7 +82,7 @@ const AuctionItem = (props: AuctionType) => {
 
           {/* props.auctioner === wallet_address && props.endtime > dayjs().unix() */}
           {props.auctioneer === wallet_address &&
-            props.endTime > dayjs().unix() && (
+            props.endTime <= dayjs().unix() && (
               <GradientButton
                 mode={GradientButtonMode.GREEN}
                 content="Finished"
@@ -97,7 +93,7 @@ const AuctionItem = (props: AuctionType) => {
 
           {/* props.auctioner === wallet_address && props.endtime <= dayjs().unix() */}
           {props.auctioneer === wallet_address &&
-            props.endTime <= dayjs().unix() && (
+            props.endTime > dayjs().unix() && (
               <GradientButton
                 onPress={() => setConfirmStopDialogVisible(true)}
                 mode={GradientButtonMode.GRAY}

@@ -8,8 +8,8 @@ import {STYLES} from '../../config/styles';
 import {SERVER_URL} from '../../utils/constants/server-url.constant';
 
 import AuctionItem from '../../components/AuctionItem';
-import { collection, onSnapshot } from 'firebase/firestore';
-import { db } from '../../config/firebaseConfig';
+import {collection, onSnapshot} from 'firebase/firestore';
+import {db} from '../../config/firebaseConfig';
 
 export type AttributeType = {
   trait_type: string;
@@ -17,7 +17,7 @@ export type AttributeType = {
 };
 export type AuctionType = {
   auctionId: string;
-  autioneer: string;
+  auctioneer: string;
   tokenId: string;
   initialPrice: string;
   previousBidder: string;
@@ -54,10 +54,10 @@ const AuctionScreen = () => {
   useEffect(() => {
     fetchListAuctionNFT();
     const unsubscribe = onSnapshot(collection(db, 'auctions'), () => {
-        fetchListAuctionNFT();
+      fetchListAuctionNFT();
     });
     // Clean up listener on unmount
-    return () => unsubscribe();  
+    return () => unsubscribe();
   }, []);
   return (
     <View style={styles.container}>
