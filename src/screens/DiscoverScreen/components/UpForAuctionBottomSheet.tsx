@@ -73,7 +73,7 @@ const UpForAuctionBottomSheet = (props: NFTItemType) => {
               }}>
               {endDate ? (
                 <Text style={styles.pickDateTimeText}>
-                  {dayjs(endDate).format('DD/MM/YYYY')}
+                  {dayjs.unix(endDate).format('DD/MM/YYYY')}
                 </Text>
               ) : (
                 <Text style={styles.pickDateTimeText}>End Date</Text>
@@ -86,7 +86,7 @@ const UpForAuctionBottomSheet = (props: NFTItemType) => {
               }}>
               {endTime ? (
                 <Text style={styles.pickDateTimeText}>
-                  {dayjs(endTime).format('hh:mm A')}
+                  {dayjs.unix(endTime).format('hh:mm A')}
                 </Text>
               ) : (
                 <Text style={styles.pickDateTimeText}>End Time</Text>
@@ -112,6 +112,7 @@ const UpForAuctionBottomSheet = (props: NFTItemType) => {
             date={new Date()}
             onConfirm={date => {
               setEndDate(dayjs(date).unix());
+              console.log(dayjs(date).format('DD/MM/YYYY'));
               setDatePickerOpen(false);
             }}
             onCancel={() => setDatePickerOpen(false)}
