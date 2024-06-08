@@ -58,7 +58,7 @@ const UpForAuctionBottomSheet = (props: NFTItemType) => {
           </View>
           <Text style={styles.itemName}>{props.name}</Text>
           <Text style={styles.priceText}>{props.price} FTM</Text>
-          <Text style={styles.confirmText}>Enter your NFT Item price</Text>
+          <Text style={styles.confirmText}>Enter your auction information</Text>
           <View style={styles.btnWrapper}>
             <PriceInput
               // onChangeText={setPrice}
