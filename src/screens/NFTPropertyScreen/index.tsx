@@ -11,29 +11,35 @@ import {NFTItemType} from '../DiscoverScreen';
 import NFTItem from '../../components/NFTItem';
 import {address_test} from '../../utils/constants/address-test.constant';
 import {ethers} from 'ethers';
+import { collection, onSnapshot } from 'firebase/firestore';
+import { db } from '../../config/firebaseConfig';
 
 const NFTPropertyScreen = () => {
   const wallet_address = useSelector((state: any) => state.wallet.address);
 
   const [listPropertyNFT, setListPropertyNFT] = useState<NFTItemType[]>([]);
-
+  const fetchListProperty = async () => {
+    try {
+      const res = await axios.get(`${SERVER_URL}/nft/owned/${wallet_address}`);
+      const nfts = res.data.data.nfts.map((nft: NFTItemType) => {
+        return {
+          ...nft,
+          price: ethers.formatEther(BigInt(nft.price)), // Convert from Wei to Ether
+        };
+      });
+      setListPropertyNFT(nfts);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+  
   useEffect(() => {
-    const fetchListProperty = async () => {
-      try {
-        const res = await axios.get(`${SERVER_URL}/nft/owned/${address_test}`);
-        const nfts = res.data.data.nfts.map((nft: NFTItemType) => {
-          return {
-            ...nft,
-            price: ethers.formatEther(BigInt(nft.price)), // Convert from Wei to Ether
-          };
-        });
-        setListPropertyNFT(nfts);
-      } catch (error) {
-        console.error(error);
-      }
-    };
-
     fetchListProperty();
+    const unsubscribe = onSnapshot(collection(db, 'nfts'), () => {
+        fetchListProperty();
+    });
+    // Clean up listener on unmount
+    return () => unsubscribe();
   }, [wallet_address]);
 
   return (
