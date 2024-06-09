@@ -44,6 +44,14 @@ const AuctionItem = (props: AuctionType) => {
   };
 
   const handleFinishAuction = async () => {
+    // If no one bid, the auctioneer can not call finish the auction
+    // It will be call the stop function
+    if (props.lastBid === props.initialPrice) {
+      alert('No one bid, we will stop the auction instead of finish it!');
+      await handleStopAuction();
+      return;
+    }
+
     // handle finish auction logic here
     const data = {
       address: wallet_address,
