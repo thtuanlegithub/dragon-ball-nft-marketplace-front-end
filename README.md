@@ -36,6 +36,10 @@ The application includes the following screens to optimize user experience:
   <img src="https://github.com/thtuanlegithub/dragon-ball-nft-marketplace-front-end/assets/113840691/7433ad17-039c-40a0-8b48-46d220f924d4" alt="Assets Screen" width="200"/>
   <img src="https://github.com/thtuanlegithub/dragon-ball-nft-marketplace-front-end/assets/113840691/f11d1677-56eb-4bfa-8194-1976244ef6b7" alt="Market Screen" width="200"/>
   <img src="https://github.com/thtuanlegithub/dragon-ball-nft-marketplace-front-end/assets/113840691/63682c49-f527-4236-83bc-83ce0816706c" alt="Auction Screen" width="200"/>
+  <img src="https://github.com/thtuanlegithub/dragon-ball-nft-marketplace-front-end/assets/113840691/4ab07068-9514-4ae3-8430-f6d9821111f3" alt="Auction Screen" width="200"/>
+  <img src="https://github.com/thtuanlegithub/dragon-ball-nft-marketplace-front-end/assets/113840691/fa7fdfbe-5246-4a0a-8d1a-6276d43a18fb" alt="Auction Screen" width="200"/>
+  <img src="https://github.com/thtuanlegithub/dragon-ball-nft-marketplace-front-end/assets/113840691/80292f27-ac3d-4df3-9ad4-370544f34d21" alt="Auction Screen" width="200"/>
+
 </p>
 
 
