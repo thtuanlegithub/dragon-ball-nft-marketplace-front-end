@@ -62,24 +62,3 @@ For any assistance or queries, please contact our support team at support@dragon
 
 Thank you for choosing Dragonball NFT Marketplace. Happy trading!
 
-
-
-## Getting Started
-
-To begin using the Dragonball NFT Marketplace on your React Native emulator, follow these steps:
-
-1. Ensure you have the **React Native development environment** set up on your system.
-2. Clone the repository from GitHub to your local machine.
-3. Navigate to the project directory and run `npm install` to install all the necessary dependencies.
-4. Start the React Native emulator of your choice.
-5. Execute `npm start` to run the app on the emulator.
-6. Once the app is running, you can create or import your wallet within the emulator environment.
-7. Add virtual funds to your wallet to simulate transactions.
-8. Dive into the marketplace and enjoy the experience of trading Dragonball NFTs!
-
-## Support
-
-For any assistance or queries, please contact our support team at support@dragonballnft.com.
-
-Thank you for choosing Dragonball NFT Marketplace. Happy trading!
-
