@@ -12,20 +12,6 @@ Welcome to the Dragonball NFT Marketplace, the premier platform for trading and 
 - **Trade NFTs**: Conduct transactions quickly and securely.
 - **Auction NFTs**: Participate in auctions to own unique NFTs.
 
-# Dragonball NFT Marketplace
-
-Welcome to the Dragonball NFT Marketplace, the premier platform for trading and auctioning your favorite Dragonball characters as NFTs!
-
-## Features
-
-- **Create Wallet**: Easily set up a new wallet to start your transactions.
-- **Import Wallet**: Import your existing wallet to manage your NFT assets.
-- **View Balance**: Check your balance anytime, anywhere.
-- **View Current Assets**: Browse through your NFT collection.
-- **Explore NFT Market**: Discover and search for new NFTs on the market.
-- **Trade NFTs**: Conduct transactions quickly and securely.
-- **Auction NFTs**: Participate in auctions to own unique NFTs.
-
 ## Application Screens
 
 The application includes the following screens to optimize user experience:
