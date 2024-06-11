@@ -1,79 +1,50 @@
-This is a new [**React Native**](https://reactnative.dev) project, bootstrapped using [`@react-native-community/cli`](https://github.com/react-native-community/cli).
+# Dragonball NFT Marketplace
 
-# Getting Started
+Welcome to the Dragonball NFT Marketplace, the premier platform for trading and auctioning your favorite Dragonball characters as NFTs!
 
->**Note**: Make sure you have completed the [React Native - Environment Setup](https://reactnative.dev/docs/environment-setup) instructions till "Creating a new application" step, before proceeding.
+## Features
 
-## Step 1: Start the Metro Server
+- **Create Wallet**: Easily set up a new wallet to start your transactions.
+- **Import Wallet**: Import your existing wallet to manage your NFT assets.
+- **View Balance**: Check your balance anytime, anywhere.
+- **View Current Assets**: Browse through your NFT collection.
+- **Explore NFT Market**: Discover and search for new NFTs on the market.
+- **Trade NFTs**: Conduct transactions quickly and securely.
+- **Auction NFTs**: Participate in auctions to own unique NFTs.
 
-First, you will need to start **Metro**, the JavaScript _bundler_ that ships _with_ React Native.
+## Application Screens
 
-To start Metro, run the following command from the _root_ of your React Native project:
+The application includes the following screens to optimize user experience:
 
-```bash
-# using npm
-npm start
+<p align="center">
+  <img src="https://github.com/thtuanlegithub/dragon-ball-nft-marketplace-front-end/assets/113840691/fd69d608-dd5e-45e6-9658-da6a00b3a5e6" alt="Home Screen" width="200"/>
+  <img src="https://github.com/thtuanlegithub/dragon-ball-nft-marketplace-front-end/assets/113840691/39b087f7-3fa4-44f1-b769-1ec837bf064b" alt="Wallet Screen" width="200"/>
+  <img src="https://github.com/thtuanlegithub/dragon-ball-nft-marketplace-front-end/assets/113840691/7433ad17-039c-40a0-8b48-46d220f924d4" alt="Assets Screen" width="200"/>
+  <img src="https://github.com/thtuanlegithub/dragon-ball-nft-marketplace-front-end/assets/113840691/f11d1677-56eb-4bfa-8194-1976244ef6b7" alt="Market Screen" width="200"/>
+  <img src="https://github.com/thtuanlegithub/dragon-ball-nft-marketplace-front-end/assets/113840691/63682c49-f527-4236-83bc-83ce0816706c" alt="Auction Screen" width="200"/>
+  <img src="https://github.com/thtuanlegithub/dragon-ball-nft-marketplace-front-end/assets/113840691/4ab07068-9514-4ae3-8430-f6d9821111f3" alt="Auction Screen" width="200"/>
+  <img src="https://github.com/thtuanlegithub/dragon-ball-nft-marketplace-front-end/assets/113840691/fa7fdfbe-5246-4a0a-8d1a-6276d43a18fb" alt="Auction Screen" width="200"/>
+  <img src="https://github.com/thtuanlegithub/dragon-ball-nft-marketplace-front-end/assets/113840691/80292f27-ac3d-4df3-9ad4-370544f34d21" alt="Auction Screen" width="200"/>
 
-# OR using Yarn
-yarn start
-```
+</p>
 
-## Step 2: Start your Application
 
-Let Metro Bundler run in its _own_ terminal. Open a _new_ terminal from the _root_ of your React Native project. Run the following command to start your _Android_ or _iOS_ app:
+## Getting Started
 
-### For Android
+To begin using the Dragonball NFT Marketplace on your React Native emulator, follow these steps:
 
-```bash
-# using npm
-npm run android
+1. Ensure you have the **React Native development environment** set up on your system.
+2. Clone the repository from GitHub to your local machine.
+3. Navigate to the project directory and run `npm install` to install all the necessary dependencies.
+4. Start the React Native emulator of your choice.
+5. Execute `npm start` to run the app on the emulator.
+6. Once the app is running, you can create or import your wallet within the emulator environment.
+7. Add virtual funds to your wallet to simulate transactions.
+8. Dive into the marketplace and enjoy the experience of trading Dragonball NFTs!
 
-# OR using Yarn
-yarn android
-```
+## Support
 
-### For iOS
+For any assistance or queries, please contact our support team at support@dragonballnft.com.
 
-```bash
-# using npm
-npm run ios
+Thank you for choosing Dragonball NFT Marketplace. Happy trading!
 
-# OR using Yarn
-yarn ios
-```
-
-If everything is set up _correctly_, you should see your new app running in your _Android Emulator_ or _iOS Simulator_ shortly provided you have set up your emulator/simulator correctly.
-
-This is one way to run your app — you can also run it directly from within Android Studio and Xcode respectively.
-
-## Step 3: Modifying your App
-
-Now that you have successfully run the app, let's modify it.
-
-1. Open `App.tsx` in your text editor of choice and edit some lines.
-2. For **Android**: Press the <kbd>R</kbd> key twice or select **"Reload"** from the **Developer Menu** (<kbd>Ctrl</kbd> + <kbd>M</kbd> (on Window and Linux) or <kbd>Cmd ⌘</kbd> + <kbd>M</kbd> (on macOS)) to see your changes!
-
-   For **iOS**: Hit <kbd>Cmd ⌘</kbd> + <kbd>R</kbd> in your iOS Simulator to reload the app and see your changes!
-
-## Congratulations! :tada:
-
-You've successfully run and modified your React Native App. :partying_face:
-
-### Now what?
-
-- If you want to add this new React Native code to an existing application, check out the [Integration guide](https://reactnative.dev/docs/integration-with-existing-apps).
-- If you're curious to learn more about React Native, check out the [Introduction to React Native](https://reactnative.dev/docs/getting-started).
-
-# Troubleshooting
-
-If you can't get this to work, see the [Troubleshooting](https://reactnative.dev/docs/troubleshooting) page.
-
-# Learn More
-
-To learn more about React Native, take a look at the following resources:
-
-- [React Native Website](https://reactnative.dev) - learn more about React Native.
-- [Getting Started](https://reactnative.dev/docs/environment-setup) - an **overview** of React Native and how setup your environment.
-- [Learn the Basics](https://reactnative.dev/docs/getting-started) - a **guided tour** of the React Native **basics**.
-- [Blog](https://reactnative.dev/blog) - read the latest official React Native **Blog** posts.
-- [`@facebook/react-native`](https://github.com/facebook/react-native) - the Open Source; GitHub **repository** for React Native.
