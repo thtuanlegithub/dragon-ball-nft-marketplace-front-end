@@ -1,4 +1,10 @@
-import {View, Text, StyleSheet, ScrollView} from 'react-native';
+import {
+  View,
+  Text,
+  StyleSheet,
+  ScrollView,
+  TouchableOpacity,
+} from 'react-native';
 import React, {useEffect, useState} from 'react';
 import {STYLES} from '../../config/styles';
 import {COLORS} from '../../config';
@@ -9,6 +15,8 @@ import {SERVER_URL} from '../../utils/constants/server-url.constant';
 import {collection, onSnapshot} from 'firebase/firestore';
 import {db} from '../../config/firebaseConfig';
 import {ethers} from 'ethers';
+import {useNavigation} from '@react-navigation/native';
+import {SCREEN} from '../../navigators/AppRoute';
 
 const HomeScreen = () => {
   const [topPriceNFT, setTopPriceNFT] = useState<NFTItemPropsType>({
@@ -36,6 +44,8 @@ const HomeScreen = () => {
     }
   };
 
+  const navigation = useNavigation();
+
   useEffect(() => {
     fetchTopPriceNFT();
     const unsubscribe = onSnapshot(collection(db, 'nfts'), () => {
@@ -60,13 +70,29 @@ const HomeScreen = () => {
           </Text>
         </View>
         <NFTItem {...topPriceNFT} />
-        <Button content="Get Started" />
+        <TouchableOpacity
+          style={styles.btnContainer}
+          onPress={() => {
+            navigation.navigate(SCREEN.DISCOVER);
+          }}>
+          <Text style={STYLES.text.WorkSansH5}>Get started</Text>
+        </TouchableOpacity>
       </View>
     </ScrollView>
   );
 };
 
 const styles = StyleSheet.create({
+  btnContainer: {
+    backgroundColor: COLORS.callToAction,
+    flex: 1,
+    borderRadius: 30,
+    paddingVertical: 14,
+    marginHorizontal: 16,
+    marginTop: 20,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
   container: {
     paddingVertical: 100,
     flex: 1,

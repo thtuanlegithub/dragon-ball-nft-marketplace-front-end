@@ -1,6 +1,7 @@
 import { SCREEN } from "./AppRoute"
 
 export type ProfileParamList = {
+  [SCREEN.DISCOVER]: undefined;
   [SCREEN.PROFILE]: undefined;
   [SCREEN.WALLET]: undefined;
   [SCREEN.NFT_PROPERTY]: undefined;

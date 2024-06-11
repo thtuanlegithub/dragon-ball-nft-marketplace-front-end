@@ -1,6 +1,6 @@
 export enum SCREEN {
   HOME = 'HOME',
-  DISCOVER = 'DISCOVER',
+  DISCOVER = 'Discover',
   AUCTION = 'AUCTION',
 
   PROFILE = 'PROFILE',
