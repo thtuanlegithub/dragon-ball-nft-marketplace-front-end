@@ -143,7 +143,7 @@ const UpForAuctionBottomSheet = (props: NFTItemType) => {
               setConfirmDialogVisible(false);
             }}
             title="Confirm"
-            message="Are you sure you want to sell this NFT?"
+            message="Are you sure you want to auction this NFT?"
           />
           <DatePicker
             modal
